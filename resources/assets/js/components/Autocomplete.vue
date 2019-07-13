@@ -36,7 +36,7 @@
     this.results = [];
     if(this.query.length > 2){     
         var query = this.query
-        page_url = `http://cn.com/api/profilesbykeyword/${query}`;
+        page_url = `http://afsi.com/api/profilesbykeyword/${query}`;
         fetch(page_url)
             .then(res => res.json())
             .then(res => {

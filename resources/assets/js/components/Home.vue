@@ -29,7 +29,7 @@
                         <div class="small-box bg-aqua">
                             <div class="inner">                                
                               <h3>Customer</h3>
-                              <p>Records</p>
+                              <p>Sales Record</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
@@ -39,10 +39,9 @@
                             </a>
                         </div>
                         <div class="small-box bg-green">
-                            <div class="inner">
-                            <i>{{ pagination_profile.total }}</i>
-                            <h3>Active</h3>  
-                            <p>Customers</p>
+                            <div class="inner">                            
+                            <h3>Registered</h3>  
+                            <p>Customers(<i>{{ pagination_profile.total }}</i>)</p>
                             </div>
                             <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -66,10 +65,9 @@
                             </a>
                         </div>                       
                         <div class="small-box bg-yellow">
-                            <div class="inner">
-                            <h3>{{ pagination_area.total }}</h3>
+                            <div class="inner">                            
                             <h3>Areas</h3> 
-                            <p>Customer Group</p>
+                            <p>Customer Groups (<i>{{ pagination_area.total }}</i>)</p>
                             </div>
                             <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -134,7 +132,7 @@ export default {
 
     fetchAreas(page_url) {
       let vm = this;
-      page_url = 'http://cn.com/api/areas';
+      page_url = 'http://afsi.com/api/areas';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
@@ -158,7 +156,7 @@ export default {
 
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = 'http://cn.com/api/profiles';
+      page_url = 'http://afsi.com/api/profiles';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
@@ -182,7 +180,7 @@ export default {
     addprofile() {
       if (this.edit === false) {
         // Add
-        fetch('http://cn.com/api/profile', {
+        fetch('http://afsi.com/api/profile', {
           method: 'post',
           body: JSON.stringify(this.profile),
           headers: {
@@ -198,7 +196,7 @@ export default {
           .catch(err => console.log(err));
       } else {
         // Update
-        fetch('http://cn.com/api/profile', {
+        fetch('http://afsi.com/api/profile', {
           method: 'put',
           body: JSON.stringify(this.profile),
           headers: {

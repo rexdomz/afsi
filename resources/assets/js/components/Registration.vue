@@ -7,101 +7,153 @@
         <div class="box box-default">
 
             <div class="box-header with-border">
-            <h3 class="box-title">New Registration</h3>
+            <h3 class="box-title">New Customer Registration</h3>
             </div>        
 
             <!-- /.box-header -->
             <div class="box-body">
             <div class="row">
                 <form @submit.prevent="addprofile" class="mb-4">
-                    <div class="form-group">                               
-                    <label for="inputFullName" class="col-sm-3 control-label">Full Name</label>
-                    <div style="margin-bottom: 10px;" class="col-sm-9">
-                        <input type="text" class="form-control" id="full_name" v-model="profile.full_name" placeholder="Lastname, Firstname  M.I. ...">
-                    </div>
-                    </div>
-                    <div class="form-group">                               
-                    <label for="inputFullName" class="col-sm-3 control-label">Address</label>
-                    <div style="margin-bottom: 10px;" class="col-sm-9">
-                        <input type="text" class="form-control" id="address" v-model="profile.address" placeholder="Address ...">
-                    </div>
-                    </div>
-                    <div class="form-group">                               
-                    <label for="inputFullName" class="col-sm-3 control-label">Area</label>
-                    <div style="margin-bottom: 10px;" class="col-sm-9">
-                        <select v-model="profile.area" id="area" name="area" class="form-control select2" style="width: 100%;">
-                            <option value="0" selected="selected">Select Area ...</option>        
-                            <option v-for="area in areas" :value="area.id" v-bind:key="area.id">{{ area.area_code }}, {{ area.address }}</option>
-                        </select>
-                    </div>
-                    </div>
+                  <div class="linebreaker-1 col-sm-12">
 
-                    <div class="form-group">                               
-                        <label for="inputFullName" class="col-sm-3 control-label">Loan</label>
+                      <div class="form-group">                               
+                        <label for="inputFullName" class="col-sm-3 control-label">Full Name</label>
                         <div style="margin-bottom: 10px;" class="col-sm-9">
-                            <input type="text" class="form-control" id="loan" v-model="profile.loan" placeholder="e,g 1000, 2000, 5000...">
+                            <input type="text" class="form-control" id="full_name" v-model="profile.full_name" placeholder="Lastname, Firstname  M.I. ...">
                         </div>
-                    </div>
+                      </div>
 
-                    <div class="form-group">                               
-                        <label for="inputFullName" class="col-sm-3 control-label">Interest</label>
+                      <div class="form-group">                               
+                        <label for="inputFullName" class="col-sm-3 control-label">Address</label>
                         <div style="margin-bottom: 10px;" class="col-sm-9">
-                            <input type="text" class="form-control" id="interest" v-model="profile.interest" placeholder="eg 10, 20, 30...">
+                            <input type="text" class="form-control" id="address" v-model="profile.address" placeholder="Address ...">
                         </div>
-                    </div>
+                      </div>
 
-                    <div class="form-group">                               
-                        <label for="inputFullName" class="col-sm-3 control-label">Term</label>
+                      <div class="form-group">                               
+                        <label for="inputFullName" class="col-sm-3 control-label">Area</label>
                         <div style="margin-bottom: 10px;" class="col-sm-9">
-                            <select v-model="profile.term" id="term" name="term" class="form-control select2" style="width: 100%;">
-                            <option value="0" selected="selected">Select Term ...</option>        
-                            <option v-for="i in (1, 12)" :value=i :key="i" > {{ i }} Month(s) </option>
-                        </select>                    
+                            <select v-model="profile.area" id="area" name="area" class="form-control select2" style="width: 100%;">
+                                <option value="0" selected="selected">Select Area ...</option>        
+                                <option v-for="area in areas" :value="area.id" v-bind:key="area.id">{{ area.area_code }}, {{ area.address }}</option>
+                            </select>
                         </div>
-                    </div>
+                      </div>
 
-                    <div class="form-group">                               
-                        <label for="inputFullName" class="col-sm-3 control-label">Date Start</label>
-                        <div style="margin-bottom: 10px;" class="col-sm-9">
-                          <div class="input-group date">
-                            <div class="input-group-addon">
-                              <i class="fa fa-calendar"></i>
+                      <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-3 control-label">Loan</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-9">
+                              <input type="text" class="form-control" id="loan" v-model="profile.loan" placeholder="e,g 1000, 2000, 5000...">
+                          </div>
+                      </div>
+
+                      <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-3 control-label">Interest</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-9">
+                              <input type="text" class="form-control" id="interest" v-model="profile.interest" placeholder="eg 10, 20, 30...">
+                          </div>
+                      </div>
+
+                      <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-3 control-label">Term</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-9">
+                              <select v-model="profile.term" id="term" name="term" class="form-control select2" style="width: 100%;">
+                              <option value="0" selected="selected">Select Term ...</option>        
+                              <option v-for="i in (1, 12)" :value=i :key="i" > {{ i }} Month(s) </option>
+                          </select>                    
+                          </div>
+                      </div>
+
+                      <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-3 control-label">Date Start</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-9">
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <!--<input class="form-control pull-right" id="datepicker">--> 
+                              <input id="myDate" class="form-control pull-right" type="date" :value="myDate && myDate.toISOString().split('T')[0]" @input="myDate = $event.target.valueAsDate">
+                              <input v-model="myDate" type="hidden">
                             </div>
-                            <!--<input class="form-control pull-right" id="datepicker">--> 
-                            <input id="myDate" class="form-control pull-right" type="date" :value="myDate && myDate.toISOString().split('T')[0]" @input="myDate = $event.target.valueAsDate">
-                            <input v-model="myDate" type="hidden">
                           </div>
-                        </div>
-                    </div>
+                      </div>
 
-                    <div class="form-group">                               
-                        <label for="inputFullName" class="col-sm-3 control-label">Date End</label>
-                        <div style="margin-bottom: 10px;" class="col-sm-9">
-                          <div class="input-group date">
-                            <div class="input-group-addon">
-                              <i class="fa fa-calendar"></i>
-                            </div>                            
-                            <!--<input id="myDate2" class="form-control pull-right" v-model="myDate2" type="text" >-->
-                            <input id="myDate2" class="form-control pull-right" type="date" :value="myDate2 && myDate2.toISOString().split('T')[0]" @input="myDate2 = $event.target.valueAsDate">
-                            <input v-model="myDate2" type="hidden">
+                      <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-3 control-label">Date End</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-9">
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>                            
+                              <!--<input id="myDate2" class="form-control pull-right" v-model="myDate2" type="text" >-->
+                              <input id="myDate2" class="form-control pull-right" type="date" :value="myDate2 && myDate2.toISOString().split('T')[0]" @input="myDate2 = $event.target.valueAsDate">
+                              <input v-model="myDate2" type="hidden">
+                            </div>
                           </div>
-                        </div>
+                      </div>
+
+                      <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-3 control-label">Contact #</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-9">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Contact number (cp) ...">
+                          </div>
+                      </div>
+                    
+                    </div>
+
+
+                    <div class="linebreaker-2 col-sm-12">
+
+                      <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-3 control-label">Promissor Res. Cert.</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Res. Cert. No.">
+                          </div>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued On">
+                          </div>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued At">
+                          </div>
+                      </div>
+
+                      <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-3 control-label">Co-Maker 1 Res. Cert.</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Res. Cert. No.">
+                          </div>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued On">
+                          </div>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued At">
+                          </div>
+                      </div>
+
+                      <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-3 control-label">Co-Maker 2 Res. Cert.</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Res. Cert. No.">
+                          </div>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued On">
+                          </div>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued At">
+                          </div>
+                      </div>
+
                     </div>
 
                     <div class="form-group">                               
-                        <label for="inputFullName" class="col-sm-3 control-label">Contact #</label>
-                        <div style="margin-bottom: 10px;" class="col-sm-9">
-                            <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Contact number (cp) ...">
+                        <div style="margin-bottom: 10px;" class="col-sm-3">                    
+                            <button type="submit" class="btn btn-primary btn-block">Save</button>                                                                                                
                         </div>
-                    </div>
-
-                    <div class="form-group">                               
-                        <div class="col-sm-3">&nbsp;</div>  
-                        <div style="margin-bottom: 10px;" class="col-sm-9">                    
-                            <button type="submit" class="btn btn-primary btn-block">Save</button>                                        
+                        <div style="margin-bottom: 10px;" class="col-sm-3">                                                
                             <button @click="clearForm()" class="btn btn-warning btn-block">Clear</button>                              
                         </div>
                     </div>
+
                 </form> 
             </div>
             </div>
@@ -205,7 +257,7 @@ created() {
   methods: {   
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = page_url || `http://cn.com/api/profiles`;
+      page_url = page_url || `http://afsi.com/api/profiles`;
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
@@ -262,7 +314,7 @@ created() {
       if (this.edit === false && this.errors.length <= 0 ) {
         console.log(JSON.stringify(this.profile))        
         // Add
-        fetch(`http://cn.com/api/profile`, {
+        fetch(`http://afsi.com/api/profile`, {
           method: 'post',
           body: JSON.stringify(this.profile),
           headers: {
@@ -279,7 +331,7 @@ created() {
       }
     },
     fetchAreas(page_url) {            
-        page_url = 'http://cn.com/api/areas';
+        page_url = 'http://afsi.com/api/areas';
         fetch(page_url)
             .then(res => res.json())
             .then(res => {

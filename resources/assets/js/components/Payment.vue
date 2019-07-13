@@ -31,26 +31,20 @@
                         <table class="table">
                             <tr>                                
                                 <th>Full Name</th>                            
-                                <th>Loan Amount</th>
-                                <!--<th>Balance</th>
-                                <th>Interest(%)</th>                                
-                                <th>Term</th>-->
-                                <!--<th>Interest(Php)</th>-->
+                                <th>Principal Loan</th>                                
+                                <th>Loan Amount</th>  
+                                <th>Balance</th>                                 
                                 <th>Rate/day</th> 
-                                <th>Rate/Week</th>                               
                                 <th>Maturity Date</th>                                               
                                 <th>Action</th>                              
                             </tr>
                             <tr v-for="profile in profiles" v-bind:key="profile.id">                                                    
-                                <td>{{ profile.full_name }}</td>                                                                                           
+                                <td>{{ profile.full_name }}</td> 
+                                <td><span class="badge bg-green"> {{ profile.loan | currency('P') }} </span></td>                                                                                                                                                                                 
                                 <td><span class="badge bg-blue"> {{ ( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term) ) | currency('P') }} </span></td>
-                                <!--<td><span class="badge bg-red">{{ ( ( (( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) ) - totalAmount ) ) - profile.totalpay | currency('P') }}</span></td>
-                                <td>{{ profile.interest }}%</td>
-                                <td>{{ profile.term }} month(s)</td>-->
-                                <!--<td>{{ (profile.loan * (profile.interest/100) * profile.term) | currency('P') }}</td>-->                                
+                                <td><span class="badge bg-red">{{ profile.amount_loan - profile.totalpay | currency('P') }}</span></td>
+                                <!--<td>{{ ( ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) * 7 ) | currency('P') }}</td>-->                                
                                 <td>{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</td>
-                                <td>{{ ( ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) * 7 ) | currency('P') }}</td>
-                                <!--<td>{{ ( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term) ) | currency('P') }}</td>-->
                                 <td><span v-bind:style=" checkDate(profile) ? 'color: #000;' : 'color: red;' " >{{ profile.date_to | formatDate }}</span></td>
                                 <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs">View Profile</button></td>                                
                             </tr>                                                        
@@ -272,7 +266,7 @@ export default {
     },
 
     fetchAreas(page_url) {            
-        page_url = 'http://cn.com/api/areas';
+        page_url = 'http://afsi.com/api/areas';
         fetch(page_url)
             .then(res => res.json())
             .then(res => {
@@ -287,7 +281,7 @@ export default {
         var id = this.area
         var perpage = 25;
         console.log('Area:' + id)
-        fetch(`http://cn.com/api/profilesbyarea/${id}/${perpage}`)
+        fetch(`http://afsi.com/api/profilesbyarea/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
             this.profiles = res.data;
@@ -297,7 +291,7 @@ export default {
     },
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = page_url || 'http://cn.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/profiles';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
@@ -325,7 +319,7 @@ export default {
     fetchPaymentsByID(id) {    
         let vm = this;                        
         var perpage = 60;                
-        fetch(`http://cn.com/api/paymentsbyid/${id}/${perpage}`)
+        fetch(`http://afsi.com/api/paymentsbyid/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
             this.payments = res.data;
@@ -340,7 +334,7 @@ export default {
         this.payment.profile_id = this.profile.id;        
         this.payment.date_pay = moment(String(this.payDate)).format('YYYY-MM-DD hh:mm:ss');                
         // Add        
-        fetch('http://cn.com/api/newpayment', {
+        fetch('http://afsi.com/api/newpayment', {
           method: 'post',
           body: JSON.stringify(this.payment),
           headers: {
@@ -357,7 +351,7 @@ export default {
           .catch(err => console.log(err));
       } else {
         // Update
-        fetch('http://cn.com/api/updatepayment', {
+        fetch('http://afsi.com/api/updatepayment', {
           method: 'put',
           body: JSON.stringify(this.payment),
           headers: {
@@ -375,7 +369,7 @@ export default {
     },
     deletepay(id) {
       if (confirm('Are You Sure?')) {
-        fetch(`http://cn.com/api/deletepayment/${id}`, {
+        fetch(`http://afsi.com/api/deletepayment/${id}`, {
           method: 'delete'
         })
           .then(res => res.json())
@@ -391,7 +385,7 @@ export default {
       this.results = [];
       if(this.query.length > 1){     
           var query = this.query
-          page_url = `http://cn.com/api/profilesbykeyword/${query}`;
+          page_url = `http://afsi.com/api/profilesbykeyword/${query}`;
           fetch(page_url)
               .then(res => res.json())
               .then(res => {

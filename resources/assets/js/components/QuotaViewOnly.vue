@@ -210,7 +210,7 @@ export default {
     fetchPaymentsByID(id) {    
         let vm = this;                        
         var perpage = 20;                
-        fetch(`http://cn.com/api/paymentsbyid/${id}/${perpage}`)
+        fetch(`http://afsi.com/api/paymentsbyid/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
             this.payments = res.data;
@@ -220,7 +220,7 @@ export default {
           .catch(err => console.log(err));                  
     },
     fetchAreas(page_url) {            
-        page_url = 'http://cn.com/api/areas';
+        page_url = 'http://afsi.com/api/areas';
         fetch(page_url)
             .then(res => res.json())
             .then(res => {
@@ -232,7 +232,7 @@ export default {
         let vm = this;                
         var id = this.area.id             
         var perpage = 25;        
-        fetch(`http://cn.com/api/profilesbyarea/${id}/${perpage}`)
+        fetch(`http://afsi.com/api/profilesbyarea/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
             this.profiles = res.data;
@@ -242,7 +242,7 @@ export default {
     },
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = page_url || 'http://cn.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/profiles';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
@@ -264,7 +264,7 @@ export default {
     },
     deleteprofile(id) {
       if (confirm('Are You Sure?')) {
-        fetch(`http://cn.com/api/profile/${id}`, {
+        fetch(`http://afsi.com/api/profile/${id}`, {
           method: 'delete'
         })
           .then(res => res.json())

@@ -14,9 +14,10 @@
 
   <!--<link rel="stylesheet"
     href="{{ asset('css/font-awesome.min.css') }}" > -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" > 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" > 
 
   <link rel="stylesheet" href="{{ asset('css/app.css') }}" >  
+  <link rel="stylesheet" href="{{ asset('css/custom.css') }}" >  
   
   <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
 
@@ -45,10 +46,11 @@
     margin: 0 0 10px -12px !important;
 }
 
-.afsibtn {
-  border: none;
-  border-radius: none;
-  background: #FF4556;
+button.afsibtn {
+  border: none !important;
+  border-radius: none !important;
+  background: #FF4556 !important;
+  padding: 8px 30px !important;
 }
 
 .login-box-body, 
@@ -112,7 +114,7 @@ input.searchnameinpt {
               <li class="user-footer">
                 <div class="pull-right">
                   <!--<a href="#" class="btn btn-default btn-flat">Sign out</a>-->
-                  <a href="{{ route('logout') }}" class="btn btn-default btn-flat"
+                  <a href="{{ route('logout') }}" class="btn afsibtn"
                     onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                     Sign out

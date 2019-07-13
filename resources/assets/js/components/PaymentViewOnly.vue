@@ -228,7 +228,7 @@ export default {
     },
 
     fetchAreas(page_url) {            
-        page_url = 'http://cn.com/api/areas';
+        page_url = 'http://afsi.com/api/areas';
         fetch(page_url)
             .then(res => res.json())
             .then(res => {
@@ -243,7 +243,7 @@ export default {
         var id = this.area
         var perpage = 25;
         console.log('Area:' + id)
-        fetch(`http://cn.com/api/profilesbyarea/${id}/${perpage}`)
+        fetch(`http://afsi.com/api/profilesbyarea/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
             this.profiles = res.data;
@@ -253,7 +253,7 @@ export default {
     },
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = page_url || 'http://cn.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/profiles';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
@@ -281,7 +281,7 @@ export default {
     fetchPaymentsByID(id) {    
         let vm = this;                        
         var perpage = 60;                
-        fetch(`http://cn.com/api/paymentsbyid/${id}/${perpage}`)
+        fetch(`http://afsi.com/api/paymentsbyid/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
             this.payments = res.data;
@@ -296,7 +296,7 @@ export default {
         this.payment.profile_id = this.profile.id;        
         this.payment.date_pay = moment(String(this.payDate)).format('YYYY-MM-DD hh:mm:ss');                
         // Add        
-        fetch('http://cn.com/api/newpayment', {
+        fetch('http://afsi.com/api/newpayment', {
           method: 'post',
           body: JSON.stringify(this.payment),
           headers: {
@@ -313,7 +313,7 @@ export default {
           .catch(err => console.log(err));
       } else {
         // Update
-        fetch('http://cn.com/api/updatepayment', {
+        fetch('http://afsi.com/api/updatepayment', {
           method: 'put',
           body: JSON.stringify(this.payment),
           headers: {
@@ -331,7 +331,7 @@ export default {
     },
     deletepay(id) {
       if (confirm('Are You Sure?')) {
-        fetch(`http://cn.com/api/deletepayment/${id}`, {
+        fetch(`http://afsi.com/api/deletepayment/${id}`, {
           method: 'delete'
         })
           .then(res => res.json())
@@ -360,7 +360,7 @@ export default {
       this.results = [];
       if(this.query.length > 1){     
           var query = this.query
-          page_url = `http://cn.com/api/profilesbykeyword/${query}`;
+          page_url = `http://afsi.com/api/profilesbykeyword/${query}`;
           fetch(page_url)
               .then(res => res.json())
               .then(res => {

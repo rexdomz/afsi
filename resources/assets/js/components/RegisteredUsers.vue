@@ -33,30 +33,32 @@
                     <!--<th style="width: 100px">Record ID </th>-->
                     <th >Full Name</th>
                     <th >Address</th>
-                    <th >Principal Loan</th>
-                    <th >Rate</th>
-                    <th >Interest</th>
-                    <th>Loan Amount</th>  
-                    <th>Balance</th>                            
-                    <th>Rate/Day</th>                   
-                    <th >Term</th>
-                    <th >Contact</th>                    
-                    <th >Action</th>   
+                    <!--<th >Principal Loan</th>-->
+                    <!--<th >Rate</th>-->
+                    <!--<th >Interest</th>-->
+                    <!--<th>Loan Amount</th>  
+                    <th>Balance</th>-->                            
+                    <!--<th>Rate/Day</th>-->                   
+                    <!--<th >Term</th>
+                    <th >Contact</th>-->                    
+                    <th >Actions</th>   
                     <th ></th> 
                     </tr>
                     <tr v-for="profile in profiles" v-bind:key="profile.id">                        
                         <td>{{ profile.full_name }}</td>
                         <td>{{ profile.address }}</td>
-                        <td><span class="badge bg-green"> {{ profile.loan | currency('P') }} </span></td>
-                        <td>{{ profile.interest }}%</td>
-                        <td>{{ (profile.loan * (profile.interest/100) * profile.term) | currency('P') }}</td>                        
-                        <td><span class="badge bg-blue"> {{ ( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term) ) | currency('P') }} </span></td>
-                        <td><span class="badge bg-red">{{ ( ( (( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) ) - totalAmount ) ) - profile.totalpay | currency('P') }}</span></td>
-                        <td>{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</td>
-                        <td>{{ profile.term }} month(s)</td>
-                        <td>{{ profile.contact }}</td>                        
-                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">Update</button></td>
-                        <td><button @click="deleteProfile(profile.id)" class="btn btn-danger btn-xs">Delete</button></td>
+                        <!--<td><span class="badge bg-green"> {{ profile.loan | currency('P') }} </span></td>-->
+                        <!--<td>{{ profile.interest }}%</td> -->
+                        <!--<td>{{ (profile.loan * (profile.interest/100) * profile.term) | currency('P') }}</td>-->                        
+                        <!--<td><span class="badge bg-blue"> {{ ( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term) ) | currency('P') }} </span></td>
+                        <td><span class="badge bg-red">{{ ( ( (( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) ) - totalAmount ) ) - profile.totalpay | currency('P') }}</span></td>-->
+                        <!--<td>{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</td>-->
+                        <!--<td>{{ profile.term }} month(s)</td>
+                        <td>{{ profile.contact }}</td>-->                        
+                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">View profile</button></td>
+                        <td><button @click="" type="button" class="btn btn-block btn-success btn-xs">Promisory Note</button></td>
+                        <td><button @click="" type="button" class="btn btn-block btn-warning btn-xs">Suspend</button></td>
+                        <td><button @click="deleteProfile(profile.id)" type="button" class="btn btn-block btn-danger btn-xs">Remove</button></td>
                     </tr>
                 </table>
                 </div>
@@ -273,7 +275,7 @@ export default {
     addprofile() {
       console.log(JSON.stringify(this.profile))
       if (this.edit === false) {
-        fetch('http://cn.com/api/profile', {
+        fetch('http://afsi.com/api/profile', {
             method: 'post',
             body: JSON.stringify(this.profile),
             headers: {
@@ -288,7 +290,7 @@ export default {
           })
           .catch(err => console.log(err));
       } else {       
-        fetch('http://cn.com/api/profiler', {
+        fetch('http://afsi.com/api/profiler', {
             method: 'put',
             body: JSON.stringify(this.profile),
             headers: {
@@ -305,7 +307,7 @@ export default {
       }      
     },
     fetchAreas(page_url) {            
-        page_url = 'http://cn.com/api/areas';
+        page_url = 'http://afsi.com/api/areas';
         fetch(page_url)
             .then(res => res.json())
             .then(res => {
@@ -318,7 +320,7 @@ export default {
         var id = this.area
         var perpage = 25;
         //console.log('Area:' + id)
-        fetch(`http://cn.com/api/profilesbyarea/${id}/${perpage}`)
+        fetch(`http://afsi.com/api/profilesbyarea/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
             this.profiles = res.data;
@@ -328,7 +330,7 @@ export default {
     },
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = page_url || 'http://cn.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/profiles';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
@@ -350,7 +352,7 @@ export default {
     },
     deleteProfile(id) {
       if (confirm('Are You Sure?')) {
-        fetch(`http://cn.com/api/profile/${id}`, {
+        fetch(`http://afsi.com/api/profile/${id}`, {
           method: 'delete'
         })
           .then(res => res.json())
