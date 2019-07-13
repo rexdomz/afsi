@@ -17,8 +17,7 @@
                         <div class="small-box bg-yellow">
                             <div class="inner">
                             <h3>New</h3>
-
-                            <p>Registration</p>
+                            <p>Customer Registration</p>
                             </div>
                             <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -29,7 +28,8 @@
                         </div>
                         <div class="small-box bg-aqua">
                             <div class="inner">                                
-                                <p>Customers</p>
+                              <h3>Customer</h3>
+                              <p>Records</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
@@ -40,9 +40,9 @@
                         </div>
                         <div class="small-box bg-green">
                             <div class="inner">
-                            <h3>{{ pagination_profile.total }}</h3>
-
-                            <p>Registered Users</p>
+                            <i>{{ pagination_profile.total }}</i>
+                            <h3>Active</h3>  
+                            <p>Customers</p>
                             </div>
                             <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -55,8 +55,8 @@
                     <div class="col-sm-6">
                         <div class="small-box bg-red">
                             <div class="inner">
-                                <h3>$$</h3>
-                                <p>Collector's Quota</p>
+                                <h3>Collector's</h3>
+                                <p> Quota</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
@@ -68,8 +68,8 @@
                         <div class="small-box bg-yellow">
                             <div class="inner">
                             <h3>{{ pagination_area.total }}</h3>
-
-                            <p>Areas</p>
+                            <h3>Areas</h3> 
+                            <p>Customer Group</p>
                             </div>
                             <div class="icon">
                             <i class="ion ion-person-add"></i>

@@ -3,11 +3,11 @@
 
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../"><b>CNCS</b>app</a>
+  <img src="{{ asset('img/afsi-logo.png') }}" class="applogo" alt="User Image">  
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-  <p class="login-box-msg">This is for Admin Login | Try Member <a href="{{ URL::route('home') }}">Login</a></p>
+  <h4 style="text-align: center" >Administrator Access</h4>
 
     <form class="form-horizontal" method="POST" action="{{ route('admin.login.submit') }}">
         <div class="box-body">
@@ -53,7 +53,7 @@
 
             <div class="form-group">
                 <div class="col-md-8 col-md-offset-4">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary afsibtn">
                         Login
                     </button>
 
@@ -64,6 +64,8 @@
             </div>
         </div>    
     </form>
+
+    <p class="login-box-msg">This is for Admin Login <br> Try <a href="{{ URL::route('home') }}"><strong> Member Login</strong></a></p>
 
   </div>
   <!-- /.login-box-body -->

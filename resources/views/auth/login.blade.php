@@ -2,13 +2,12 @@
 @section('content')
 
 <div class="login-box">
-  <div class="login-logo">
-    <a href="../../"><b>CNCS</b>app</a>    
+  <div class="login-logo">    
+    <img src="{{ asset('img/afsi-logo.png') }}" class="applogo" alt="User Image">      
   </div>    
   <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg">This is for Member Login | Try Admin <a href="{{ URL::route('admin.home') }}">Login</a></p>
-
+  <div class="login-box-body">    
+    <h4 style="text-align: center" >Member Access</h4>
     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
         <div class="box-body">
             {{ csrf_field() }}
@@ -53,7 +52,7 @@
 
             <div class="form-group">
                 <div class="col-md-8 col-md-offset-4">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary afsibtn">
                         Login
                     </button>
 
@@ -64,6 +63,9 @@
             </div>
         </div>    
     </form>    
+
+    <p class="login-box-msg">This is for Member Login <br> Try <a href="{{ URL::route('admin.home') }}"><strong>Admin Login</strong></a></p>
+
   </div>
   <!-- /.login-box-body -->
   

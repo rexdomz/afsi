@@ -14,32 +14,70 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="small-box bg-aqua">
+                        <div class="small-box bg-yellow">
                             <div class="inner">
-                                <h3>$$</h3>
-                                <p>Customers</p>
+                            <h3>New</h3>
+                            <p>Customer Registration</p>
+                            </div>
+                            <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="admin/registration" class="small-box-footer">
+                            Add New Entry <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                        <div class="small-box bg-aqua">
+                            <div class="inner">                                
+                              <h3>Customer</h3>
+                              <p>Records</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="/user-payment" class="small-box-footer">
-                            View <i class="fa fa-arrow-circle-right"></i>
+                            <a href="admin/user-payment" class="small-box-footer">
+                            View/Add <i class="fa fa-arrow-circle-right"></i>
                             </a>
-                        </div>                        
+                        </div>
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                            <i>{{ pagination_profile.total }}</i>
+                            <h3>Active</h3>  
+                            <p>Customers</p>
+                            </div>
+                            <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="admin/registered-users" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>                           
                     </div>
                     <div class="col-sm-6">
                         <div class="small-box bg-red">
                             <div class="inner">
-                                <h3>$$</h3>
-                                <p>Collector's Quota</p>
+                                <h3>Collector's</h3>
+                                <p> Quota</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="/quota" class="small-box-footer">
+                            <a href="admin/quota" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>                       
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                            <h3>{{ pagination_area.total }}</h3>
+                            <h3>Areas</h3> 
+                            <p>Customer Group</p>
+                            </div>
+                            <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="admin/area" class="small-box-footer">
+                            View/Add <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
                     </div>
 
                 </div>
@@ -96,7 +134,7 @@ export default {
 
     fetchAreas(page_url) {
       let vm = this;
-      page_url = page_url || 'api/areas';
+      page_url = 'http://cn.com/api/areas';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
@@ -120,7 +158,7 @@ export default {
 
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = page_url || 'api/profiles';
+      page_url = 'http://cn.com/api/profiles';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
@@ -144,7 +182,7 @@ export default {
     addprofile() {
       if (this.edit === false) {
         // Add
-        fetch('api/profile', {
+        fetch('http://cn.com/api/profile', {
           method: 'post',
           body: JSON.stringify(this.profile),
           headers: {
@@ -160,7 +198,7 @@ export default {
           .catch(err => console.log(err));
       } else {
         // Update
-        fetch('api/profile', {
+        fetch('http://cn.com/api/profile', {
           method: 'put',
           body: JSON.stringify(this.profile),
           headers: {

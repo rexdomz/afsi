@@ -8,7 +8,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <script>window.Laravel = { csrfToken: '{{ csrf_token() }}' }</script> 
 
-  <title>CN</title>
+  <title>AFSI</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -45,6 +45,18 @@
     margin: 0 0 10px -12px !important;
 }
 
+.afsibtn {
+  border: none;
+  border-radius: none;
+  background: #FF4556;
+}
+
+.login-box-body, 
+.register-box-body {
+  background: #232323 !important;
+  border-radius: 6px !important;
+}
+
 input.searchnameinpt {
   height: 30px;
   font-size: 11pt;
@@ -64,7 +76,9 @@ input.searchnameinpt {
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>CNCS</b>App</span>
+      <img src="{{ asset('img/afsi-logo.png') }}" class="user-image" alt="User Image">    
+      <span class="logo-lg"><b>AFS</b>INC</span>
+      
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -149,9 +163,12 @@ input.searchnameinpt {
             <a href="{{ URL::route('admin.quota') }}"><i class="fa fa-th"></i>Collector's Quota</a> 
             <a href="{{ URL::route('admin.area') }}"><i class="fa fa-laptop"></i>Areas</a>    
           @else
-            <a href="/home"><i class="fa fa-dashboard"></i> Home</a>        
-            <a href="/user-payment"><i class="fa fa-pie-chart"></i> Customers</a>          
-            <a href="/quota"><i class="fa fa-th"></i>Collector's Quota</a>         
+            <a href="/home"><i class="fa fa-dashboard"></i> Home</a>   
+            <a href="{{ URL::route('admin.registration') }}"><i class="fa fa-edit"></i> New Registration</a>     
+            <a href="/user-payment"><i class="fa fa-pie-chart"></i> Customers</a>    
+            <a href="{{ URL::route('admin.registered-users') }}"><i class="fa fa-table"></i>Registered Users</a>      
+            <a href="/quota"><i class="fa fa-th"></i>Collector's Quota</a>        
+            <a href="{{ URL::route('admin.area') }}"><i class="fa fa-laptop"></i>Areas</a>    
           @endif
           
         </li>
