@@ -58,4 +58,30 @@ class PrintController extends Controller
         return view('printqouta', array('profiles' => $profiles, 'collector'=> $collector, 'daily' => $daily, 'weekly'=>$weekly ));
     }
 
+    public function printPromisory($id) {
+
+        //get profile                
+        $profile = Profiles::where('id', '=', $id)->first();
+              
+        // Get payments history
+        //$payments = Payments::where('profile_id', $id)->orderBy('date_pay', 'desc')->paginate(200);      
+        
+        /*$totalPayment = 0;        
+        foreach($payments as $item) {
+            $totalPayment += $item->pay;
+        }
+
+        $originalBalance = 0;
+        $originalBalance = $profile->loan + ($profile->loan * ($profile->interest/100) * $profile->term);
+
+        $ratePerDay = 0;
+        $ratePerDay = $originalBalance/($profile->term * 30);        
+        */
+
+        // Return paginated records by area                
+        //return view('promisory', array('payments' => $payments, 'profile' => $profile, 'totalPayment' => $totalPayment, 'originalBalance' => $originalBalance, 'ratePerDay' => $ratePerDay));
+        return view('promisory', array('profile' => $profile));
+    }
+
+
 }

@@ -159,18 +159,18 @@ input.searchnameinpt {
         <li class="">
           @if(Auth::guard('admin')->check())
             <a href="{{ URL::route('admin.home') }}"><i class="fa fa-dashboard"></i> Home</a>
-            <a href="{{ URL::route('admin.registration') }}"><i class="fa fa-edit"></i> New Registration</a>
+            <a href="{{ URL::route('admin.registration') }}"><i class="fa fa-edit"></i> New Registration</a>            
             <a href="{{ URL::route('admin.user-payment') }}"><i class="fa fa-pie-chart"></i> Customers</a>
-            <a href="{{ URL::route('admin.registered-users') }}"><i class="fa fa-table"></i>Registered Users</a>
+            <a href="{{ URL::route('admin.registered-users') }}"><i class="fa fa-table"></i>Registered Customers</a>
             <a href="{{ URL::route('admin.quota') }}"><i class="fa fa-th"></i>Collector's Quota</a> 
             <a href="{{ URL::route('admin.area') }}"><i class="fa fa-laptop"></i>Areas</a>    
           @else
             <a href="/home"><i class="fa fa-dashboard"></i> Home</a>   
-            <a href="{{ URL::route('admin.registration') }}"><i class="fa fa-edit"></i> New Registration</a>     
+            <a href="registration"><i class="fa fa-edit"></i> New Registration</a>     
             <a href="/user-payment"><i class="fa fa-pie-chart"></i> Customers</a>    
-            <a href="{{ URL::route('admin.registered-users') }}"><i class="fa fa-table"></i>Registered Users</a>      
+            <a href="registered-users"><i class="fa fa-table"></i>Registered Customers</a>      
             <a href="/quota"><i class="fa fa-th"></i>Collector's Quota</a>        
-            <a href="{{ URL::route('admin.area') }}"><i class="fa fa-laptop"></i>Areas</a>    
+            <a href="/area"><i class="fa fa-laptop"></i>Areas</a>    
           @endif
           
         </li>
@@ -246,37 +246,6 @@ input.searchnameinpt {
 
     });
 
-  /*
-  $(function () {
-
-    $('#datepickerpay').datepicker('setDate', new Date());         
-    
-    $('#datepicker').datepicker({
-      //autoclose: true,
-      onSelect: function() {
-        var event = new Event('input');
-        this.dispatchEvent(event);
-      }
-    });
-    */
- /*
-  $('#datepicker').change(function() {
-    var date2 = $('#datepicker').datepicker('getDate'); 
-    $('#date_start').val(date2);
-      //console.log($('#term').val());
-      var numterm = $('#term').val();        
-      date2.setDate(date2.getDate()+numterm * 30);       
-    $('#datepicker2').datepicker('setDate', date2); 
-   
-    $('#date_end').val(date2);    
-  });
-
-  $('#myDate').change(function() {
-    var date2 = $('#myDate').datepicker('getDate'); 
-    date2.setDate(date2.getDate()+numterm * 30);
-    alert(date2);
-  });
-  */
 
 </script>
 

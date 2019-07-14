@@ -22,7 +22,7 @@
                             <div class="icon">
                             <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="admin/registration" class="small-box-footer">
+                            <a href="/registration" class="small-box-footer">
                             Add New Entry <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
@@ -34,7 +34,7 @@
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="admin/user-payment" class="small-box-footer">
+                            <a href="/user-payment" class="small-box-footer">
                             View/Add <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
@@ -46,7 +46,7 @@
                             <div class="icon">
                             <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="admin/registered-users" class="small-box-footer">
+                            <a href="/registered-users" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>                           
@@ -60,7 +60,7 @@
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="admin/quota" class="small-box-footer">
+                            <a href="/quota" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>                       
@@ -72,7 +72,7 @@
                             <div class="icon">
                             <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="admin/area" class="small-box-footer">
+                            <a href="/area" class="small-box-footer">
                             View/Add <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
@@ -156,7 +156,7 @@ export default {
 
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = 'http://afsi.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/profiles';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {

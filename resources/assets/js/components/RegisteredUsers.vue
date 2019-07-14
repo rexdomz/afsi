@@ -55,10 +55,11 @@
                         <!--<td>{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</td>-->
                         <!--<td>{{ profile.term }} month(s)</td>
                         <td>{{ profile.contact }}</td>-->                        
-                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">View profile</button></td>
-                        <td><button @click="" type="button" class="btn btn-block btn-success btn-xs">Promisory Note</button></td>
-                        <td><button @click="" type="button" class="btn btn-block btn-warning btn-xs">Suspend</button></td>
+                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">View profile | Promisory</button></td>
+                        <!--<td><button @click="paymentHref(profile.id)" type="button" class="btnPrint btn btn-block btn-success btn-xs">Promisory Note</button></td>-->
+                        <td><button type="button" class="btn btn-block btn-warning btn-xs">Suspend</button></td>
                         <td><button @click="deleteProfile(profile.id)" type="button" class="btn btn-block btn-danger btn-xs">Remove</button></td>
+                                                  
                     </tr>
                 </table>
                 </div>
@@ -73,7 +74,7 @@
                     <span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title">Borrower's Profile</h4>
                 </div>
-                <div class="modal-body" style="min-height: 500px;">
+                <div class="modal-body" style="min-height: 700px;">
                   
                     <form @submit.prevent="addprofile" class="mb-4">
                         <div class="form-group">                               
@@ -159,7 +160,10 @@
 
                         <div class="form-group">                               
                             <div class="col-sm-3">
-                              <button type="submit" class="btn btn-primary btn-xs">Update Record</button>
+                              <button type="submit" class="btn btn-primary btn-sm">Update Record</button>
+                            </div>
+                            <div class="col-sm-4">  
+                              <a :href=paymentHref class="btnPrint btn btn-block btn-success btn-sm">Print Promisorry Note</a>
                             </div>
                         </div>
                     </form> 
@@ -192,6 +196,11 @@
 </template>
 
 <script>
+
+import Vue2Filters from 'vue2-filters'
+import moment from 'moment'
+Vue.use(Vue2Filters)
+
 export default {
   data() {
     return {
@@ -268,10 +277,15 @@ export default {
               sum += e.pay;
           });
           return sum
-      }
+      },
+      paymentHref() {
+        //console.log(profile);
+        return "promisory/" + this.profile.id;
+        //window.location.href = "/admin/promisory/" + profile;
+      } 
   },
 
-  methods: {    
+  methods: {                 
     addprofile() {
       console.log(JSON.stringify(this.profile))
       if (this.edit === false) {
@@ -363,7 +377,7 @@ export default {
           })
           .catch(err => console.log(err));
       }
-    },
+    }, 
     editprofile(profile) {
       this.edit = true;
       this.profile.id = profile.id;

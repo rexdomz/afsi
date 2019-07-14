@@ -38,14 +38,19 @@ Route::prefix('admin')->group(function() {
     //Print
     Route::get('/payment-view/{id}', 'PrintController@printPreview');
     Route::get('/qouta-view/{id}/{collector}', 'PrintController@printQouta');
+    Route::get('/promisory/{id}', 'PrintController@printPromisory');
 
 });
 
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/registration', 'HomeController@register')->name('registration');
 Route::get('/user-payment', 'HomeController@collection_sales')->name('collection-sales');
 Route::get('/quota', 'HomeController@collector')->name('quota');
+Route::get('/registered-users', 'HomeController@registered_users')->name('registered-users');
+Route::get('/area', 'HomeController@area')->name('area');
 
 //Print
 Route::get('/payment-view/{id}', 'PrintController@printPreview');
 Route::get('/qouta-view/{id}/{collector}', 'PrintController@printQouta');
+Route::get('/promisory/{id}', 'PrintController@printPromisory');

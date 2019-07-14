@@ -26,8 +26,8 @@ Vue.component('areas', require('./components/Area.vue'));
 Vue.component('area-list', require('./components/AreaList.vue'));
 Vue.component('payment-list', require('./components/Payment.vue'));
 Vue.component('quota', require('./components/Quota.vue'));
-Vue.component('collector-view-only', require('./components/PaymentViewOnly.vue')); 
-Vue.component('quota-view-only', require('./components/QuotaViewOnly.vue'));
+Vue.component('collector-view-only', require('./components/member/PaymentViewOnly.vue')); 
+Vue.component('quota-view-only', require('./components/member/QuotaViewOnly.vue'));
 
 Vue.component('autocomplete', require('./components/Autocomplete.vue'));
 

@@ -80,9 +80,7 @@ class ProfilesController extends Controller
             $profile->interest = $request->input('interest');
             $profile->term = $request->input('term');
             $profile->date_from = $request->input('date_from');      
-            $profile->date_to = $request->input('date_to');
-            //$profile->date_from = strtotime('Y-m-d H:i:s', $request->input('date_from'));      
-            //$profile->date_to = strtotime('Y-m-d H:i:s', $request->input('date_to'));
+            $profile->date_to = $request->input('date_to');            
             $profile->contact = $request->input('contact');
 
             if($profile->save()) {

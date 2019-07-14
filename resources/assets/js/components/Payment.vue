@@ -62,14 +62,14 @@
                         <h3 class="box-title">Payment Form</h3>
                     </div>
                     <div class="box-body">                        
-                        <div style="margin: 1em 0;" class="row">
+                        <!--<div style="margin: 1em 0;" class="row">
                               <div class="form-group">                               
                                   <label for="inputFullName" class="control-label col-sm-4">Name</label>    
                                   <div class="col-sm-12">
                                       <input type="text" class="form-control" id="full_name" v-model="profile.full_name" placeholder="Borrower's name...">                            
                                   </div>
                               </div>
-                        </div>
+                        </div>-->
                         <form @submit.prevent="addpayment" class="mb-4">                          
                           <div style="margin: 1em 0;" class="row">
                               <div class="form-group">                               
@@ -106,14 +106,15 @@
                         <h3 class="box-title">Payment History</h3>
                         <h5><strong> Name: {{ profile.full_name | capitalize }} </strong></h5>
                         <p>                          
-                         <span style="width: 130px;float: left;">Balance: </span><span class="badge bg-red">{{ ( (( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) ) - totalAmount ) | currency('P') }} </span> <br>
                          <span style="width: 130px;float: left;">Loan Amount: </span><span class="badge bg-blue"> {{ ( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term) ) | currency('P') }} </span> <br>
-                         <span style="width: 130px;float: left;">Interest rate: </span><span class="badge bg-green"> {{ profile.interest }}% </span> <br>
+                         <span style="width: 130px;float: left;">Balance: </span><span class="badge bg-red">{{ ( (( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) ) - totalAmount ) | currency('P') }} </span> <br>                         
+                         <!-- <span style="width: 130px;float: left;">Interest rate: </span><span class="badge bg-green"> {{ profile.interest }}% </span> <br> -->
                          <span style="width: 130px;float: left;"> Rate/day: </span><span class="badge bg-green"> {{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</span>
                         </p>
                     </div>
                     <div class="box-body">
                         <table class="table">
+                            <tr><td> Date from: <strong> {{ profile.date_from | formatDateFromTo }} </strong> to: <strong> {{ profile.date_to | formatDateFromTo }} </strong> </td></tr>
                             <tr>                                
                                 <th>Payment</th>                            
                                 <th>Date paid</th>   
@@ -125,7 +126,7 @@
                                 <td><button @click="editpayment(payment)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">edit</button></td>
                                 <td><button @click="deletepay(payment.id)" type="button" class="btn btn-block btn-danger btn-xs">remove</button></td>                                
                             </tr>
-                            <tr><td><strong> payments: {{ totalAmount | currency('P') }} </strong></td></tr>
+                            <tr><td><strong> Total Payments: {{ totalAmount | currency('P') }} </strong></td></tr>
                         </table>                        
                     </div>
                 </div> <!-- /box -->
@@ -180,6 +181,7 @@
 
 //npm install vue2-filters
 import Vue2Filters from 'vue2-filters'
+import moment from 'moment'
 Vue.use(Vue2Filters)
 
 export default {
@@ -229,7 +231,11 @@ export default {
 
   filters: {
     formatDate(value) {                
-      return moment(String(value)).format('D MMM YYYY');      
+      return moment(String(value)).format('D-MMM-YYYY');      
+    }, 
+    formatDateFromTo(value) {    
+      var date = moment(value);            
+      return moment(String(value)).format('D-MMM-YYYY');      
     }
   },
 

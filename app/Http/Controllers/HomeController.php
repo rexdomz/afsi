@@ -26,6 +26,11 @@ class HomeController extends Controller
         return view('home');
     }   
 
+    public function register()
+    {
+        return view('registration');
+    }
+
     /*public function register()
     {
         return view('registration');
