@@ -26,7 +26,7 @@
                             Add New Entry <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
-                        <div class="small-box bg-aqua">
+                        <div class="small-box bg-red">
                             <div class="inner">                                
                               <h3>Customer</h3>
                               <p>Sales Record</p>

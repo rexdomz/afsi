@@ -105,7 +105,7 @@
                     <div class="linebreaker-2 col-sm-12">
 
                       <div class="form-group">                               
-                          <label for="inputFullName" class="col-sm-3 control-label">Promissor Res. Cert.</label>
+                          <label for="inputFullName" class="col-sm-2 control-label">Promissor</label>                          
                           <div style="margin-bottom: 10px;" class="col-sm-3">
                               <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Res. Cert. No.">
                           </div>
@@ -118,27 +118,33 @@
                       </div>
 
                       <div class="form-group">                               
-                          <label for="inputFullName" class="col-sm-3 control-label">Co-Maker 1 Res. Cert.</label>
+                          <label for="inputFullName" class="col-sm-2 control-label">Co-Maker 1</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Name">
+                          </div>
                           <div style="margin-bottom: 10px;" class="col-sm-3">
                               <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Res. Cert. No.">
                           </div>
-                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                          <div style="margin-bottom: 10px;" class="col-sm-2">
                               <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued On">
                           </div>
-                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                          <div style="margin-bottom: 10px;" class="col-sm-2">
                               <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued At">
                           </div>
                       </div>
 
                       <div class="form-group">                               
-                          <label for="inputFullName" class="col-sm-3 control-label">Co-Maker 2 Res. Cert.</label>
+                          <label for="inputFullName" class="col-sm-2 control-label">Co-Maker 2</label>
+                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Name">
+                          </div>
                           <div style="margin-bottom: 10px;" class="col-sm-3">
                               <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Res. Cert. No.">
                           </div>
-                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                          <div style="margin-bottom: 10px;" class="col-sm-2">
                               <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued On">
                           </div>
-                          <div style="margin-bottom: 10px;" class="col-sm-3">
+                          <div style="margin-bottom: 10px;" class="col-sm-2">
                               <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued At">
                           </div>
                       </div>
