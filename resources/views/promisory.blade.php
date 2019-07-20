@@ -29,6 +29,9 @@
         font-size: 13px;
         margin: 2px auto;       
     }
+    p {
+        font-size: 10pt;
+    }
     .underlyn {
         text-decoration: underline;
     }
@@ -59,7 +62,9 @@
     }
 
     .space {
-        height: 10px;
+        height: 5px;
+        width: 100%;
+        float: left;
     }
 
     .border-btm {
@@ -116,18 +121,20 @@
         </tr>
     </table>
 
-    <div class="space">&nbsp;</div>
+    <div class="">&nbsp;</div>
 
     <table>
         <tr>
             <td style="width:50%">
                 <h3 class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->full_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+                <p class="txtmiddle marginless">Co-Maker</p>
                 <p class="marginless">Res. Cert. No.</p>
                 <p class="marginless">Issued On</p>
                 <p class="marginless">Issued At</p>
             </td>
             <td style="width:50%">            
                 <h3 class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->full_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+                <p class="txtmiddle marginless">Co-Maker</p>
                 <p class="marginless">Res. Cert. No.</p>
                 <p class="marginless">Issued On</p>
                 <p class="marginless">Issued At</p>
@@ -135,7 +142,7 @@
         </tr>        
     </table>
 
-    <div class="space">&nbsp;</div>    
+    <div class="">&nbsp;</div>    
     <p class="txtmiddle">Sign in the presence of </p>
     <div class="space">&nbsp;</div>  
 
@@ -152,8 +159,11 @@
             </td>
         </tr>        
     </table>
-
-
+    <h2 class="txtmiddle">A C K N O W L E D G E M E N T</h2>
+    <p class="space" style="line-height: 11pt">REPUBLIC OF THE PHILIPPINES)<br>
+    CITY OF DIPOLOG. . . . . . . . . . . . . . .) S.S.<br></p>
+    <div class="space">&nbsp;</div>         
+    <p style="margin: 5px 0; text-align: left">BEFORE ME, a notary public and in the City of Dipolog, Philippines, this ________ day of ____________________________________20_______. Personally appeared ______________________________________________________________________ with respective Res. Cert. No. _______________. The stated, know to me and to me known to be the same their own free and voluntary set and deed.</p>
     
 </body>
 </html>

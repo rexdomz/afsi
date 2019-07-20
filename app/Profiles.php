@@ -19,7 +19,7 @@ class Profiles extends Model
         'updated_at'
     ];
 
-    protected $appends = ['totalpay', 'amountloan'];
+    protected $appends = ['totalpay', 'amountloan', 'dailyrate'];
 
     function getTotalPayAttribute() {                            
         $payments = DB::table('payments')->where('profile_id', $this->id)->orderBy('date_pay', 'desc')->get();              
@@ -33,6 +33,11 @@ class Profiles extends Model
       function getAmountLoanAttribute() {                        
         $loanAmount = $this->loan + ($this->loan * $this->interest/100 * $this->term);
         return $loanAmount; 
+      }
+
+      function getDailyRateAttribute() {
+        $dailyrate = (($this->loan) + ($this->loan * ($this->interest/100) * $this->term)) / ($this->term * 30);                
+        return $dailyrate;
       }
 
 }

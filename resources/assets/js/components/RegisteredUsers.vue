@@ -55,8 +55,8 @@
                         <!--<td>{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</td>-->
                         <!--<td>{{ profile.term }} month(s)</td>
                         <td>{{ profile.contact }}</td>-->                        
-                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">View profile | Promisory</button></td>
-                        <!--<td><button @click="paymentHref(profile.id)" type="button" class="btnPrint btn btn-block btn-success btn-xs">Promisory Note</button></td>-->
+                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">View profile</button></td>
+                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-info-2">Promisory Note</button></td>                        
                         <td><button type="button" class="btn btn-block btn-warning btn-xs">Suspend</button></td>
                         <td><button @click="deleteProfile(profile.id)" type="button" class="btn btn-block btn-danger btn-xs">Remove</button></td>
                                                   
@@ -66,6 +66,142 @@
                 <!-- /.box-body -->
             </div>
 
+            <!-- Promisory Note starts-->
+            <div class="modal modal-info fade" id="modal-info-2">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Promisory Note</h4>
+                </div>
+                <div class="modal-body" style="min-height: 680px;">
+                  
+                    <form @submit.prevent="addprofile" class="mb-4">
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Full Name</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="full_name" id="full_name" v-model="profile.full_name" placeholder="Lastname, Firstname  M.I. ...">
+                          </div>
+                        </div>  
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Loan Amount</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="amount_loan" id="amount_loan" v-model="profile.amount_loan" placeholder="Amount Loan">
+                          </div>
+                        </div>   
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Amount(in words)</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="sum_in_words" id="sum_in_words" v-model="profile.sum_in_words" placeholder="">
+                          </div>
+                        </div>                      
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Rate per Day</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="per_day_in_words" id="per_day_in_words" v-model="profile.per_day_in_words" placeholder="Daily Rate">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Rate/Day(in words)</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="dailyrate" id="dailyrate" v-model="profile.dailyrate" placeholder="">
+                          </div>
+                        </div> 
+                        <!-- Editable -->  
+
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Promisor cert_no</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="promisor_certno" id="promisor_certno" v-model="profile.promisor_certno" placeholder="">
+                          </div>
+                        </div>                         
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Promisor cert_issued_on</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="promisor_cert_issued_on" id="promisor_cert_issued_on" v-model="profile.promisor_cert_issued_on" placeholder="">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Promisor cert_issued_at</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="promisor_cert_issued_at" id="promisor_cert_issued_at" v-model="profile.promisor_cert_issued_at" placeholder="">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Comaker-1 Name</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="comaker1_name" id="comaker1_name" v-model="profile.comaker1_name" placeholder="">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Comaker-1 cert_no</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="comaker1_certno" id="comaker1_certno" v-model="profile.comaker1_certno" placeholder="">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Comaker-1 cert_issued_on</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="comaker1_cert_issued_on" id="comaker1_cert_issued_on" v-model="profile.comaker1_cert_issued_on" placeholder="">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Comaker-1 cert_issued_at</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="comaker1_cert_issued_at" id="comaker1_cert_issued_at" v-model="profile.comaker1_cert_issued_at" placeholder="">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Comaker-2 Name</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="comaker2_name" id="comaker2_name" v-model="profile.comaker2_name" placeholder="">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Comaker-2 cert_no</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="comaker2_certno" id="comaker2_certno" v-model="profile.comaker2_certno" placeholder="">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Comaker-2 cert_issued_on</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="comaker2_cert_issued_on" id="comaker2_cert_issued_on" v-model="profile.comaker2_cert_issued_on" placeholder="">
+                          </div>
+                        </div> 
+                        <div class="form-group">                               
+                          <label for="inputFullName" class="col-sm-4 control-label">Comaker-2 cert_issued_at</label>
+                          <div style="margin-bottom: 9px;" class="col-sm-8">
+                              <input type="text" class="form-control" name="comaker2_cert_issued_at" id="comaker2_cert_issued_at" v-model="profile.comaker2_cert_issued_at" placeholder="">
+                          </div>
+                        </div> 
+                        <!-- Editable -->
+
+                        <div class="form-group">                               
+                            <div class="col-sm-4">
+                              <button style="margin-top: 15px;" type="submit" class="btn btn-primary btn-sm">Update Record</button>
+                            </div>
+                            <div class="col-sm-8">  
+                              <a :href=paymentHref  style="margin-top: 15px;" class="btnPrint btn btn-block btn-success btn-sm">Print Promisorry Note</a>
+                            </div>
+                        </div>
+                    </form> 
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>                  
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+          <!-- Promisory Note ends-->
+
+
+            <!-- Edit Profile View starts-->
             <div class="modal modal-info fade" id="modal-info">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -74,7 +210,7 @@
                     <span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title">Borrower's Profile</h4>
                 </div>
-                <div class="modal-body" style="min-height: 700px;">
+                <div class="modal-body" style="min-height: 430px;">
                   
                     <form @submit.prevent="addprofile" class="mb-4">
                         <div class="form-group">                               
@@ -127,12 +263,8 @@
                               <div class="input-group date">
                                 <div class="input-group-addon">
                                   <i class="fa fa-calendar"></i>
-                                </div>
-                                <!--<input v-model="profile.date_from" type="text" class="form-control pull-right" id="datepicker">                                 
-                                <input v-model="profile.date_from" type="hidden" id="date_start">-->                                
-                                <input id="myDate" class="form-control pull-right" type="text" v-model="profile.date_from" placeholder="2019-04-01"> 
-                                <!--<input id="myDate" class="form-control pull-right" type="date" :value="myDate && myDate.toISOString().split('T')[0]" @input="myDate = $event.target.valueAsDate">
-                                <input v-model="myDate" type="hidden">-->
+                                </div>                                                           
+                                <input id="myDate" class="form-control pull-right" type="text" v-model="profile.date_from" placeholder="2019-04-01">                                 
                               </div>
                             </div>
                         </div>
@@ -144,9 +276,7 @@
                                 <div class="input-group-addon">
                                   <i class="fa fa-calendar"></i>
                                 </div>
-                                <input id="myDate" class="form-control pull-right" type="text" v-model="profile.date_to" placeholder="2019-04-01"> 
-                                <!--<input v-model="profile.date_to" type="text" class="form-control pull-right" id="datepicker2"> 
-                                <input v-model="profile.date_to" type="hidden" id="date_end">--> 
+                                <input id="myDate" class="form-control pull-right" type="text" v-model="profile.date_to" placeholder="2019-04-01">                                 
                               </div>
                             </div>
                         </div>
@@ -162,9 +292,6 @@
                             <div class="col-sm-3">
                               <button type="submit" class="btn btn-primary btn-sm">Update Record</button>
                             </div>
-                            <div class="col-sm-4">  
-                              <a :href=paymentHref class="btnPrint btn btn-block btn-success btn-sm">Print Promisorry Note</a>
-                            </div>
                         </div>
                     </form> 
                   
@@ -178,6 +305,8 @@
             <!-- /.modal-dialog -->
           </div>
           <!-- /.modal -->
+          <!-- Edit Profile View ends-->
+
 
 
             <!-- /.box-body -->
@@ -229,12 +358,30 @@ export default {
         full_name: '',
         address: '',
         area: '',
+        status:'',
         loan: '',
         interest: '',
         term: '',
+        status: '',
         date_from: '',
         date_to: '',
-        contact: ''
+        contact: '',
+        promisor_certno: '',
+        promisor_cert_issued_on: '',
+        promisor_cert_issued_at: '',
+        comaker1_name: '',
+        comaker1_certno: '',
+        comaker1_cert_issued_on: '',
+        comaker1_cert_issued_at: '',
+        comaker2_name: '',
+        comaker2_certno: '',
+        comaker2_cert_issued_on: '',
+        comaker2_cert_issued_at: '',
+        sum_in_words: '',
+        per_day_in_words: '',
+        totalpay: '',
+        dailyrate: '',
+        amount_loan: ''
       },
       profile_id: '',
       pagination: {},
@@ -332,7 +479,7 @@ export default {
     fetchProfilesByAreas() {    
         let vm = this;                
         var id = this.area
-        var perpage = 25;
+        var perpage = 20;
         //console.log('Area:' + id)
         fetch(`http://afsi.com/api/profilesbyarea/${id}/${perpage}`)
           .then(res => res.json())
@@ -388,9 +535,27 @@ export default {
       this.profile.loan = profile.loan;
       this.profile.interest = profile.interest;
       this.profile.term = profile.term;
+      this.profile.status = profile.status;
       this.profile.date_from = moment(String(profile.date_from)).format('YYYY-MM-DD'); 
       this.profile.date_to = moment(String(profile.date_to)).format('YYYY-MM-DD');
-      this.profile.contact = profile.contact;              
+      this.profile.contact = profile.contact;  
+      
+      this.promisor_certno = profile.promisor_certno;
+      this.promisor_cert_issued_on = profile.promisor_cert_issued_on;
+      this.promisor_cert_issued_at = profile.promisor_cert_issued_at;
+      this.comaker1_name = profile.comaker1_name;
+      this.comaker1_certno = profile.comaker1_certno;
+      this.comaker1_cert_issued_on = profile.comaker1_cert_issued_on;
+      this.comaker1_cert_issued_at = profile.comaker1_cert_issued_at;
+      this.comaker2_name = profile.comaker2_name;
+      this.comaker2_certno = profile.comaker2_certno;
+      this.comaker2_cert_issued_on = profile.comaker2_cert_issued_on;
+      this.comaker2_cert_issued_at = profile.comaker2_cert_issued_at;
+      this.sum_in_words = profile.sum_in_words;
+      this.per_day_in_words = profile.per_day_in_words;
+
+      this.amount_loan = profile.amount_loan;
+      
     },
     clearForm() {
       this.edit = false;
@@ -402,9 +567,23 @@ export default {
       this.profile.loan = '';
       this.profile.interest = '';
       this.profile.term = '';
+      this.status.term = '';
       this.profile.date_from = '';
       this.profile.date_to = '';
       this.profile.contact = ''; 
+      this.promisor_certno = '';
+      this.promisor_cert_issued_on = '';
+      this.promisor_cert_issued_at = '';
+      this.comaker1_name = '';
+      this.comaker1_certno = '';
+      this.comaker1_cert_issued_on = '';
+      this.comaker1_cert_issued_at = '';
+      this.comaker2_name = '';
+      this.comaker2_certno = '';
+      this.comaker2_cert_issued_on = '';
+      this.comaker2_cert_issued_at = '';
+      this.sum_in_words = '';
+      this.per_day_in_words = '';
     }
   }
 };

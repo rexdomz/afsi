@@ -59,6 +59,7 @@
                           <div style="margin-bottom: 10px;" class="col-sm-9">
                               <select v-model="profile.term" id="term" name="term" class="form-control select2" style="width: 100%;">
                               <option value="0" selected="selected">Select Term ...</option>        
+                              <!--<option :value=1 > 58 Days </option>-->
                               <option v-for="i in (1, 12)" :value=i :key="i" > {{ i }} Month(s) </option>
                           </select>                    
                           </div>
@@ -70,8 +71,7 @@
                             <div class="input-group date">
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
-                              </div>
-                              <!--<input class="form-control pull-right" id="datepicker">--> 
+                              </div>                              
                               <input id="myDate" class="form-control pull-right" type="date" :value="myDate && myDate.toISOString().split('T')[0]" @input="myDate = $event.target.valueAsDate">
                               <input v-model="myDate" type="hidden">
                             </div>
@@ -107,45 +107,45 @@
                       <div class="form-group">                               
                           <label for="inputFullName" class="col-sm-2 control-label">Promissor</label>                          
                           <div style="margin-bottom: 10px;" class="col-sm-3">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Res. Cert. No.">
+                              <input type="text" class="form-control" id="promisor_certno" v-model="profile.promisor_certno" placeholder="Res. Cert. No.">
                           </div>
                           <div style="margin-bottom: 10px;" class="col-sm-3">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued On">
+                              <input type="text" class="form-control" id="promisor_cert_issued_on" v-model="profile.promisor_cert_issued_on" placeholder="Issued On">
                           </div>
                           <div style="margin-bottom: 10px;" class="col-sm-3">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued At">
+                              <input type="text" class="form-control" id="promisor_cert_issued_at" v-model="profile.promisor_cert_issued_at" placeholder="Issued At">
                           </div>
                       </div>
 
                       <div class="form-group">                               
                           <label for="inputFullName" class="col-sm-2 control-label">Co-Maker 1</label>
                           <div style="margin-bottom: 10px;" class="col-sm-3">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Name">
+                              <input type="text" class="form-control" id="comaker1_name" v-model="profile.comaker1_name" placeholder="Name">
                           </div>
                           <div style="margin-bottom: 10px;" class="col-sm-3">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Res. Cert. No.">
+                              <input type="text" class="form-control" id="comaker1_certno" v-model="profile.comaker1_certno" placeholder="Res. Cert. No.">
                           </div>
                           <div style="margin-bottom: 10px;" class="col-sm-2">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued On">
+                              <input type="text" class="form-control" id="comaker1_cert_issued_on" v-model="profile.comaker1_cert_issued_on" placeholder="Issued On">
                           </div>
                           <div style="margin-bottom: 10px;" class="col-sm-2">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued At">
+                              <input type="text" class="form-control" id="comaker1_cert_issued_at" v-model="profile.comaker1_cert_issued_at" placeholder="Issued At">
                           </div>
                       </div>
 
                       <div class="form-group">                               
                           <label for="inputFullName" class="col-sm-2 control-label">Co-Maker 2</label>
                           <div style="margin-bottom: 10px;" class="col-sm-3">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Name">
+                              <input type="text" class="form-control" id="comaker2_name" v-model="profile.comaker2_name" placeholder="Name">
                           </div>
                           <div style="margin-bottom: 10px;" class="col-sm-3">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Res. Cert. No.">
+                              <input type="text" class="form-control" id="comaker2_certno" v-model="profile.comaker2_certno" placeholder="Res. Cert. No.">
                           </div>
                           <div style="margin-bottom: 10px;" class="col-sm-2">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued On">
+                              <input type="text" class="form-control" id="comaker2_cert_issued_on" v-model="profile.comaker2_cert_issued_on" placeholder="Issued On">
                           </div>
                           <div style="margin-bottom: 10px;" class="col-sm-2">
-                              <input type="text" class="form-control" id="contact" v-model="profile.contact" placeholder="Issued At">
+                              <input type="text" class="form-control" id="comaker2_cert_issued_at" v-model="profile.comaker2_cert_issued_at" placeholder="Issued At">
                           </div>
                       </div>
 
@@ -232,13 +232,27 @@ export default {
         id: '',
         full_name: '',
         address: '',
-        area: '',
+        area: '',        
         loan: '',
         interest: '',
         term: '',
+        status: '',
         date_from: null,
         date_to: null,
-        contact: ''
+        contact: '',
+        promisor_certno: '',
+        promisor_cert_issued_on: '',
+        promisor_cert_issued_at: '',
+        comaker1_name: '',
+        comaker1_certno: '',
+        comaker1_cert_issued_on: '',
+        comaker1_cert_issued_at: '',
+        comaker2_name: '',
+        comaker2_certno: '',
+        comaker2_cert_issued_on: '',
+        comaker2_cert_issued_at: '',
+        sum_in_words: '',
+        per_day_in_words: ''
       },
       profile_id: '',
       pagination: {},
@@ -250,8 +264,8 @@ export default {
     myDate() {      
       this.myDate2 = new Date(this.myDate.setDate(this.myDate.getDate() + this.profile.term * 30));
       this.myDate3 = new Date(this.myDate.setDate(this.myDate.getDate() - this.profile.term * 30));          
-      console.log('1st: '+ this.myDate3.toISOString().split('T')[0]);
-      console.log('2nd: '+ this.myDate2.toISOString().split('T')[0]);
+      //console.log('1st: '+ this.myDate3.toISOString().split('T')[0]);
+      //console.log('2nd: '+ this.myDate2.toISOString().split('T')[0]);
     }
   },
 
@@ -355,9 +369,23 @@ created() {
       this.profile.loan = '';
       this.profile.interest = '';
       this.profile.term = '';
+      this.profile.status = '';
       this.profile.date_from = null;
       this.profile.date_to = null
       this.profile.contact = ''; 
+      this.promisor_certno = '';
+      this.promisor_cert_issued_on = '';
+      this.promisor_cert_issued_at = '';
+      this.comaker1_name = '';
+      this.comaker1_certno = '';
+      this.comaker1_cert_issued_on = '';
+      this.comaker1_cert_issued_at = '';
+      this.comaker2_name = '';
+      this.comaker2_certno = '';
+      this.comaker2_cert_issued_on = '';
+      this.comaker2_cert_issued_at = '';
+      this.sum_in_words = '';
+      this.per_day_in_words = '';
     }
   }
 };
