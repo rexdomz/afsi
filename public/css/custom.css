@@ -1,0 +1,27 @@
+
+div.login-box-body, 
+div.register-box-body {
+  background: #232323 !important;
+  color:#fff !important;
+}
+
+.login-logo, 
+.register-logo {
+  margin-bottom: 0 !important;
+}
+
+.login-logo img {
+  width: 200px;
+}
+
+.afsibtn {
+  background: #FF4556;
+  padding: 7px 30px;
+  border: none;
+  border-radius: 0;
+}
+
+.skin-blue .main-header .navbar,
+.skin-blue .main-header .logo {
+  background: #232323 !important;
+}
