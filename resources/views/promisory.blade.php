@@ -163,7 +163,7 @@
     <p class="space" style="line-height: 11pt">REPUBLIC OF THE PHILIPPINES)<br>
     CITY OF DIPOLOG. . . . . . . . . . . . . . .) S.S.<br></p>
     <div class="space">&nbsp;</div>         
-    <p style="margin: 5px 0; text-align: left">BEFORE ME, a notary public and in the City of Dipolog, Philippines, this ________ day of ____________________________________20_______. Personally appeared ______________________________________________________________________ with respective Res. Cert. No. _______________. The stated, know to me and to me known to be the same their own free and voluntary set and deed.</p>
+    <p style="margin: 5px 0; text-align: left">BEFORE ME, a notary public and in the City of Dipolog, Philippines, this ________ day of ___________________20_______. Personally appeared <span class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->full_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> with respective Res. Cert. No. _______________. The stated, know to me and to me known to be the same their own free and voluntary set and deed.</p>
     
 </body>
 </html>
