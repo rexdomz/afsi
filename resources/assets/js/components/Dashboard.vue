@@ -3,7 +3,7 @@
 
     <section class="content">              
 
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="box box-default">
 
             <div class="box-header with-border">
@@ -13,8 +13,8 @@
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <div class="small-box bg-yellow">
+                    <div class="col-sm-3">
+                        <div class="small-box bg-blue">
                             <div class="inner">
                             <h3>New</h3>
                             <p>Customer Registration</p>
@@ -26,10 +26,12 @@
                             Add New Entry <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
-                        <div class="small-box bg-red">
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="small-box bg-yellow">
                             <div class="inner">                                
                               <h3>Customer</h3>
-                              <p>Sales Record</p>
+                              <p>Ledger</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
@@ -38,6 +40,8 @@
                             View/Add <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
+                    </div>
+                    <div class="col-sm-3">
                         <div class="small-box bg-green">
                             <div class="inner">                            
                             <h3>Registered</h3>  
@@ -51,7 +55,7 @@
                             </a>
                         </div>                           
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="small-box bg-red">
                             <div class="inner">
                                 <h3>Collector's</h3>
@@ -63,7 +67,9 @@
                             <a href="admin/quota" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                             </a>
-                        </div>                       
+                        </div>   
+                    </div>
+                    <div class="col-sm-3">                    
                         <div class="small-box bg-yellow">
                             <div class="inner">                            
                             <h3>Areas</h3> 
@@ -77,7 +83,34 @@
                             </a>
                         </div>
                     </div>
-
+                    <div class="col-sm-3">
+                        <div class="small-box bg-green">
+                            <div class="inner">                            
+                            <h3>Reports</h3>  
+                            <p>Daily|Monthly</p>
+                            </div>
+                            <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="admin/" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>                           
+                    </div>
+                    <div class="col-sm-3">                    
+                        <div class="small-box bg-yellow">
+                            <div class="inner">                            
+                            <h3>Payslip</h3> 
+                            <p>Collector</p>
+                            </div>
+                            <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="admin/" class="small-box-footer">
+                            View/Add <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 

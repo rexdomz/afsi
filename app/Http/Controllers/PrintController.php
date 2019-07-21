@@ -78,8 +78,7 @@ class PrintController extends Controller
         $ratePerDay = $originalBalance/($profile->term * 30);                
 
         // Return paginated records by area                
-        return view('promisory', array('payments' => $payments, 'profile' => $profile, 'totalPayment' => $totalPayment, 'originalBalance' => $originalBalance, 'ratePerDay' => $ratePerDay));
-        //return view('promisory', array('profile' => $profile));
+        return view('promisory', array('payments' => $payments, 'profile' => $profile, 'totalPayment' => $totalPayment, 'originalBalance' => $originalBalance, 'ratePerDay' => $ratePerDay));        
     }
 
 

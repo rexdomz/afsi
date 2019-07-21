@@ -160,10 +160,12 @@ input.searchnameinpt {
           @if(Auth::guard('admin')->check())
             <a href="{{ URL::route('admin.home') }}"><i class="fa fa-dashboard"></i> Home</a>
             <a href="{{ URL::route('admin.registration') }}"><i class="fa fa-edit"></i> New Registration</a>            
-            <a href="{{ URL::route('admin.user-payment') }}"><i class="fa fa-pie-chart"></i> Customers</a>
+            <a href="{{ URL::route('admin.user-payment') }}"><i class="fa fa-pie-chart"></i> Customer Ledger</a>
             <a href="{{ URL::route('admin.registered-users') }}"><i class="fa fa-table"></i>Registered Customers</a>
             <a href="{{ URL::route('admin.quota') }}"><i class="fa fa-th"></i>Collector's Quota</a> 
             <a href="{{ URL::route('admin.area') }}"><i class="fa fa-laptop"></i>Areas</a>    
+            <a href=""><i class="fa fa-pie-chart"></i>Reports</a>
+            <a href=""><i class="fa fa-th"></i>Payslip</a>
           @else
             <a href="/home"><i class="fa fa-dashboard"></i> Home</a>   
             <a href="registration"><i class="fa fa-edit"></i> New Registration</a>     

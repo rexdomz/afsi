@@ -64452,6 +64452,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -64520,7 +64525,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this2 = this;
 
       var vm = this;
-      page_url = page_url || 'http://afsi.com/api/profiles';
+      page_url = 'http://afsi.com/api/profiles';
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
@@ -64608,17 +64613,17 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "box box-default" }, [
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "box-body" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-6" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _vm._m(2),
-                _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-3" }, [
                 _c("div", { staticClass: "small-box bg-green" }, [
                   _c("div", { staticClass: "inner" }, [
                     _c("h3", [_vm._v("Registered")]),
@@ -64636,9 +64641,9 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-sm-6" }, [
-                _vm._m(5),
-                _vm._v(" "),
+              _vm._m(5),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-3" }, [
                 _c("div", { staticClass: "small-box bg-yellow" }, [
                   _c("div", { staticClass: "inner" }, [
                     _c("h3", [_vm._v("Areas")]),
@@ -64675,50 +64680,54 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "small-box bg-yellow" }, [
-      _c("div", { staticClass: "inner" }, [
-        _c("h3", [_vm._v("New")]),
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "small-box bg-blue" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("New")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Customer Registration")])
+        ]),
         _vm._v(" "),
-        _c("p", [_vm._v("Customer Registration")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "icon" }, [
-        _c("i", { staticClass: "ion ion-person-add" })
-      ]),
-      _vm._v(" "),
-      _c(
-        "a",
-        { staticClass: "small-box-footer", attrs: { href: "/registration" } },
-        [
-          _vm._v("\n                          Add New Entry "),
-          _c("i", { staticClass: "fa fa-arrow-circle-right" })
-        ]
-      )
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "small-box-footer", attrs: { href: "/registration" } },
+          [
+            _vm._v("\n                          Add New Entry "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "small-box bg-red" }, [
-      _c("div", { staticClass: "inner" }, [
-        _c("h3", [_vm._v("Customer")]),
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "small-box bg-yellow" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("Customer")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Ledger")])
+        ]),
         _vm._v(" "),
-        _c("p", [_vm._v("Sales Record")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "icon" }, [
-        _c("i", { staticClass: "ion ion-person-add" })
-      ]),
-      _vm._v(" "),
-      _c(
-        "a",
-        { staticClass: "small-box-footer", attrs: { href: "/user-payment" } },
-        [
-          _vm._v("\n                          View/Add "),
-          _c("i", { staticClass: "fa fa-arrow-circle-right" })
-        ]
-      )
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "small-box-footer", attrs: { href: "/user-payment" } },
+          [
+            _vm._v("\n                          View/Add "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
+      ])
     ])
   },
   function() {
@@ -64746,20 +64755,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "small-box bg-red" }, [
-      _c("div", { staticClass: "inner" }, [
-        _c("h3", [_vm._v("Collector's")]),
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "small-box bg-red" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("Collector's")]),
+          _vm._v(" "),
+          _c("p", [_vm._v(" Quota")])
+        ]),
         _vm._v(" "),
-        _c("p", [_vm._v(" Quota")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "icon" }, [
-        _c("i", { staticClass: "ion ion-person-add" })
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "small-box-footer", attrs: { href: "/quota" } }, [
-        _vm._v("\n                          More info "),
-        _c("i", { staticClass: "fa fa-arrow-circle-right" })
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "small-box-footer", attrs: { href: "/quota" } },
+          [
+            _vm._v("\n                          More info "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
       ])
     ])
   },
@@ -64847,6 +64862,39 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -65096,17 +65144,17 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "box box-default" }, [
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "box-body" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-6" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _vm._m(2),
-                _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-3" }, [
                 _c("div", { staticClass: "small-box bg-green" }, [
                   _c("div", { staticClass: "inner" }, [
                     _c("h3", [_vm._v("Registered")]),
@@ -65124,9 +65172,9 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-sm-6" }, [
-                _vm._m(5),
-                _vm._v(" "),
+              _vm._m(5),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-3" }, [
                 _c("div", { staticClass: "small-box bg-yellow" }, [
                   _c("div", { staticClass: "inner" }, [
                     _c("h3", [_vm._v("Areas")]),
@@ -65142,7 +65190,11 @@ var render = function() {
                   _vm._v(" "),
                   _vm._m(7)
                 ])
-              ])
+              ]),
+              _vm._v(" "),
+              _vm._m(8),
+              _vm._v(" "),
+              _vm._m(9)
             ])
           ])
         ])
@@ -65163,56 +65215,60 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "small-box bg-yellow" }, [
-      _c("div", { staticClass: "inner" }, [
-        _c("h3", [_vm._v("New")]),
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "small-box bg-blue" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("New")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Customer Registration")])
+        ]),
         _vm._v(" "),
-        _c("p", [_vm._v("Customer Registration")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "icon" }, [
-        _c("i", { staticClass: "ion ion-person-add" })
-      ]),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "small-box-footer",
-          attrs: { href: "admin/registration" }
-        },
-        [
-          _vm._v("\n                          Add New Entry "),
-          _c("i", { staticClass: "fa fa-arrow-circle-right" })
-        ]
-      )
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "small-box-footer",
+            attrs: { href: "admin/registration" }
+          },
+          [
+            _vm._v("\n                          Add New Entry "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "small-box bg-red" }, [
-      _c("div", { staticClass: "inner" }, [
-        _c("h3", [_vm._v("Customer")]),
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "small-box bg-yellow" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("Customer")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Ledger")])
+        ]),
         _vm._v(" "),
-        _c("p", [_vm._v("Sales Record")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "icon" }, [
-        _c("i", { staticClass: "ion ion-person-add" })
-      ]),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "small-box-footer",
-          attrs: { href: "admin/user-payment" }
-        },
-        [
-          _vm._v("\n                          View/Add "),
-          _c("i", { staticClass: "fa fa-arrow-circle-right" })
-        ]
-      )
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "small-box-footer",
+            attrs: { href: "admin/user-payment" }
+          },
+          [
+            _vm._v("\n                          View/Add "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
+      ])
     ])
   },
   function() {
@@ -65243,25 +65299,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "small-box bg-red" }, [
-      _c("div", { staticClass: "inner" }, [
-        _c("h3", [_vm._v("Collector's")]),
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "small-box bg-red" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("Collector's")]),
+          _vm._v(" "),
+          _c("p", [_vm._v(" Quota")])
+        ]),
         _vm._v(" "),
-        _c("p", [_vm._v(" Quota")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "icon" }, [
-        _c("i", { staticClass: "ion ion-person-add" })
-      ]),
-      _vm._v(" "),
-      _c(
-        "a",
-        { staticClass: "small-box-footer", attrs: { href: "admin/quota" } },
-        [
-          _vm._v("\n                          More info "),
-          _c("i", { staticClass: "fa fa-arrow-circle-right" })
-        ]
-      )
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "small-box-footer", attrs: { href: "admin/quota" } },
+          [
+            _vm._v("\n                          More info "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
+      ])
     ])
   },
   function() {
@@ -65284,6 +65342,60 @@ var staticRenderFns = [
         _c("i", { staticClass: "fa fa-arrow-circle-right" })
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "small-box bg-green" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("Reports")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Daily|Monthly")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "small-box-footer", attrs: { href: "admin/" } },
+          [
+            _vm._v("\n                          More info "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "small-box bg-yellow" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("Payslip")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Collector")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "small-box-footer", attrs: { href: "admin/" } },
+          [
+            _vm._v("\n                          View/Add "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
+      ])
+    ])
   }
 ]
 render._withStripped = true

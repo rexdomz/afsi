@@ -30,7 +30,7 @@
         margin: 2px auto;       
     }
     p {
-        font-size: 10pt;
+        font-size: 11pt;
     }
     .underlyn {
         text-decoration: underline;
@@ -110,14 +110,17 @@
         <tr><td style="width:60%">&nbsp;</td>
             <td><p class="txtmiddle marginless">Promissor/Debtor</p></td>
         </tr>
-        <tr><td style="width:60%">&nbsp;</td>
-            <td><p class="marginless">Res. Cert. No.</p></td>
+        <tr>
+            <td style="width:60%">&nbsp;</td>        
+            <td style="width:40%"><p class="marginless">Res. Cert. No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_certno }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
         </tr>
-        <tr><td style="width:60%">&nbsp;</td>
-            <td><p class="marginless">Issued On</p></td>
+        <tr>
+            <td style="width:60%">&nbsp;</td>        
+            <td style="width:40%"><p class="marginless">Issued On &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_cert_issued_on }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
         </tr>
-        <tr><td style="width:60%">&nbsp;</td>
-            <td><p class="marginless">Issued At</p></td>
+        <tr>
+            <td style="width:60%">&nbsp;</td>        
+            <td style="width:40%"><p class="marginless">Issued At &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_cert_issued_at }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
         </tr>
     </table>
 
@@ -125,19 +128,20 @@
 
     <table>
         <tr>
-            <td style="width:50%">
-                <h3 class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->full_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+            <td style="width:40%">
+                <h3 class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ $profile->comaker1_name }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
                 <p class="txtmiddle marginless">Co-Maker</p>
-                <p class="marginless">Res. Cert. No.</p>
-                <p class="marginless">Issued On</p>
-                <p class="marginless">Issued At</p>
+                <p class="marginless">Res. Cert. No. {{ $profile->comaker1_certno }}</p>
+                <p class="marginless">Issued On {{ $profile->comaker1_cert_issued_on }}</p>
+                <p class="marginless">Issued At {{ $profile->comaker1_cert_issued_at }}</p>
             </td>
-            <td style="width:50%">            
-                <h3 class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->full_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+            <td style="width:20%">&nbsp;</td>
+            <td style="width:40%">            
+                <h3 class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ $profile->comaker2_name }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
                 <p class="txtmiddle marginless">Co-Maker</p>
-                <p class="marginless">Res. Cert. No.</p>
-                <p class="marginless">Issued On</p>
-                <p class="marginless">Issued At</p>
+                <p class="marginless">Res. Cert. No. {{ $profile->comaker2_certno }}</p>
+                <p class="marginless">Issued On {{ $profile->comaker2_cert_issued_on }}</p>
+                <p class="marginless">Issued At {{ $profile->comaker2_cert_issued_at }}</p>
             </td>
         </tr>        
     </table>
@@ -160,10 +164,20 @@
         </tr>        
     </table>
     <h2 class="txtmiddle">A C K N O W L E D G E M E N T</h2>
-    <p class="space" style="line-height: 11pt">REPUBLIC OF THE PHILIPPINES)<br>
-    CITY OF DIPOLOG. . . . . . . . . . . . . . .) S.S.<br></p>
-    <div class="space">&nbsp;</div>         
+    <p class="space" style="line-height: 12pt">REPUBLIC OF THE PHILIPPINES)<br>CITY OF DIPOLOG. . . . . . . . . . . . . . .) S.S.<br></p>
+    <div style="margin-top: 25px;" class="space">&nbsp;</div>         
     <p style="margin: 5px 0; text-align: left">BEFORE ME, a notary public and in the City of Dipolog, Philippines, this ________ day of ___________________20_______. Personally appeared <span class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->full_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> with respective Res. Cert. No. _______________. The stated, know to me and to me known to be the same their own free and voluntary set and deed.</p>
+
+    <table>
+        <tr>
+            <td style="width:50%">
+                <p>Doc. No. _____________________________; <br> Page No. _____________________________; <br> Book No. _____________________________; <br> Series Of _____________________________.</p>
+            </td>
+            <td style="width:50%">            
+                <p>AFS INC. DATE : _____________________ <br> RELEASED BY:_______________________ <br> SIGNATURE:________________________ </p>
+            </td>
+        </tr>        
+    </table>
     
 </body>
 </html>
