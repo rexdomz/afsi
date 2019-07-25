@@ -67649,7 +67649,6 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       this.profile.date_from = __WEBPACK_IMPORTED_MODULE_1_moment___default()(String(profile.date_from)).format('YYYY-MM-DD');
       this.profile.date_to = __WEBPACK_IMPORTED_MODULE_1_moment___default()(String(profile.date_to)).format('YYYY-MM-DD');
       this.profile.contact = profile.contact;
-
       this.promisor_certno = profile.promisor_certno;
       this.promisor_cert_issued_on = profile.promisor_cert_issued_on;
       this.promisor_cert_issued_at = profile.promisor_cert_issued_at;
@@ -67661,10 +67660,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       this.comaker2_certno = profile.comaker2_certno;
       this.comaker2_cert_issued_on = profile.comaker2_cert_issued_on;
       this.comaker2_cert_issued_at = profile.comaker2_cert_issued_at;
+      this.amount_loan = profile.amount_loan;
       this.sum_in_words = profile.sum_in_words;
       this.per_day_in_words = profile.per_day_in_words;
-
-      this.amount_loan = profile.amount_loan;
     },
     clearForm: function clearForm() {
       this.edit = false;
@@ -68293,7 +68291,7 @@ var render = function() {
                               "label",
                               {
                                 staticClass: "col-sm-4 control-label",
-                                attrs: { for: "inputFullName" }
+                                attrs: { for: "amountloan" }
                               },
                               [_vm._v("Loan Amount")]
                             ),
@@ -68310,18 +68308,18 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.profile.amount_loan,
-                                      expression: "profile.amount_loan"
+                                      value: _vm.profile.amountloan,
+                                      expression: "profile.amountloan"
                                     }
                                   ],
                                   staticClass: "form-control",
                                   attrs: {
                                     type: "text",
-                                    name: "amount_loan",
-                                    id: "amount_loan",
+                                    name: "amountloan",
+                                    id: "amountloan",
                                     placeholder: "Amount Loan"
                                   },
-                                  domProps: { value: _vm.profile.amount_loan },
+                                  domProps: { value: _vm.profile.amountloan },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
@@ -68329,7 +68327,7 @@ var render = function() {
                                       }
                                       _vm.$set(
                                         _vm.profile,
-                                        "amount_loan",
+                                        "amountloan",
                                         $event.target.value
                                       )
                                     }
@@ -70052,6 +70050,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -70062,7 +70078,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         area_code: '',
         address: '',
         collector: '',
-        contact: ''
+        contact: '',
+        assistant_collector: '',
+        cp: ''
       },
       area_id: '',
       pagination: {},
@@ -70151,6 +70169,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.area.address = area.address;
       this.area.collector = area.collector;
       this.area.contact = area.contact;
+      this.area.assistant_collector = area.assistant_collector;
+      this.area.cp = area.cp;
     },
     clearForm: function clearForm() {
       this.edit = false;
@@ -70160,6 +70180,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.area.address = '';
       this.area.collector = '';
       this.area.contact = '';
+      this.area.assistant_collector = '';
+      this.area.cp = '';
     }
   }
 });
@@ -70384,6 +70406,102 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 control-label",
+                        attrs: { for: "assistant_collector" }
+                      },
+                      [_vm._v("Assistant Collector")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-sm-8",
+                        staticStyle: { "margin-bottom": "10px" }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.area.assistant_collector,
+                              expression: "area.assistant_collector"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "assistant_collector",
+                            placeholder: "Assistant collector name"
+                          },
+                          domProps: { value: _vm.area.assistant_collector },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.area,
+                                "assistant_collector",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 control-label",
+                        attrs: { for: "cp" }
+                      },
+                      [_vm._v("Assistant (CP) #")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-sm-8",
+                        staticStyle: { "margin-bottom": "10px" }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.area.cp,
+                              expression: "area.cp"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "cp",
+                            placeholder: "Assistant number (cp) ..."
+                          },
+                          domProps: { value: _vm.area.cp },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.area, "cp", $event.target.value)
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "div",
                     {
@@ -70528,6 +70646,10 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(area.contact))]),
                         _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(area.assistant_collector))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(area.cp))]),
+                        _vm._v(" "),
                         _c("td", [
                           _c(
                             "button",
@@ -70596,9 +70718,19 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", { staticStyle: { width: "420px" } }, [_vm._v("Address")]),
       _vm._v(" "),
-      _c("th", { staticStyle: { width: "180px" } }, [_vm._v("Collector")]),
+      _c("th", { staticStyle: { width: "180px" } }, [_vm._v("Collector Name")]),
       _vm._v(" "),
-      _c("th", { staticStyle: { width: "200px" } }, [_vm._v("Contact")]),
+      _c("th", { staticStyle: { width: "200px" } }, [
+        _vm._v("Collector Contact")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { width: "200px" } }, [
+        _vm._v("Assistant Collector Name")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { width: "200px" } }, [
+        _vm._v("Assistant Collector CP")
+      ]),
       _vm._v(" "),
       _c("th", { staticStyle: { width: "80px" } }, [_vm._v("Action")]),
       _vm._v(" "),

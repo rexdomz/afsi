@@ -21,7 +21,9 @@ class Area extends Resource
             'area_code' => $this->area_code,
             'address' => $this->address,
             'collector' => $this->collector,
-            'contact' => $this->contact    
+            'contact' => $this->contact,
+            'assistant_collector' => $this->assistant_collector,
+            'cp' => $this->cp
         ];    
     }
 }

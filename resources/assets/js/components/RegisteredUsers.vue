@@ -85,9 +85,9 @@
                           </div>
                         </div>  
                         <div class="form-group">                               
-                          <label for="inputFullName" class="col-sm-4 control-label">Loan Amount</label>
+                          <label for="amountloan" class="col-sm-4 control-label">Loan Amount</label>
                           <div style="margin-bottom: 9px;" class="col-sm-8">
-                              <input type="text" class="form-control" name="amount_loan" id="amount_loan" v-model="profile.amount_loan" placeholder="Amount Loan">
+                              <input type="text" class="form-control" name="amountloan" id="amountloan" v-model="profile.amountloan" placeholder="Amount Loan">
                           </div>
                         </div>   
                         <div class="form-group">                               
@@ -538,8 +538,7 @@ export default {
       this.profile.status = profile.status;
       this.profile.date_from = moment(String(profile.date_from)).format('YYYY-MM-DD'); 
       this.profile.date_to = moment(String(profile.date_to)).format('YYYY-MM-DD');
-      this.profile.contact = profile.contact;  
-      
+      this.profile.contact = profile.contact;      
       this.promisor_certno = profile.promisor_certno;
       this.promisor_cert_issued_on = profile.promisor_cert_issued_on;
       this.promisor_cert_issued_at = profile.promisor_cert_issued_at;
@@ -551,10 +550,9 @@ export default {
       this.comaker2_certno = profile.comaker2_certno;
       this.comaker2_cert_issued_on = profile.comaker2_cert_issued_on;
       this.comaker2_cert_issued_at = profile.comaker2_cert_issued_at;
-      this.sum_in_words = profile.sum_in_words;
-      this.per_day_in_words = profile.per_day_in_words;
-
       this.amount_loan = profile.amount_loan;
+      this.sum_in_words = profile.sum_in_words;
+      this.per_day_in_words = profile.per_day_in_words;      
       
     },
     clearForm() {

@@ -47,6 +47,8 @@ class AreaController extends Controller
         $area->address = $request->input('address');        
         $area->collector = $request->input('collector');        
         $area->contact = $request->input('contact');        
+        $area->assistant_collector = $request->input('assistant_collector');
+        $area->cp = $request->input('cp');
 
         if($area->save()) {
             return new AreaResource($area);

@@ -45,7 +45,7 @@ class Profiles extends Resource
 
             'totalpay' => $this->totalpay,
             'dailyrate' => $this->dailyrate,
-            'amount_loan' => $this->amountloan
+            'amountloan' => $this->amountloan
             //'etc' => $this->etc            
         ];
     }

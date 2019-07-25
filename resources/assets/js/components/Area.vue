@@ -54,6 +54,20 @@
                     </div>
                 </div>
 
+                <div class="form-group">                               
+                    <label for="assistant_collector" class="col-sm-3 control-label">Assistant Collector</label>
+                    <div style="margin-bottom: 10px;" class="col-sm-8">
+                        <input type="text" class="form-control" id="assistant_collector" v-model="area.assistant_collector" placeholder="Assistant collector name">
+                    </div>
+                </div>
+
+                <div class="form-group">                               
+                    <label for="cp" class="col-sm-3 control-label">Assistant (CP) #</label>
+                    <div style="margin-bottom: 10px;" class="col-sm-8">
+                        <input type="text" class="form-control" id="cp" v-model="area.cp" placeholder="Assistant number (cp) ...">
+                    </div>
+                </div>                
+
                 <div style="margin-bottom: 1.5" class="form-group">                               
                     <div class="col-sm-3">&nbsp;</div>  
                     <div style="margin-bottom: 10px;" class="col-sm-8">                    
@@ -76,8 +90,10 @@
                     <tr>                    
                     <th style="width: 235px">Area Code</th>
                     <th style="width: 420px">Address</th>
-                    <th style="width: 180px">Collector</th>                 
-                    <th style="width: 200px">Contact</th>                    
+                    <th style="width: 180px">Collector Name</th>                 
+                    <th style="width: 200px">Collector Contact</th>                    
+                    <th style="width: 200px">Assistant Collector Name</th>
+                    <th style="width: 200px">Assistant Collector CP</th>
                     <th style="width: 80px">Action</th>   
                     <th style="width: 80px"></th> 
                     </tr>
@@ -86,6 +102,8 @@
                         <td>{{ area.address }}</td>
                         <td>{{ area.collector }} </td>
                         <td>{{ area.contact }}</td>                        
+                        <td>{{ area.assistant_collector }}</td>
+                        <td>{{ area.cp }}</td>
                         <td><button @click="editarea(area)" type="button" class="btn btn-block btn-warning btn-xs">Update</button></td>
                         <!--<td><button @click="deletearea(area.id)" type="button" class="btn btn-block btn-danger btn-xs">Deactivate</button></td>-->                        
                     </tr>
@@ -144,7 +162,9 @@ export default {
         area_code: '',
         address: '',
         collector: '',
-        contact: ''
+        contact: '',
+        assistant_collector: '',
+        cp: ''
       },
       area_id: '',
       pagination: {},
@@ -225,7 +245,9 @@ export default {
       this.area.area_code = area.area_code;
       this.area.address = area.address;      
       this.area.collector = area.collector;
-      this.area.contact = area.contact;              
+      this.area.contact = area.contact;    
+      this.area.assistant_collector = area.assistant_collector;    
+      this.area.cp = area.cp;            
     },
     clearForm() {
       this.edit = false;        
@@ -235,6 +257,9 @@ export default {
       this.area.address = '';
       this.area.collector = '';      
       this.area.contact = ''; 
+      this.area.assistant_collector = ''; 
+      this.area.cp = '';         
+
     }
   }
 };
