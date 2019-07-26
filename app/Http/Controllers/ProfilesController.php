@@ -112,6 +112,51 @@ class ProfilesController extends Controller
 
     }
 
+
+    public function set_account(Request $request)
+    {
+        try {
+            $profile = $request->isMethod('put') ? Profiles::findOrFail($request->profile_id) : '';            
+        
+            $profile->id = $request->input('profile_id');
+            $profile->full_name = $request->input('full_name');
+            $profile->address = $request->input('address');
+            $profile->area = $request->input('area');
+            $profile->loan = $request->input('loan');
+            $profile->interest = $request->input('interest');
+            $profile->term = $request->input('term');
+            $profile->status = $request->input('status');
+            $profile->date_from = $request->input('date_from');      
+            $profile->date_to = $request->input('date_to');            
+            $profile->contact = $request->input('contact');
+
+            $profile->promisor_certno = $request->input('promisor_certno');
+            $profile->promisor_cert_issued_on = $request->input('promisor_cert_issued_on');
+            $profile->promisor_cert_issued_at = $request->input('promisor_cert_issued_at');
+            $profile->comaker1_name = $request->input('comaker1_name');
+            $profile->comaker1_certno = $request->input('comaker1_certno');
+            $profile->comaker1_cert_issued_on = $request->input('comaker1_cert_issued_on');
+            $profile->comaker1_cert_issued_at = $request->input('comaker1_cert_issued_at');
+            $profile->comaker2_name = $request->input('comaker2_name');
+            $profile->comaker2_certno = $request->input('comaker2_certno');
+            $profile->comaker2_cert_issued_on = $request->input('comaker2_cert_issued_on');
+            $profile->comaker2_cert_issued_at = $request->input('comaker2_cert_issued_at');
+            
+            $profile->sum_in_words = $request->input('sum_in_words');
+            $profile->per_day_in_words = $request->input('per_day_in_words');
+
+            if($profile->save()) {
+                return new ProfilesResource($profile);
+            }
+            
+        } catch (ModelNotFoundException $ex) {
+        } catch (Exception $ex) {
+            abort(500, 'Could not create office or assign it to administrator');
+        }
+
+
+    }
+
     /**
      * Display the specified resource.
      *

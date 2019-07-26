@@ -45,7 +45,7 @@
                         </tr>
                         <tr v-for="profile in profiles" v-bind:key="profile.id">                        
                             <td>{{ profile.full_name }}</td>                                                        
-                            <td>{{ profile.status }}</td>                                                        
+                            <td><div v-html="getStat(profile.status)"></div></td>
                         </tr>                            
                     </table>                                                              
                 </div>
@@ -94,19 +94,21 @@ export default {
       profile: {        
         id: '',
         full_name: '',
-        address: '',
-        status: '',
+        address: '',        
         area: '',
         loan: '',
         interest: '',
         term: '',
+        status: '',
         date_from: '',
         date_to: '',
-        contact: ''
+        contact: '',
+        result: '',
+        icon: ''
       },
       profile_id: '',
       pagination: {},
-      edit: false
+      edit: false,      
     };
   },
 
@@ -130,42 +132,7 @@ export default {
     this.fetchAreas();
   },
 
-  computed: {
-      totalAmountDaily: function () {
-          var sum = 0;
-          this.profiles.forEach(e => {
-              sum += ( ((e.loan) + (e.loan * (e.interest/100) * e.term)) / (e.term * 30) );
-          });
-          return sum;
-      },
-      totalAmountWeekly: function () {
-          var sum = 0;
-          this.profiles.forEach(e => {
-              sum += ( ((e.loan) + (e.loan * (e.interest/100) * e.term)) / (e.term * 30) * 7);
-          });
-          return sum;
-      },
-      totalPayments: function () {
-          var sum = 0;
-          this.profiles.forEach(e => {
-              sum += e.totalpay;
-          });
-          return sum;
-      },
-      totalLoanAmounts: function () {
-          var sum = 0;          
-          this.profiles.forEach(e => {
-              sum += e.amount_loan;
-          });
-          return sum;
-      },
-      totalAmount: function () {
-          var sum = 0;
-          this.payments.forEach(e => {
-              sum += e.pay;
-          });
-          return sum;
-      },
+  computed: {      
       paymentHref () {        
         return "/admin/cash-card/" + this.area.id + "/" + this.area.collector;
       }
@@ -281,7 +248,34 @@ export default {
       this.profile.date_from = '';
       this.profile.date_to = '';
       this.profile.contact = ''; 
+    },
+    getStat: function(status) {        
+        switch (status) {
+          case 0: {
+            this.profile.result = "Inactive";
+            this.profile.icon = "bg-yellow";
+            break;
+          }
+          case 1: {
+            this.profile.result = "Active";
+            this.profile.icon = "bg-green";
+            break;
+          }
+          case 2: {
+            this.profile.result = "Suspended";
+            this.profile.icon = "bg-red";
+            break; 
+          }     
+          default: {
+            this.profile.result = "holla";
+            this.profile.icon = "";
+            break;
+          }          
+        }
+        var output = '<span class="badge '+ this.profile.icon + '">' + this.profile.result + '</span>';
+        return output;
     }
+    
   }
 };
 </script>

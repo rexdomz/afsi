@@ -169,8 +169,8 @@ input.searchnameinpt {
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ URL::route('admin.user-payment') }}"><i class="fa fa-pie-chart"></i>Ledger</a></li>
-                <li><a href="{{ URL::route('admin.registered-users') }}"><i class="fa fa-table"></i>Registered</a></li>
+                <li><a href="{{ URL::route('admin.user-payment') }}"><i class="fa fa-pie-chart"></i>Customer Ledger</a></li>
+                <li><a href="{{ URL::route('admin.registered-users') }}"><i class="fa fa-table"></i>Registered Customers</a></li>
               </ul>
             </li>                                                       
 
@@ -183,7 +183,7 @@ input.searchnameinpt {
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{ URL::route('admin.cashcards') }}"><i class="fa fa-table"></i>Cash Cards</a></li>
-                <li><a href=""><i class="fa fa-pie-chart"></i>Release</a></li>
+                <li><a href=""><i class="fa fa-pie-chart"></i>Transactions</a></li>
                 <li><a href="{{ URL::route('admin.quota') }}"><i class="fa fa-th"></i>Collector's Quota</a></li>
               </ul>
             </li>

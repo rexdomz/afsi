@@ -65728,8 +65728,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     myDate: function myDate() {
       this.myDate2 = new Date(this.myDate.setDate(this.myDate.getDate() + this.profile.term * 30));
       this.myDate3 = new Date(this.myDate.setDate(this.myDate.getDate() - this.profile.term * 30));
-      //console.log('1st: '+ this.myDate3.toISOString().split('T')[0]);
-      //console.log('2nd: '+ this.myDate2.toISOString().split('T')[0]);
     }
   },
 
@@ -65791,15 +65789,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (!this.profile.contact) {
         this.errors.push('Contact information required.');
       }
-      /*if (!this.profile.date_from) {
-        this.errors.push('Invalid start date.');
-      }
-      if (!this.profile.date_to) {
-        this.errors.push('Invalid end date.');
-      }*/
-      //console.log(this.errors.length);
+
       this.profile.date_from = moment(String(this.myDate3)).format('YYYY-MM-DD hh:mm:ss');
       this.profile.date_to = moment(String(this.myDate2)).format('YYYY-MM-DD hh:mm:ss');
+      this.profile.status = 0;
       console.log(JSON.stringify(this.profile));
       if (this.edit === false && this.errors.length <= 0) {
         console.log(JSON.stringify(this.profile));
@@ -67435,6 +67428,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -67475,7 +67470,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
         loan: '',
         interest: '',
         term: ''
-      }, _defineProperty(_profile, 'status', ''), _defineProperty(_profile, 'date_from', ''), _defineProperty(_profile, 'date_to', ''), _defineProperty(_profile, 'contact', ''), _defineProperty(_profile, 'promisor_certno', ''), _defineProperty(_profile, 'promisor_cert_issued_on', ''), _defineProperty(_profile, 'promisor_cert_issued_at', ''), _defineProperty(_profile, 'comaker1_name', ''), _defineProperty(_profile, 'comaker1_certno', ''), _defineProperty(_profile, 'comaker1_cert_issued_on', ''), _defineProperty(_profile, 'comaker1_cert_issued_at', ''), _defineProperty(_profile, 'comaker2_name', ''), _defineProperty(_profile, 'comaker2_certno', ''), _defineProperty(_profile, 'comaker2_cert_issued_on', ''), _defineProperty(_profile, 'comaker2_cert_issued_at', ''), _defineProperty(_profile, 'sum_in_words', ''), _defineProperty(_profile, 'per_day_in_words', ''), _defineProperty(_profile, 'totalpay', ''), _defineProperty(_profile, 'dailyrate', ''), _defineProperty(_profile, 'amount_loan', ''), _profile),
+      }, _defineProperty(_profile, 'status', ''), _defineProperty(_profile, 'date_from', ''), _defineProperty(_profile, 'date_to', ''), _defineProperty(_profile, 'contact', ''), _defineProperty(_profile, 'promisor_certno', ''), _defineProperty(_profile, 'promisor_cert_issued_on', ''), _defineProperty(_profile, 'promisor_cert_issued_at', ''), _defineProperty(_profile, 'comaker1_name', ''), _defineProperty(_profile, 'comaker1_certno', ''), _defineProperty(_profile, 'comaker1_cert_issued_on', ''), _defineProperty(_profile, 'comaker1_cert_issued_at', ''), _defineProperty(_profile, 'comaker2_name', ''), _defineProperty(_profile, 'comaker2_certno', ''), _defineProperty(_profile, 'comaker2_cert_issued_on', ''), _defineProperty(_profile, 'comaker2_cert_issued_at', ''), _defineProperty(_profile, 'sum_in_words', ''), _defineProperty(_profile, 'per_day_in_words', ''), _defineProperty(_profile, 'totalpay', ''), _defineProperty(_profile, 'acctset', ''), _profile),
       profile_id: '',
       pagination: {},
       edit: false
@@ -67499,20 +67494,20 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
 
 
   computed: {
-    totalAmountDaily: function totalAmountDaily() {
-      var sum = 0;
-      this.profiles.forEach(function (e) {
-        sum += (e.loan + e.loan * (e.interest / 100) * e.term) / (e.term * 30);
-      });
-      return sum;
+    /*totalAmountDaily: function () {
+        var sum = 0;
+        this.profiles.forEach(e => {
+            sum += ( ((e.loan) + (e.loan * (e.interest/100) * e.term)) / (e.term * 30) );
+        });
+        return sum
     },
-    totalAmountWeekly: function totalAmountWeekly() {
-      var sum = 0;
-      this.profiles.forEach(function (e) {
-        sum += (e.loan + e.loan * (e.interest / 100) * e.term) / (e.term * 30) * 7;
-      });
-      return sum;
-    },
+    totalAmountWeekly: function () {
+        var sum = 0;
+        this.profiles.forEach(e => {
+            sum += ( ((e.loan) + (e.loan * (e.interest/100) * e.term)) / (e.term * 30) * 7);
+        });
+        return sum
+    },*/
     totalAmount: function totalAmount() {
       var sum = 0;
       this.payments.forEach(function (e) {
@@ -67521,9 +67516,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       return sum;
     },
     paymentHref: function paymentHref() {
-      //console.log(profile);
       return "promisory/" + this.profile.id;
-      //window.location.href = "/admin/promisory/" + profile;
     }
   },
 
@@ -67566,20 +67559,49 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
         });
       }
     },
-    fetchAreas: function fetchAreas(page_url) {
+    setProfile: function setProfile(profile) {
       var _this2 = this;
+
+      this.editprofile(profile);
+
+      if (confirm('Are You Sure?')) {
+        if (profile.status != 1) {
+          this.profile.status = 1;
+        } else {
+          this.profile.status = 0;
+        }
+        console.log("this:" + JSON.stringify(this.profile));
+        fetch('http://afsi.com/api/setaccount', {
+          method: 'put',
+          body: JSON.stringify(this.profile),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this2.clearForm();
+          alert('Account Set!');
+          _this2.fetchProfilesByAreas();
+        }).catch(function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    fetchAreas: function fetchAreas(page_url) {
+      var _this3 = this;
 
       page_url = 'http://afsi.com/api/areas';
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this2.areas = res.data;
+        _this3.areas = res.data;
       }).catch(function (err) {
         return console.log(err);
       });
     },
     fetchProfilesByAreas: function fetchProfilesByAreas() {
-      var _this3 = this;
+      var _this4 = this;
 
       var vm = this;
       var id = this.area;
@@ -67588,25 +67610,26 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       fetch('http://afsi.com/api/profilesbyarea/' + id + '/' + perpage).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this3.profiles = res.data;
+        _this4.profiles = res.data;
         vm.makePagination(res.meta, res.links);
       }).catch(function (err) {
         return console.log(err);
       });
     },
     fetchprofiles: function fetchprofiles(page_url) {
-      var _this4 = this;
+      var _this5 = this;
 
       var vm = this;
       page_url = page_url || 'http://afsi.com/api/profiles';
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this4.profiles = res.data;
+        _this5.profiles = res.data;
         vm.makePagination(res.meta, res.links);
       }).catch(function (err) {
         return console.log(err);
       });
+      console.log("tanan:" + JSON.stringify(this.profile));
     },
     makePagination: function makePagination(meta, links) {
       var pagination = {
@@ -67620,7 +67643,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       this.pagination = pagination;
     },
     deleteProfile: function deleteProfile(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (confirm('Are You Sure?')) {
         fetch('http://afsi.com/api/profile/' + id, {
@@ -67630,7 +67653,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
         }).then(function (data) {
           alert('profile Removed');
           //this.fetchprofiles();
-          _this5.fetchProfilesByAreas();
+          _this6.fetchProfilesByAreas();
         }).catch(function (err) {
           return console.log(err);
         });
@@ -67650,20 +67673,19 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       this.profile.date_from = __WEBPACK_IMPORTED_MODULE_1_moment___default()(String(profile.date_from)).format('YYYY-MM-DD');
       this.profile.date_to = __WEBPACK_IMPORTED_MODULE_1_moment___default()(String(profile.date_to)).format('YYYY-MM-DD');
       this.profile.contact = profile.contact;
-      this.promisor_certno = profile.promisor_certno;
-      this.promisor_cert_issued_on = profile.promisor_cert_issued_on;
-      this.promisor_cert_issued_at = profile.promisor_cert_issued_at;
-      this.comaker1_name = profile.comaker1_name;
-      this.comaker1_certno = profile.comaker1_certno;
-      this.comaker1_cert_issued_on = profile.comaker1_cert_issued_on;
-      this.comaker1_cert_issued_at = profile.comaker1_cert_issued_at;
-      this.comaker2_name = profile.comaker2_name;
-      this.comaker2_certno = profile.comaker2_certno;
-      this.comaker2_cert_issued_on = profile.comaker2_cert_issued_on;
-      this.comaker2_cert_issued_at = profile.comaker2_cert_issued_at;
-      this.amount_loan = profile.amount_loan;
-      this.sum_in_words = profile.sum_in_words;
-      this.per_day_in_words = profile.per_day_in_words;
+      this.profile.promisor_certno = profile.promisor_certno;
+      this.profile.promisor_cert_issued_on = profile.promisor_cert_issued_on;
+      this.profile.promisor_cert_issued_at = profile.promisor_cert_issued_at;
+      this.profile.comaker1_name = profile.comaker1_name;
+      this.profile.comaker1_certno = profile.comaker1_certno;
+      this.profile.comaker1_cert_issued_on = profile.comaker1_cert_issued_on;
+      this.profile.comaker1_cert_issued_at = profile.comaker1_cert_issued_at;
+      this.profile.comaker2_name = profile.comaker2_name;
+      this.profile.comaker2_certno = profile.comaker2_certno;
+      this.profile.comaker2_cert_issued_on = profile.comaker2_cert_issued_on;
+      this.profile.comaker2_cert_issued_at = profile.comaker2_cert_issued_at;
+      this.profile.sum_in_words = profile.sum_in_words;
+      this.profile.per_day_in_words = profile.per_day_in_words;
     },
     clearForm: function clearForm() {
       this.edit = false;
@@ -67675,7 +67697,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       this.profile.loan = '';
       this.profile.interest = '';
       this.profile.term = '';
-      this.status.term = '';
+      this.profile.status = '';
       this.profile.date_from = '';
       this.profile.date_to = '';
       this.profile.contact = '';
@@ -67692,7 +67714,73 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       this.comaker2_cert_issued_at = '';
       this.sum_in_words = '';
       this.per_day_in_words = '';
+    },
+
+    get_amount_loan: function get_amount_loan(profile) {
+      return profile.amountloan;
+    },
+    getStat: function getStat(status) {
+      switch (status) {
+        case 0:
+          {
+            this.profile.result = "Inactive";
+            this.profile.icon = "bg-yellow";
+            break;
+          }
+        case 1:
+          {
+            this.profile.result = "Active";
+            this.profile.icon = "bg-green";
+            break;
+          }
+        case 2:
+          {
+            this.profile.result = "Suspended";
+            this.profile.icon = "bg-red";
+            break;
+          }
+        default:
+          {
+            this.profile.result = "holla";
+            this.profile.icon = "";
+            break;
+          }
+      }
+      var output = '<span class="badge ' + this.profile.icon + '">' + this.profile.result + '</span>';
+      return output;
+    },
+    getAction: function getAction(status) {
+      var statmsg = "";
+      switch (status) {
+        case 0:
+          {
+            statmsg = "Activate";
+            this.acctset = true;
+            break;
+          }
+        case 1:
+          {
+            statmsg = "Deactivate";
+            this.acctset = false;
+            break;
+          }
+        case 2:
+          {
+            statmsg = "Activate";
+            this.acctset = true;
+            break;
+          }
+        default:
+          {
+            statmsg = "holla";
+            this.acctset = '';
+            break;
+          }
+      }
+
+      return statmsg;
     }
+
   }
 });
 
@@ -68142,6 +68230,30 @@ var render = function() {
                       _c("td", [_vm._v(_vm._s(profile.address))]),
                       _vm._v(" "),
                       _c("td", [
+                        _c("div", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.getStat(profile.status))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-block btn-warning btn-xs",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.setProfile(profile)
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.getAction(profile.status)))]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
                         _c(
                           "button",
                           {
@@ -68177,11 +68289,9 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Promisory Note")]
+                          [_vm._v("Promisory")]
                         )
                       ]),
-                      _vm._v(" "),
-                      _vm._m(2, true),
                       _vm._v(" "),
                       _c("td", [
                         _c(
@@ -68215,13 +68325,13 @@ var render = function() {
             [
               _c("div", { staticClass: "modal-dialog" }, [
                 _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "div",
                     {
                       staticClass: "modal-body",
-                      staticStyle: { "min-height": "680px" }
+                      staticStyle: { "min-height": "700px" }
                     },
                     [
                       _c(
@@ -68304,36 +68414,16 @@ var render = function() {
                                 staticStyle: { "margin-bottom": "9px" }
                               },
                               [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.profile.amountloan,
-                                      expression: "profile.amountloan"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: {
-                                    type: "text",
-                                    name: "amountloan",
-                                    id: "amountloan",
-                                    placeholder: "Amount Loan"
-                                  },
-                                  domProps: { value: _vm.profile.amountloan },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.profile,
-                                        "amountloan",
-                                        $event.target.value
+                                _c("p", { staticClass: "form-control" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm._f("currency")(
+                                        _vm.get_amount_loan(_vm.profile),
+                                        "P"
                                       )
-                                    }
-                                  }
-                                })
+                                    )
+                                  )
+                                ])
                               ]
                             )
                           ]),
@@ -68389,58 +68479,7 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-sm-4 control-label",
-                                attrs: { for: "inputFullName" }
-                              },
-                              [_vm._v("Rate per Day")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "col-sm-8",
-                                staticStyle: { "margin-bottom": "9px" }
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.profile.per_day_in_words,
-                                      expression: "profile.per_day_in_words"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: {
-                                    type: "text",
-                                    name: "per_day_in_words",
-                                    id: "per_day_in_words",
-                                    placeholder: "Daily Rate"
-                                  },
-                                  domProps: {
-                                    value: _vm.profile.per_day_in_words
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.profile,
-                                        "per_day_in_words",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ]
-                            )
-                          ]),
+                          _vm._m(3),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
                             _c(
@@ -68464,18 +68503,20 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.profile.dailyrate,
-                                      expression: "profile.dailyrate"
+                                      value: _vm.profile.per_day_in_words,
+                                      expression: "profile.per_day_in_words"
                                     }
                                   ],
                                   staticClass: "form-control",
                                   attrs: {
                                     type: "text",
                                     name: "dailyrate",
-                                    id: "dailyrate",
+                                    id: "per_day_in_words",
                                     placeholder: ""
                                   },
-                                  domProps: { value: _vm.profile.dailyrate },
+                                  domProps: {
+                                    value: _vm.profile.per_day_in_words
+                                  },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
@@ -68483,7 +68524,7 @@ var render = function() {
                                       }
                                       _vm.$set(
                                         _vm.profile,
-                                        "dailyrate",
+                                        "per_day_in_words",
                                         $event.target.value
                                       )
                                     }
@@ -69714,24 +69755,11 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Address")]),
       _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
       _c("th", [_vm._v("Actions")]),
       _vm._v(" "),
       _c("th")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-block btn-warning btn-xs",
-          attrs: { type: "button" }
-        },
-        [_vm._v("Suspend")]
-      )
     ])
   },
   function() {
@@ -69759,6 +69787,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-sm-4 control-label",
+          attrs: { for: "inputFullName" }
+        },
+        [_vm._v("Rate per Day")]
+      ),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "col-sm-8",
+        staticStyle: { "margin-bottom": "9px" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-4" }, [
       _c(
         "button",
@@ -69767,7 +69815,7 @@ var staticRenderFns = [
           staticStyle: { "margin-top": "15px" },
           attrs: { type: "submit" }
         },
-        [_vm._v("Update Record")]
+        [_vm._v("Save Record")]
       )
     ])
   },
@@ -75454,14 +75502,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         id: '',
         full_name: '',
         address: '',
-        status: '',
         area: '',
         loan: '',
         interest: '',
         term: '',
+        status: '',
         date_from: '',
         date_to: '',
-        contact: ''
+        contact: '',
+        result: '',
+        icon: ''
       },
       profile_id: '',
       pagination: {},
@@ -75492,41 +75542,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   computed: {
-    totalAmountDaily: function totalAmountDaily() {
-      var sum = 0;
-      this.profiles.forEach(function (e) {
-        sum += (e.loan + e.loan * (e.interest / 100) * e.term) / (e.term * 30);
-      });
-      return sum;
-    },
-    totalAmountWeekly: function totalAmountWeekly() {
-      var sum = 0;
-      this.profiles.forEach(function (e) {
-        sum += (e.loan + e.loan * (e.interest / 100) * e.term) / (e.term * 30) * 7;
-      });
-      return sum;
-    },
-    totalPayments: function totalPayments() {
-      var sum = 0;
-      this.profiles.forEach(function (e) {
-        sum += e.totalpay;
-      });
-      return sum;
-    },
-    totalLoanAmounts: function totalLoanAmounts() {
-      var sum = 0;
-      this.profiles.forEach(function (e) {
-        sum += e.amount_loan;
-      });
-      return sum;
-    },
-    totalAmount: function totalAmount() {
-      var sum = 0;
-      this.payments.forEach(function (e) {
-        sum += e.pay;
-      });
-      return sum;
-    },
     paymentHref: function paymentHref() {
       return "/admin/cash-card/" + this.area.id + "/" + this.area.collector;
     }
@@ -75657,7 +75672,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.profile.date_from = '';
       this.profile.date_to = '';
       this.profile.contact = '';
+    },
+
+    getStat: function getStat(status) {
+      switch (status) {
+        case 0:
+          {
+            this.profile.result = "Inactive";
+            this.profile.icon = "bg-yellow";
+            break;
+          }
+        case 1:
+          {
+            this.profile.result = "Active";
+            this.profile.icon = "bg-green";
+            break;
+          }
+        case 2:
+          {
+            this.profile.result = "Suspended";
+            this.profile.icon = "bg-red";
+            break;
+          }
+        default:
+          {
+            this.profile.result = "holla";
+            this.profile.icon = "";
+            break;
+          }
+      }
+      var output = '<span class="badge ' + this.profile.icon + '">' + this.profile.result + '</span>';
+      return output;
     }
+
   }
 });
 
@@ -75881,7 +75928,13 @@ var render = function() {
                       return _c("tr", { key: profile.id }, [
                         _c("td", [_vm._v(_vm._s(profile.full_name))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(profile.status))])
+                        _c("td", [
+                          _c("div", {
+                            domProps: {
+                              innerHTML: _vm._s(_vm.getStat(profile.status))
+                            }
+                          })
+                        ])
                       ])
                     })
                   ],

@@ -82,10 +82,11 @@ class PrintController extends Controller
     }
 
     public function printCC($id, $collector) {
-        //get profile                
+        //get profile   
+        $status = 1;        
         if ($id >= 0) {
             $profiles = Profiles::where('area', '=', $id)
-                        ->where('status', '=', null)
+                        ->where('status', '=', $status)
                         ->orderBy('full_name', 'asc')
                         ->get();
             $area = Area::where('id', '=', $id)->get();
@@ -93,7 +94,7 @@ class PrintController extends Controller
                 $area = json_encode($a);
             }
         } else {
-            $profiles = Profiles::->where('status', '=', null)
+            $profiles = Profiles::where('status', '=', $status)
                         ->orderBy('full_name', 'asc')
                         ->get();
             $area = '';

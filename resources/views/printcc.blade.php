@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
+<title>Cash Cards</title>
 <style type="text/css">
     table{
         border: 1px solid #eee;
@@ -75,9 +75,9 @@
     @php
         if($area) {
             $item = json_decode($area);
-            echo "<p>Area: <b>" . $item->area_code . "</b> | Collector: <b>" . $item->collector . "</b></p>";        
+            echo "<p>Area: <b>" . $item->area_code . "</b> | Collector: <b>" . $item->collector . "</b> | Assistant: <b>" . $item->assistant_collector . "</b></p>";        
         } else {
-            echo "<p>Area: <b>All</b> | Collector: <b>All</b></p>";
+            echo "<p>Area: <b>All</b> | Collector: <b>All</b> | Assistant: <b>All</b></p>";
         }
     @endphp
     </p></div>         
@@ -103,7 +103,7 @@
                 echo "<tr>";                                                    
             }                                        
 
-            echo '<td width="3%">'. $ctr . '</td><td width="22%">'. $profile->full_name .'</td><td width="8%">'. $profile->status .'</td>';                        
+            echo '<td width="3%">'. $ctr . '</td><td width="22%">'. $profile->full_name .'</td><td width="8%"></td>';                        
 
             if ($ctr%3==0) {                  
                 echo "</tr>";
@@ -116,6 +116,11 @@
             $ctr++;   
         }
         @endphp
+        <tr>
+            <td width="3%"></td><td width="22%">Total</td><td width="8%"></td>
+            <td width="3%"></td><td width="22%">Total</td><td width="8%"></td>
+            <td width="3%"></td><td width="22%">Total</td><td width="8%"></td>
+        </tr>
     </table>
     
 </body>

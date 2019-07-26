@@ -31,8 +31,9 @@
                <table style="margin-top: 1.5em; float: left" class="table">
                     <tr>
                     <!--<th style="width: 100px">Record ID </th>-->
-                    <th >Full Name</th>
-                    <th >Address</th>
+                    <th>Full Name</th>
+                    <th>Address</th>
+                    <th>Status</th>
                     <!--<th >Principal Loan</th>-->
                     <!--<th >Rate</th>-->
                     <!--<th >Interest</th>-->
@@ -47,6 +48,7 @@
                     <tr v-for="profile in profiles" v-bind:key="profile.id">                        
                         <td>{{ profile.full_name }}</td>
                         <td>{{ profile.address }}</td>
+                        <td><div v-html="getStat(profile.status)"></div></td>
                         <!--<td><span class="badge bg-green"> {{ profile.loan | currency('P') }} </span></td>-->
                         <!--<td>{{ profile.interest }}%</td> -->
                         <!--<td>{{ (profile.loan * (profile.interest/100) * profile.term) | currency('P') }}</td>-->                        
@@ -55,9 +57,9 @@
                         <!--<td>{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</td>-->
                         <!--<td>{{ profile.term }} month(s)</td>
                         <td>{{ profile.contact }}</td>-->                        
+                        <td><button @click="setProfile(profile)" type="button" class="btn btn-block btn-warning btn-xs">{{ getAction(profile.status) }}</button></td>
                         <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">View profile</button></td>
-                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-info-2">Promisory Note</button></td>                        
-                        <td><button type="button" class="btn btn-block btn-warning btn-xs">Suspend</button></td>
+                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-info-2">Promisory</button></td>                                                               
                         <td><button @click="deleteProfile(profile.id)" type="button" class="btn btn-block btn-danger btn-xs">Remove</button></td>
                                                   
                     </tr>
@@ -75,7 +77,7 @@
                     <span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title">Promisory Note</h4>
                 </div>
-                <div class="modal-body" style="min-height: 680px;">
+                <div class="modal-body" style="min-height: 700px;">
                   
                     <form @submit.prevent="addprofile" class="mb-4">
                         <div class="form-group">                               
@@ -86,8 +88,8 @@
                         </div>  
                         <div class="form-group">                               
                           <label for="amountloan" class="col-sm-4 control-label">Loan Amount</label>
-                          <div style="margin-bottom: 9px;" class="col-sm-8">
-                              <input type="text" class="form-control" name="amountloan" id="amountloan" v-model="profile.amountloan" placeholder="Amount Loan">
+                          <div style="margin-bottom: 9px;" class="col-sm-8">  
+                              <p class="form-control">{{ get_amount_loan(profile) | currency('P') }}</p>                              
                           </div>
                         </div>   
                         <div class="form-group">                               
@@ -99,13 +101,13 @@
                         <div class="form-group">                               
                           <label for="inputFullName" class="col-sm-4 control-label">Rate per Day</label>
                           <div style="margin-bottom: 9px;" class="col-sm-8">
-                              <input type="text" class="form-control" name="per_day_in_words" id="per_day_in_words" v-model="profile.per_day_in_words" placeholder="Daily Rate">
+                              <!--<p class="form-control">{{ computedDataRate | currency('P') }}</p>-->
                           </div>
                         </div> 
                         <div class="form-group">                               
                           <label for="inputFullName" class="col-sm-4 control-label">Rate/Day(in words)</label>
                           <div style="margin-bottom: 9px;" class="col-sm-8">
-                              <input type="text" class="form-control" name="dailyrate" id="dailyrate" v-model="profile.dailyrate" placeholder="">
+                              <input type="text" class="form-control" name="dailyrate" id="per_day_in_words" v-model="profile.per_day_in_words" placeholder="">
                           </div>
                         </div> 
                         <!-- Editable -->  
@@ -180,7 +182,7 @@
 
                         <div class="form-group">                               
                             <div class="col-sm-4">
-                              <button style="margin-top: 15px;" type="submit" class="btn btn-primary btn-sm">Update Record</button>
+                              <button style="margin-top: 15px;" type="submit" class="btn btn-primary btn-sm">Save Record</button>
                             </div>
                             <div class="col-sm-8">  
                               <a :href=paymentHref  style="margin-top: 15px;" class="btnPrint btn btn-block btn-success btn-sm">Print Promisorry Note</a>
@@ -237,7 +239,7 @@
 
                         <div class="form-group">                               
                             <label for="inputFullName" class="col-sm-3 control-label">Loan Amount</label>
-                            <div style="margin-bottom: 10px;" class="col-sm-8">
+                            <div style="margin-bottom: 10px;" class="col-sm-8">                                
                                 <input type="text" class="form-control" id="loan" v-model="profile.loan" placeholder="e,g 1000, 2000, 5000...">
                             </div>
                         </div>
@@ -380,8 +382,7 @@ export default {
         sum_in_words: '',
         per_day_in_words: '',
         totalpay: '',
-        dailyrate: '',
-        amount_loan: ''
+        acctset: ''
       },
       profile_id: '',
       pagination: {},
@@ -404,7 +405,7 @@ export default {
   },
 
   computed: {
-      totalAmountDaily: function () {
+      /*totalAmountDaily: function () {
           var sum = 0;
           this.profiles.forEach(e => {
               sum += ( ((e.loan) + (e.loan * (e.interest/100) * e.term)) / (e.term * 30) );
@@ -417,19 +418,17 @@ export default {
               sum += ( ((e.loan) + (e.loan * (e.interest/100) * e.term)) / (e.term * 30) * 7);
           });
           return sum
-      },
-      totalAmount: function () {
+      },*/
+      totalAmount: function (){
           var sum = 0;
           this.payments.forEach(e => {
               sum += e.pay;
           });
           return sum
       },
-      paymentHref() {
-        //console.log(profile);
-        return "promisory/" + this.profile.id;
-        //window.location.href = "/admin/promisory/" + profile;
-      } 
+      paymentHref() {        
+        return "promisory/" + this.profile.id;        
+      }
   },
 
   methods: {                 
@@ -467,6 +466,32 @@ export default {
           .catch(err => console.log(err));               
       }      
     },
+    setProfile(profile) {      
+      this.editprofile(profile);
+
+      if (confirm('Are You Sure?')) {                    
+        if (profile.status != 1) {
+          this.profile.status = 1;
+        } else {
+          this.profile.status = 0;
+        }
+        console.log("this:"+ JSON.stringify(this.profile));
+        fetch(`http://afsi.com/api/setaccount`, {
+            method: 'put',
+            body: JSON.stringify(this.profile),
+            headers: {
+              'content-type': 'application/json'
+            }
+          })
+          .then(res => res.json())
+          .then(data => {
+            this.clearForm();
+            alert('Account Set!');
+            this.fetchProfilesByAreas();
+          })
+          .catch(err => console.log(err));  
+      }
+    },
     fetchAreas(page_url) {            
         page_url = 'http://afsi.com/api/areas';
         fetch(page_url)
@@ -499,6 +524,7 @@ export default {
           vm.makePagination(res.meta, res.links);
         })
         .catch(err => console.log(err));
+        console.log("tanan:"+JSON.stringify(this.profile));
     },
     makePagination(meta, links) {
       let pagination = {
@@ -524,7 +550,7 @@ export default {
           })
           .catch(err => console.log(err));
       }
-    }, 
+    },    
     editprofile(profile) {
       this.edit = true;
       this.profile.id = profile.id;
@@ -539,21 +565,19 @@ export default {
       this.profile.date_from = moment(String(profile.date_from)).format('YYYY-MM-DD'); 
       this.profile.date_to = moment(String(profile.date_to)).format('YYYY-MM-DD');
       this.profile.contact = profile.contact;      
-      this.promisor_certno = profile.promisor_certno;
-      this.promisor_cert_issued_on = profile.promisor_cert_issued_on;
-      this.promisor_cert_issued_at = profile.promisor_cert_issued_at;
-      this.comaker1_name = profile.comaker1_name;
-      this.comaker1_certno = profile.comaker1_certno;
-      this.comaker1_cert_issued_on = profile.comaker1_cert_issued_on;
-      this.comaker1_cert_issued_at = profile.comaker1_cert_issued_at;
-      this.comaker2_name = profile.comaker2_name;
-      this.comaker2_certno = profile.comaker2_certno;
-      this.comaker2_cert_issued_on = profile.comaker2_cert_issued_on;
-      this.comaker2_cert_issued_at = profile.comaker2_cert_issued_at;
-      this.amount_loan = profile.amount_loan;
-      this.sum_in_words = profile.sum_in_words;
-      this.per_day_in_words = profile.per_day_in_words;      
-      
+      this.profile.promisor_certno = profile.promisor_certno;
+      this.profile.promisor_cert_issued_on = profile.promisor_cert_issued_on;
+      this.profile.promisor_cert_issued_at = profile.promisor_cert_issued_at;
+      this.profile.comaker1_name = profile.comaker1_name;
+      this.profile.comaker1_certno = profile.comaker1_certno;
+      this.profile.comaker1_cert_issued_on = profile.comaker1_cert_issued_on;
+      this.profile.comaker1_cert_issued_at = profile.comaker1_cert_issued_at;
+      this.profile.comaker2_name = profile.comaker2_name;
+      this.profile.comaker2_certno = profile.comaker2_certno;
+      this.profile.comaker2_cert_issued_on = profile.comaker2_cert_issued_on;
+      this.profile.comaker2_cert_issued_at = profile.comaker2_cert_issued_at;   
+      this.profile.sum_in_words = profile.sum_in_words;            
+      this.profile.per_day_in_words = profile.per_day_in_words;   
     },
     clearForm() {
       this.edit = false;
@@ -565,7 +589,7 @@ export default {
       this.profile.loan = '';
       this.profile.interest = '';
       this.profile.term = '';
-      this.status.term = '';
+      this.profile.status = '';
       this.profile.date_from = '';
       this.profile.date_to = '';
       this.profile.contact = ''; 
@@ -582,7 +606,64 @@ export default {
       this.comaker2_cert_issued_at = '';
       this.sum_in_words = '';
       this.per_day_in_words = '';
+    },  
+    get_amount_loan: function(profile) {      
+      return profile.amountloan;
+    },  
+    getStat: function(status) {        
+        switch (status) {
+          case 0: {
+            this.profile.result = "Inactive";
+            this.profile.icon = "bg-yellow";
+            break;
+          }
+          case 1: {
+            this.profile.result = "Active";
+            this.profile.icon = "bg-green";
+            break;
+          }
+          case 2: {
+            this.profile.result = "Suspended";
+            this.profile.icon = "bg-red";
+            break; 
+          }     
+          default: {
+            this.profile.result = "holla";
+            this.profile.icon = "";
+            break;
+          }          
+        }
+        var output = '<span class="badge '+ this.profile.icon + '">' + this.profile.result + '</span>';
+        return output;
+    },
+    getAction: function(status) {
+      var statmsg = "";
+      switch (status) {
+          case 0: {
+            statmsg = "Activate";      
+            this.acctset = true;      
+            break;
+          }
+          case 1: {
+            statmsg = "Deactivate";      
+            this.acctset = false;      
+            break;
+          }
+          case 2: {
+            statmsg = "Activate";  
+            this.acctset = true;          
+            break; 
+          }     
+          default: {
+            statmsg = "holla";   
+            this.acctset = '';         
+            break;
+          }          
+      }      
+
+      return statmsg;
     }
+     
   }
 };
 </script>

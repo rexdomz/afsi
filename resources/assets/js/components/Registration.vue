@@ -264,8 +264,6 @@ export default {
     myDate() {      
       this.myDate2 = new Date(this.myDate.setDate(this.myDate.getDate() + this.profile.term * 30));
       this.myDate3 = new Date(this.myDate.setDate(this.myDate.getDate() - this.profile.term * 30));          
-      //console.log('1st: '+ this.myDate3.toISOString().split('T')[0]);
-      //console.log('2nd: '+ this.myDate2.toISOString().split('T')[0]);
     }
   },
 
@@ -321,15 +319,10 @@ created() {
       if (!this.profile.contact) {
         this.errors.push('Contact information required.');
       }
-      /*if (!this.profile.date_from) {
-        this.errors.push('Invalid start date.');
-      }
-      if (!this.profile.date_to) {
-        this.errors.push('Invalid end date.');
-      }*/
-      //console.log(this.errors.length);
+
       this.profile.date_from = moment(String(this.myDate3)).format('YYYY-MM-DD hh:mm:ss');      
       this.profile.date_to = moment(String(this.myDate2)).format('YYYY-MM-DD hh:mm:ss');
+      this.profile.status = 0;
       console.log(JSON.stringify(this.profile));        
       if (this.edit === false && this.errors.length <= 0 ) {
         console.log(JSON.stringify(this.profile))        

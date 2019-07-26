@@ -36,6 +36,9 @@ Route::post('profile', 'ProfilesController@store');
 // Update profile
 Route::put('profiler', 'ProfilesController@store');
 
+// Set account status
+Route::put('setaccount', 'ProfilesController@set_account');
+
 // Delete profile
 Route::delete('profile/{id}', 'ProfilesController@destroy');
 
