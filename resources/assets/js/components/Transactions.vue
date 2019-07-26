@@ -7,7 +7,7 @@
       <div class="row">
 
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-6 connectedSortable">
+        <section class="col-lg-7 connectedSortable">
 
           <!-- Map box -->
           <div class="box box-solid bg-light-blue-gradient">
@@ -26,7 +26,7 @@
               </h3>
             </div>
             <div class="box-body">
-                <div class="form-group col-sm-5">                               
+                <div class="form-group col-sm-3">                               
                     <label for="inputFullName" class="control-label">Select Date</label>
                     <div style="margin-bottom: 10px;">
                       <div class="input-group date">
@@ -41,14 +41,17 @@
                 <table class="table">
                     <tr>                    
                       <th>Full Name</th>                                        
-                      <th>Loan Amount</th>                     
+                      <th>Principal Amount</th>
+                      <th>Interest</th>
                     </tr>   
+                    <tr v-for="profile in profiles" v-bind:key="profile.id">                        
+                      <td>{{ profile.full_name }}</td>
+                      <td>{{ profile.loan | currency('P') }}</td>
+                      <td>{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</td>
                     <tr>
-                      <td>xxx</td>
-                      <td>xxx</td>
-                    </tr> 
                     <tr>
                       <td>Total:</td>
+                      <td>$$$</td>
                       <td>$$$</td>
                     </tr>                 
                 </table>  
@@ -57,7 +60,41 @@
           </div>
           <!-- /.box -->
 
-          <!-- solid sales graph -->
+        </section>
+        <!-- right col -->
+
+        <!-- Left col -->
+        <section class="col-lg-5 connectedSortable">         
+
+          <!-- quick email widget -->
+          <div class="box box-info">
+            <div class="box-header">
+              <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+
+              <h3 class="box-title">Add Expenses</h3>
+
+            </div>
+            <div class="box-body">
+              <form action="#" method="post">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="name" placeholder="name">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="amount" placeholder="amount">
+                </div>
+                <div>
+                <textarea class="textarea" placeholder="Description"
+                  style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="box-footer clearfix">
+              <button type="button" class="pull-right btn btn-default" id="sendEmail">Add
+                <i class="fa fa-arrow-circle-right"></i></button>
+            </div>
+          </div>
+
+                    <!-- solid sales graph -->
           <div class="box box-solid bg-teal-gradient">
             <div class="box-header">
               <i class="fa fa-money" aria-hidden="true"></i>
@@ -106,40 +143,6 @@
 
           </div>
           <!-- /.box -->
-
-        </section>
-        <!-- right col -->
-
-        <!-- Left col -->
-        <section class="col-lg-6 connectedSortable">         
-
-          <!-- quick email widget -->
-          <div class="box box-info">
-            <div class="box-header">
-              <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-
-              <h3 class="box-title">Add Expenses</h3>
-
-            </div>
-            <div class="box-body">
-              <form action="#" method="post">
-                <div class="form-group">
-                  <input type="text" class="form-control" name="name" placeholder="name">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control" name="amount" placeholder="amount">
-                </div>
-                <div>
-                <textarea class="textarea" placeholder="Description"
-                  style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                </div>
-              </form>
-            </div>
-            <div class="box-footer clearfix">
-              <button type="button" class="pull-right btn btn-default" id="sendEmail">Add
-                <i class="fa fa-arrow-circle-right"></i></button>
-            </div>
-          </div>
 
         </section>
         <!-- /.Left col -->
@@ -221,7 +224,7 @@ export default {
 
   computed: {      
       paymentHref () {        
-        return "/admin/cash-card/" + this.area.id + "/" + this.area.collector;
+        return "/admin/" + this.area.id + "/" + this.area.collector;
       }
   },
 
@@ -272,7 +275,7 @@ export default {
     },
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = page_url || 'http://afsi.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/filteredrelease';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {

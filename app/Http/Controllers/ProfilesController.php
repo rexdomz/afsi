@@ -24,7 +24,7 @@ class ProfilesController extends Controller
     {
         // Get profiles        
         $profiles = Profiles::orderBy('full_name', 'asc')
-                    ->paginate(20);                        
+                    ->paginate(25);                        
                         
         //dd($profiles);                  
         // Return collection of articles as a resource               
@@ -37,9 +37,20 @@ class ProfilesController extends Controller
         $status = 1;
         $profiles = Profiles::where('status', '=', $status)
                     ->orderBy('full_name', 'asc')
-                    ->paginate(20);                        
+                    ->paginate(25);                        
                         
         //dd($profiles);                  
+        // Return collection of articles as a resource               
+        return ProfilesResource::collection($profiles);                
+    }
+
+    public function filtered_release() {
+        // Get profiles
+        $status = 1;
+        $profiles = Profiles::where('status', '=', $status)
+                    ->orderBy('date_from', 'asc')
+                    ->get();                        
+                                               
         // Return collection of articles as a resource               
         return ProfilesResource::collection($profiles);                
     }

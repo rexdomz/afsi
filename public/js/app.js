@@ -76219,6 +76219,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -76288,7 +76291,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {
     paymentHref: function paymentHref() {
-      return "/admin/cash-card/" + this.area.id + "/" + this.area.collector;
+      return "/admin/" + this.area.id + "/" + this.area.collector;
     }
   },
 
@@ -76350,7 +76353,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this4 = this;
 
       var vm = this;
-      page_url = page_url || 'http://afsi.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/filteredrelease';
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
@@ -76464,12 +76467,12 @@ var render = function() {
   return _c("div", [
     _c("section", { staticClass: "content" }, [
       _c("div", { staticClass: "row" }, [
-        _c("section", { staticClass: "col-lg-6 connectedSortable" }, [
+        _c("section", { staticClass: "col-lg-7 connectedSortable" }, [
           _c("div", { staticClass: "box box-solid bg-light-blue-gradient" }, [
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "box-body" }, [
-              _c("div", { staticClass: "form-group col-sm-5" }, [
+              _c("div", { staticClass: "form-group col-sm-3" }, [
                 _c(
                   "label",
                   {
@@ -76521,12 +76524,50 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(2)
+              _c(
+                "table",
+                { staticClass: "table" },
+                [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _vm._l(_vm.profiles, function(profile) {
+                    return _c("tr", { key: profile.id }, [
+                      _c("td", [_vm._v(_vm._s(profile.full_name))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("currency")(profile.loan, "P")))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(
+                            _vm._f("currency")(
+                              (profile.loan +
+                                profile.loan *
+                                  (profile.interest / 100) *
+                                  profile.term) /
+                                (profile.term * 30),
+                              "P"
+                            )
+                          )
+                        )
+                      ])
+                    ])
+                  }),
+                  _c("tr"),
+                  _vm._m(3)
+                ],
+                2
+              )
             ])
-          ]),
+          ])
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "col-lg-5 connectedSortable" }, [
+          _vm._m(4),
           _vm._v(" "),
           _c("div", { staticClass: "box box-solid bg-teal-gradient" }, [
-            _vm._m(3),
+            _vm._m(5),
             _vm._v(" "),
             _c("div", { staticClass: "box-body border-radius-none" }, [
               _c("div", { staticClass: "form-group col-sm-5" }, [
@@ -76541,7 +76582,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticStyle: { "margin-bottom": "10px" } }, [
                   _c("div", { staticClass: "input-group date" }, [
-                    _vm._m(4),
+                    _vm._m(6),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control pull-right",
@@ -76581,12 +76622,10 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(5)
+              _vm._m(7)
             ])
           ])
-        ]),
-        _vm._v(" "),
-        _vm._m(6)
+        ])
       ])
     ])
   ])
@@ -76633,23 +76672,85 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "table" }, [
-      _c("tr", [
-        _c("th", [_vm._v("Full Name")]),
+    return _c("tr", [
+      _c("th", [_vm._v("Full Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Principal Amount")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Interest")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Total:")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("$$$")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("$$$")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box box-info" }, [
+      _c("div", { staticClass: "box-header" }, [
+        _c("i", {
+          staticClass: "fa fa-keyboard-o",
+          attrs: { "aria-hidden": "true" }
+        }),
         _vm._v(" "),
-        _c("th", [_vm._v("Loan Amount")])
+        _c("h3", { staticClass: "box-title" }, [_vm._v("Add Expenses")])
       ]),
       _vm._v(" "),
-      _c("tr", [
-        _c("td", [_vm._v("xxx")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("xxx")])
+      _c("div", { staticClass: "box-body" }, [
+        _c("form", { attrs: { action: "#", method: "post" } }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "text", name: "name", placeholder: "name" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "text", name: "amount", placeholder: "amount" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("textarea", {
+              staticClass: "textarea",
+              staticStyle: {
+                width: "100%",
+                height: "125px",
+                "font-size": "14px",
+                "line-height": "18px",
+                border: "1px solid #dddddd",
+                padding: "10px"
+              },
+              attrs: { placeholder: "Description" }
+            })
+          ])
+        ])
       ]),
       _vm._v(" "),
-      _c("tr", [
-        _c("td", [_vm._v("Total:")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("$$$")])
+      _c("div", { staticClass: "box-footer clearfix" }, [
+        _c(
+          "button",
+          {
+            staticClass: "pull-right btn btn-default",
+            attrs: { type: "button", id: "sendEmail" }
+          },
+          [
+            _vm._v("Add\n              "),
+            _c("i", { staticClass: "fa fa-arrow-circle-right" })
+          ]
+        )
       ])
     ])
   },
@@ -76718,70 +76819,6 @@ var staticRenderFns = [
         _c("td"),
         _vm._v(" "),
         _c("td", [_vm._v("$$$")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "col-lg-6 connectedSortable" }, [
-      _c("div", { staticClass: "box box-info" }, [
-        _c("div", { staticClass: "box-header" }, [
-          _c("i", {
-            staticClass: "fa fa-keyboard-o",
-            attrs: { "aria-hidden": "true" }
-          }),
-          _vm._v(" "),
-          _c("h3", { staticClass: "box-title" }, [_vm._v("Add Expenses")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("form", { attrs: { action: "#", method: "post" } }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", name: "name", placeholder: "name" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", name: "amount", placeholder: "amount" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("textarea", {
-                staticClass: "textarea",
-                staticStyle: {
-                  width: "100%",
-                  height: "125px",
-                  "font-size": "14px",
-                  "line-height": "18px",
-                  border: "1px solid #dddddd",
-                  padding: "10px"
-                },
-                attrs: { placeholder: "Description" }
-              })
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "box-footer clearfix" }, [
-          _c(
-            "button",
-            {
-              staticClass: "pull-right btn btn-default",
-              attrs: { type: "button", id: "sendEmail" }
-            },
-            [
-              _vm._v("Add\n              "),
-              _c("i", { staticClass: "fa fa-arrow-circle-right" })
-            ]
-          )
-        ])
       ])
     ])
   }

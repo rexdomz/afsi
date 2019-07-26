@@ -22,6 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('profiles', 'ProfilesController@index');
 Route::get('filteredprofiles', 'ProfilesController@filtered_index');
 
+//Get Release
+Route::get('filteredrelease', 'ProfilesController@filtered_release');
+
 // List profiles by area
 Route::get('profilesbyarea/{id}/{perpage?}', 'ProfilesController@get_profiles_by_area');
 Route::get('filteredprofilesbyarea/{id}/{perpage?}', 'ProfilesController@get_profiles_by_area_filtered');

@@ -112,15 +112,15 @@
         </tr>
         <tr>
             <td style="width:60%">&nbsp;</td>        
-            <td style="width:40%"><p class="marginless">Res. Cert. No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_certno }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
+            <td style="width:40%"><p class="marginless">Res. Cert. No.: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_certno }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
         </tr>
         <tr>
             <td style="width:60%">&nbsp;</td>        
-            <td style="width:40%"><p class="marginless">Issued On &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_cert_issued_on }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
+            <td style="width:40%"><p class="marginless">Issued On: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_cert_issued_on }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
         </tr>
         <tr>
             <td style="width:60%">&nbsp;</td>        
-            <td style="width:40%"><p class="marginless">Issued At &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_cert_issued_at }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
+            <td style="width:40%"><p class="marginless">Issued At: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_cert_issued_at }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
         </tr>
     </table>
 
@@ -131,17 +131,17 @@
             <td style="width:40%">
                 <h3 class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ $profile->comaker1_name }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
                 <p class="txtmiddle marginless">Co-Maker</p>
-                <p class="marginless">Res. Cert. No. {{ $profile->comaker1_certno }}</p>
-                <p class="marginless">Issued On {{ $profile->comaker1_cert_issued_on }}</p>
-                <p class="marginless">Issued At {{ $profile->comaker1_cert_issued_at }}</p>
+                <p class="marginless">Res. Cert. No.: {{ $profile->comaker1_certno }}</p>
+                <p class="marginless">Issued On: {{ $profile->comaker1_cert_issued_on }}</p>
+                <p class="marginless">Issued At: {{ $profile->comaker1_cert_issued_at }}</p>
             </td>
             <td style="width:20%">&nbsp;</td>
             <td style="width:40%">            
                 <h3 class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ $profile->comaker2_name }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
                 <p class="txtmiddle marginless">Co-Maker</p>
-                <p class="marginless">Res. Cert. No. {{ $profile->comaker2_certno }}</p>
-                <p class="marginless">Issued On {{ $profile->comaker2_cert_issued_on }}</p>
-                <p class="marginless">Issued At {{ $profile->comaker2_cert_issued_at }}</p>
+                <p class="marginless">Res. Cert. No.: {{ $profile->comaker2_certno }}</p>
+                <p class="marginless">Issued On: {{ $profile->comaker2_cert_issued_on }}</p>
+                <p class="marginless">Issued At: {{ $profile->comaker2_cert_issued_at }}</p>
             </td>
         </tr>        
     </table>
