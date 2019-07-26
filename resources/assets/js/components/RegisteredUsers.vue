@@ -58,7 +58,7 @@
                         <!--<td>{{ profile.term }} month(s)</td>
                         <td>{{ profile.contact }}</td>-->                        
                         <td><button @click="setProfile(profile)" type="button" class="btn btn-block btn-warning btn-xs">{{ getAction(profile.status) }}</button></td>
-                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">View profile</button></td>
+                        <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#modal-info">Edit profile</button></td>
                         <td><button @click="editprofile(profile)" type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-info-2">Promisory</button></td>                                                               
                         <td><button @click="deleteProfile(profile.id)" type="button" class="btn btn-block btn-danger btn-xs">Remove</button></td>
                                                   
