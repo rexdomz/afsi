@@ -76222,6 +76222,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -76290,6 +76291,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   computed: {
+    totalLoan: function totalLoan() {
+      var sum = 0;
+      this.profiles.forEach(function (e) {
+        sum += e.loan;
+      });
+      return sum;
+    },
+    totalInterest: function totalInterest() {
+      var sum = 0;
+      this.profiles.forEach(function (e) {
+        sum += e.loan + e.loan * (e.interest / 100) * e.term - e.loan;
+      });
+      return sum;
+    },
+    totalAmount: function totalAmount() {
+      var sum = 0;
+      this.payments.forEach(function (e) {
+        sum += e.pay;
+      });
+      return sum;
+    },
     paymentHref: function paymentHref() {
       return "/admin/" + this.area.id + "/" + this.area.collector;
     }
@@ -76542,11 +76564,11 @@ var render = function() {
                         _vm._v(
                           _vm._s(
                             _vm._f("currency")(
-                              (profile.loan +
+                              profile.loan +
                                 profile.loan *
                                   (profile.interest / 100) *
-                                  profile.term) /
-                                (profile.term * 30),
+                                  profile.term -
+                                profile.loan,
                               "P"
                             )
                           )
@@ -76555,7 +76577,29 @@ var render = function() {
                     ])
                   }),
                   _c("tr"),
-                  _vm._m(3)
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c(
+                    "tr",
+                    { staticStyle: { background: "#000", border: "none" } },
+                    [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("b", [
+                          _vm._v(_vm._s(_vm._f("currency")(_vm.totalLoan, "P")))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("b", [
+                          _vm._v(
+                            _vm._s(_vm._f("currency")(_vm.totalInterest, "P"))
+                          )
+                        ])
+                      ])
+                    ]
+                  )
                 ],
                 2
               )
@@ -76564,10 +76608,10 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("section", { staticClass: "col-lg-5 connectedSortable" }, [
-          _vm._m(4),
+          _vm._m(5),
           _vm._v(" "),
           _c("div", { staticClass: "box box-solid bg-teal-gradient" }, [
-            _vm._m(5),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "box-body border-radius-none" }, [
               _c("div", { staticClass: "form-group col-sm-5" }, [
@@ -76582,7 +76626,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticStyle: { "margin-bottom": "10px" } }, [
                   _c("div", { staticClass: "input-group date" }, [
-                    _vm._m(6),
+                    _vm._m(7),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control pull-right",
@@ -76622,7 +76666,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(7)
+              _vm._m(8)
             ])
           ])
         ])
@@ -76684,13 +76728,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_vm._v("Total:")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("$$$")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("$$$")])
-    ])
+    return _c("tr", [_c("td"), _c("td"), _c("td")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("b", [_vm._v("Total:")])])
   },
   function() {
     var _vm = this

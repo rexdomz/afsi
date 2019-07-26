@@ -47,12 +47,13 @@
                     <tr v-for="profile in profiles" v-bind:key="profile.id">                        
                       <td>{{ profile.full_name }}</td>
                       <td>{{ profile.loan | currency('P') }}</td>
-                      <td>{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</td>
+                      <td>{{ (( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) )  - profile.loan | currency('P') }}</td>
                     <tr>
-                    <tr>
-                      <td>Total:</td>
-                      <td>$$$</td>
-                      <td>$$$</td>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr style="background: #000; border: none">
+                      <td><b>Total:</b></td>
+                      <td><b>{{totalLoan | currency('P')}}</b></td>
+                      <td><b>{{totalInterest | currency('P')}}</b></td>
                     </tr>                 
                 </table>  
             </div>
@@ -222,7 +223,28 @@ export default {
     this.fetchAreas();
   },
 
-  computed: {      
+  computed: {  
+      totalLoan: function () {
+          var sum = 0;          
+          this.profiles.forEach(e => {
+              sum += e.loan;
+          });
+          return sum;
+      },
+      totalInterest: function () {
+          var sum = 0;          
+          this.profiles.forEach(e => {
+              sum += (( (e.loan) + (e.loan * (e.interest/100) * e.term)) )  - e.loan;
+          });
+          return sum;
+      }, 
+      totalAmount: function () {
+          var sum = 0;
+          this.payments.forEach(e => {
+              sum += e.pay;
+          });
+          return sum;
+      },   
       paymentHref () {        
         return "/admin/" + this.area.id + "/" + this.area.collector;
       }
