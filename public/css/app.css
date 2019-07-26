@@ -16643,6 +16643,12 @@ div.register-box-body {
   background: #232323 !important;
 }
 
+.skin-blue .wrapper,
+.skin-blue .main-sidebar,
+.skin-blue .left-side {
+  background: #232323 !important;
+}
+
 .form-control {
   height: 28px !important;
   padding: 0 10px !important;
@@ -16659,5 +16665,9 @@ div.register-box-body {
 label {
   font-size: 10pt !important;
   line-height: 11pt !important;
+}
+
+.skin-blue .sidebar-menu .treeview-menu > li > a {
+  padding-left: 2.5em !important;
 }
 

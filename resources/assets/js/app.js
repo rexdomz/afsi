@@ -28,6 +28,7 @@ Vue.component('payment-list', require('./components/Payment.vue'));
 Vue.component('quota', require('./components/Quota.vue'));
 Vue.component('collector-view-only', require('./components/member/PaymentViewOnly.vue')); 
 Vue.component('quota-view-only', require('./components/member/QuotaViewOnly.vue'));
+Vue.component('cash-cards', require('./components/CashCards.vue'));
 
 Vue.component('autocomplete', require('./components/Autocomplete.vue'));
 

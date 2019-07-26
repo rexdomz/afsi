@@ -1,0 +1,8 @@
+php artisan tinker
+
+$admin = new App\Admin 
+$admin->name = "Terry"
+$admin->email = "afsiadmin@gmail.com"
+$admin->password = Hash::make('123456')
+$admin->job_title = "Administrator-Owner"
+$admin->save()

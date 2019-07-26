@@ -18204,7 +18204,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(141);
-module.exports = __webpack_require__(207);
+module.exports = __webpack_require__(210);
 
 
 /***/ }),
@@ -18245,8 +18245,9 @@ Vue.component('payment-list', __webpack_require__(192));
 Vue.component('quota', __webpack_require__(195));
 Vue.component('collector-view-only', __webpack_require__(198));
 Vue.component('quota-view-only', __webpack_require__(201));
+Vue.component('cash-cards', __webpack_require__(204));
 
-Vue.component('autocomplete', __webpack_require__(204));
+Vue.component('autocomplete', __webpack_require__(207));
 
 
 
@@ -65350,9 +65351,9 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-sm-3" }, [
       _c("div", { staticClass: "small-box bg-green" }, [
         _c("div", { staticClass: "inner" }, [
-          _c("h3", [_vm._v("Reports")]),
+          _c("h3", [_vm._v("Release")]),
           _vm._v(" "),
-          _c("p", [_vm._v("Daily|Monthly")])
+          _c("p", [_vm._v("Daily")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "icon" }, [
@@ -75329,6 +75330,634 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources/assets/js/components/CashCards.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0afc686e", Component.options)
+  } else {
+    hotAPI.reload("data-v-0afc686e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 205 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      myDate: null,
+      myDate2: null,
+      myDate3: null,
+      areas: [],
+      area: {
+        id: -1,
+        area_code: '',
+        address: '',
+        collector: 'All',
+        contact: ''
+      },
+      payments: [],
+      payment: {
+        id: '',
+        profile_id: '',
+        pay: '',
+        date_pay: ''
+      },
+      pay_id: '',
+      profiles: [],
+      profile: {
+        id: '',
+        full_name: '',
+        address: '',
+        status: '',
+        area: '',
+        loan: '',
+        interest: '',
+        term: '',
+        date_from: '',
+        date_to: '',
+        contact: ''
+      },
+      profile_id: '',
+      pagination: {},
+      edit: false
+    };
+  },
+
+
+  filters: {
+    formatDate: function formatDate(value) {
+      return moment(String(value)).format('D MMM YYYY');
+    }
+  },
+
+  watch: {
+    myDate: function myDate() {
+      this.myDate2 = new Date(this.myDate.setDate(this.myDate.getDate() + this.profile.term * 30));
+      this.myDate3 = new Date(this.myDate.setDate(this.myDate.getDate() - this.profile.term * 30));
+      console.log('1st: ' + this.myDate3.toISOString().split('T')[0]);
+      console.log('2nd: ' + this.myDate2.toISOString().split('T')[0]);
+    }
+  },
+
+  created: function created() {
+    this.fetchprofiles();
+    this.fetchAreas();
+  },
+
+
+  computed: {
+    totalAmountDaily: function totalAmountDaily() {
+      var sum = 0;
+      this.profiles.forEach(function (e) {
+        sum += (e.loan + e.loan * (e.interest / 100) * e.term) / (e.term * 30);
+      });
+      return sum;
+    },
+    totalAmountWeekly: function totalAmountWeekly() {
+      var sum = 0;
+      this.profiles.forEach(function (e) {
+        sum += (e.loan + e.loan * (e.interest / 100) * e.term) / (e.term * 30) * 7;
+      });
+      return sum;
+    },
+    totalPayments: function totalPayments() {
+      var sum = 0;
+      this.profiles.forEach(function (e) {
+        sum += e.totalpay;
+      });
+      return sum;
+    },
+    totalLoanAmounts: function totalLoanAmounts() {
+      var sum = 0;
+      this.profiles.forEach(function (e) {
+        sum += e.amount_loan;
+      });
+      return sum;
+    },
+    totalAmount: function totalAmount() {
+      var sum = 0;
+      this.payments.forEach(function (e) {
+        sum += e.pay;
+      });
+      return sum;
+    },
+    paymentHref: function paymentHref() {
+      return "/admin/cash-card/" + this.area.id + "/" + this.area.collector;
+    }
+  },
+
+  methods: {
+    checkDate: function checkDate(profile) {
+      var date = moment(profile.date_to);
+      var now = moment().valueOf();
+      if (date > now) {
+        this.profile.date_expire = true;
+        return true;
+      } else {
+        this.profile.date_expire = false;
+        return false;
+      }
+    },
+    fetchPaymentsByID: function fetchPaymentsByID(id) {
+      var _this = this;
+
+      var vm = this;
+      var perpage = 20;
+      fetch('http://afsi.com/api/paymentsbyid/' + id + '/' + perpage).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this.payments = res.data;
+        console.log(_this.payments);
+        vm.makePagination(res.meta, res.links);
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    fetchAreas: function fetchAreas(page_url) {
+      var _this2 = this;
+
+      page_url = 'http://afsi.com/api/areas';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this2.areas = res.data;
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    fetchProfilesByAreas: function fetchProfilesByAreas() {
+      var _this3 = this;
+
+      var vm = this;
+      var id = this.area.id;
+      var perpage = 25;
+      fetch('http://afsi.com/api/profilesbyarea/' + id + '/' + perpage).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this3.profiles = res.data;
+        vm.makePagination(res.meta, res.links);
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    fetchprofiles: function fetchprofiles(page_url) {
+      var _this4 = this;
+
+      var vm = this;
+      page_url = page_url || 'http://afsi.com/api/profiles';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this4.profiles = res.data;
+        vm.makePagination(res.meta, res.links);
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev,
+        per_page: meta.per_page,
+        total: meta.total
+      };
+      this.pagination = pagination;
+    },
+    deleteprofile: function deleteprofile(id) {
+      var _this5 = this;
+
+      if (confirm('Are You Sure?')) {
+        fetch('http://afsi.com/api/profile/' + id, {
+          method: 'delete'
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          alert('profile Removed');
+          _this5.fetchprofiles();
+        }).catch(function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    editprofile: function editprofile(profile) {
+      this.edit = true;
+      this.profile.id = profile.id;
+      this.profile.profile_id = profile.id;
+      this.profile.full_name = profile.full_name;
+      this.profile.address = profile.address;
+      this.profile.area = profile.area;
+      this.profile.loan = profile.loan;
+      this.profile.interest = profile.interest;
+      this.profile.term = profile.term;
+      this.profile.status = profile.status;
+      this.profile.date_from = moment(String(profile.date_from)).format('YYYY-MM-DD');
+      this.profile.date_to = moment(String(profile.date_to)).format('YYYY-MM-DD');
+      this.profile.contact = profile.contact;
+      this.fetchPaymentsByID(profile.id);
+    },
+    clearForm: function clearForm() {
+      this.edit = false;
+      this.profile.id = null;
+      this.profile.profile_id = null;
+      this.profile.full_name = '';
+      this.profile.address = '';
+      this.profile.area = '';
+      this.profile.loan = '';
+      this.profile.interest = '';
+      this.profile.term = '';
+      this.profile.status = '';
+      this.profile.date_from = '';
+      this.profile.date_to = '';
+      this.profile.contact = '';
+    }
+  }
+});
+
+/***/ }),
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("section", { staticClass: "content" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "box" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", [
+                  _c("p", [
+                    _vm._v(
+                      "Filter by Area:                    \n                      "
+                    ),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.area,
+                            expression: "area"
+                          }
+                        ],
+                        staticClass: "form-control select2",
+                        staticStyle: {
+                          height: "30px !important",
+                          width: "50%",
+                          margin: "10px 0 5px 0"
+                        },
+                        attrs: { id: "area", name: "area" },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.area = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            function($event) {
+                              return _vm.fetchProfilesByAreas()
+                            }
+                          ]
+                        }
+                      },
+                      _vm._l(_vm.areas, function(area) {
+                        return _c(
+                          "option",
+                          { key: area.id, domProps: { value: area } },
+                          [
+                            _vm._v(
+                              _vm._s(area.area_code) +
+                                " - " +
+                                _vm._s(area.address)
+                            )
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "box" }, [
+                  _c("div", { staticClass: "box-header" }, [
+                    _c("h3", { staticClass: "box-title" }, [_vm._v("Details")]),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("i", [
+                      _vm._v("Note: Total number of lenders per page is 25.")
+                    ]),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticStyle: { width: "150px", float: "left" } },
+                      [_vm._v(" Total Customers: ")]
+                    ),
+                    _vm._v(" " + _vm._s(_vm.pagination.total)),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticStyle: { width: "150px", float: "left" } },
+                      [_vm._v(" Area Collector: ")]
+                    ),
+                    _vm._v(" " + _vm._s(_vm.area.collector)),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticStyle: { width: "150px", float: "left" } },
+                      [_vm._v(" Assistant Collector: ")]
+                    ),
+                    _vm._v(" " + _vm._s(_vm.area.assistant_collector)),
+                    _c("p")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "box-body" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btnPrint btn btn-block btn-info btn-xs",
+                        attrs: { href: _vm.paymentHref }
+                      },
+                      [_vm._v("Print")]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "box-tools" }, [
+                  _c(
+                    "ul",
+                    {
+                      staticClass:
+                        "pagination pagination-sm no-margin pull-right"
+                    },
+                    [
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          class: [{ disabled: !_vm.pagination.prev_page_url }]
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.fetchprofiles(
+                                    _vm.pagination.prev_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Previous")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "page-item disabled" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "page-link text-dark",
+                            attrs: { href: "#" }
+                          },
+                          [
+                            _vm._v(
+                              "Page " +
+                                _vm._s(_vm.pagination.current_page) +
+                                " of " +
+                                _vm._s(_vm.pagination.last_page)
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          class: [{ disabled: !_vm.pagination.next_page_url }]
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.fetchprofiles(
+                                    _vm.pagination.next_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Next")]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "table",
+                  {
+                    staticClass: "table",
+                    staticStyle: { "margin-top": "1.5em", float: "left" }
+                  },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._l(_vm.profiles, function(profile) {
+                      return _c("tr", { key: profile.id }, [
+                        _c("td", [_vm._v(_vm._s(profile.full_name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(profile.status))])
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-footer" }, [
+            _vm._v(
+              "\n                  Showing (" +
+                _vm._s(_vm.pagination.total) +
+                ") records...\n              "
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Cash Cards")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("Full Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0afc686e", module.exports)
+  }
+}
+
+/***/ }),
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(208)
+/* template */
+var __vue_template__ = __webpack_require__(209)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources/assets/js/components/Autocomplete.vue"
 
 /* hot reload */
@@ -75351,7 +75980,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 205 */
+/* 208 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -75413,7 +76042,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 206 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -75460,7 +76089,7 @@ if (false) {
 }
 
 /***/ }),
-/* 207 */
+/* 210 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

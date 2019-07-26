@@ -86,8 +86,8 @@
                     <div class="col-sm-3">
                         <div class="small-box bg-green">
                             <div class="inner">                            
-                            <h3>Reports</h3>  
-                            <p>Daily|Monthly</p>
+                            <h3>Release</h3>  
+                            <p>Daily</p>
                             </div>
                             <div class="icon">
                             <i class="ion ion-person-add"></i>

@@ -55,4 +55,8 @@ class AdminController extends Controller
         return view('release');
     }
 
+    public function cash_card() {
+        return view('cashcards');
+    }
+
 }

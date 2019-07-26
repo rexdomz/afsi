@@ -81,5 +81,26 @@ class PrintController extends Controller
         return view('promisory', array('payments' => $payments, 'profile' => $profile, 'totalPayment' => $totalPayment, 'originalBalance' => $originalBalance, 'ratePerDay' => $ratePerDay));        
     }
 
+    public function printCC($id, $collector) {
+        //get profile                
+        if ($id >= 0) {
+            $profiles = Profiles::where('area', '=', $id)
+                        ->where('status', '=', null)
+                        ->orderBy('full_name', 'asc')
+                        ->get();
+            $area = Area::where('id', '=', $id)->get();
+            foreach($area as $a) {            
+                $area = json_encode($a);
+            }
+        } else {
+            $profiles = Profiles::->where('status', '=', null)
+                        ->orderBy('full_name', 'asc')
+                        ->get();
+            $area = '';
+        }        
+        
+        return view('printcc', array('profiles' => $profiles, 'collector'=> $collector, 'area'=> $area));
+    }
+
 
 }

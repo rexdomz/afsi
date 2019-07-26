@@ -156,26 +156,49 @@ input.searchnameinpt {
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <!-- li class="header">MAIN NAVIGATION</li> -->
-        <li class="">
+        
           @if(Auth::guard('admin')->check())
-            <a href="{{ URL::route('admin.home') }}"><i class="fa fa-dashboard"></i> Home</a>
-            <a href="{{ URL::route('admin.registration') }}"><i class="fa fa-edit"></i> New Registration</a>            
-            <a href="{{ URL::route('admin.user-payment') }}"><i class="fa fa-pie-chart"></i> Customer Ledger</a>
-            <a href="{{ URL::route('admin.registered-users') }}"><i class="fa fa-table"></i>Registered Customers</a>
-            <a href="{{ URL::route('admin.quota') }}"><i class="fa fa-th"></i>Collector's Quota</a> 
-            <a href="{{ URL::route('admin.area') }}"><i class="fa fa-laptop"></i>Areas</a>    
-            <a href=""><i class="fa fa-pie-chart"></i>Reports</a>
-            <a href=""><i class="fa fa-th"></i>Payslip</a>
+            <li><a href="{{ URL::route('admin.home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{{ URL::route('admin.registration') }}"><i class="fa fa-edit"></i> New Registration</a></li>    
+
+            <li class="active treeview menu-open">
+              <a href="#">
+                <i class="fa "></i> <span>Customers</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{ URL::route('admin.user-payment') }}"><i class="fa fa-pie-chart"></i>Ledger</a></li>
+                <li><a href="{{ URL::route('admin.registered-users') }}"><i class="fa fa-table"></i>Registered</a></li>
+              </ul>
+            </li>                                                       
+
+            <li class="active treeview menu-open">
+              <a href="#">
+                <i class="fa "></i> <span>Reports</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{ URL::route('admin.cashcards') }}"><i class="fa fa-table"></i>Cash Cards</a></li>
+                <li><a href=""><i class="fa fa-pie-chart"></i>Release</a></li>
+                <li><a href="{{ URL::route('admin.quota') }}"><i class="fa fa-th"></i>Collector's Quota</a></li>
+              </ul>
+            </li>
+
+            <li><a href=""><i class="fa fa-th"></i>Payslip</a></li>
+            <li><a href="{{ URL::route('admin.area') }}"><i class="fa fa-laptop"></i>Areas</a></li>
           @else
-            <a href="/home"><i class="fa fa-dashboard"></i> Home</a>   
-            <a href="registration"><i class="fa fa-edit"></i> New Registration</a>     
-            <a href="/user-payment"><i class="fa fa-pie-chart"></i> Customers</a>    
-            <a href="registered-users"><i class="fa fa-table"></i>Registered Customers</a>      
-            <a href="/quota"><i class="fa fa-th"></i>Collector's Quota</a>        
-            <a href="/area"><i class="fa fa-laptop"></i>Areas</a>    
+            <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="registration"><i class="fa fa-edit"></i> New Registration</a></li>
+            <li><a href="/user-payment"><i class="fa fa-pie-chart"></i> Customers</a></li>    
+            <li><a href="registered-users"><i class="fa fa-table"></i>Registered Customers</a></li>      
+            <li><a href="/quota"><i class="fa fa-th"></i>Collector's Quota</a></li>
+            <li><a href="/area"><i class="fa fa-laptop"></i>Areas</a></li>
           @endif
-          
-        </li>
+                  
       </ul>
     </section>
     <!-- /.sidebar -->

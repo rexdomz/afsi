@@ -33,11 +33,13 @@ Route::prefix('admin')->group(function() {
     Route::get('/area', 'AdminController@area')->name('admin.area');
 
     /* Release */
+    Route::get('/cashcards', 'AdminController@cash_card')->name('admin.cashcards');
     Route::get('/release', 'AdminController@release')->name('release');
 
     //Print
     Route::get('/payment-view/{id}', 'PrintController@printPreview');
     Route::get('/qouta-view/{id}/{collector}', 'PrintController@printQouta');
+    Route::get('/cash-card/{id}/{collector}', 'PrintController@printCC');
     Route::get('/promisory/{id}', 'PrintController@printPromisory');
 
 });
