@@ -87,7 +87,7 @@
         </tr>
         <tr>
             <td style="width:70%">&nbsp;</td>
-            <td>Date: {{ date('d-m-Y', strtotime($profile->date_from)) }}</td>
+            <td>Date: {{ date("Y-m-d", strtotime("+ 1 day")) }}</td>
         </tr>        
     </table>
 
@@ -100,7 +100,7 @@
         4. That I/We further bind ourselves to pay an additional amount of ten percent (10%) in case of extrajudicial collection, or twenty-five percent (25%) in case of judicial collection, based on the remaining principal obligation, by way of attorney’s fee.<br>
         5. That in case of litigation arising from or in connection with this note, the venue of any case as may be filed shall be at the decision of the creditor, the proper court in the City of Dipolog to the exclusion of other courts.</p>  
 
-        <p>IN WITNESS WHEREOF, I/WE have hereunto set my/our  hand/s  this ________day of ________20________ in the City of Dipolog, Philippines.</p>
+        <p>IN WITNESS WHEREOF, I/WE have hereunto set my/our  hand/s  this <span class="underlyn big">{{date("d", strtotime("+ 1 day"))}}</span> day of <span class="underlyn big">{{date("F")}}</span> <span class="underlyn big">{{date("Y")}}</span> in the City of Dipolog, Philippines.</p>
     </div>
 
     <table>
@@ -166,7 +166,9 @@
     <h2 class="txtmiddle">A C K N O W L E D G E M E N T</h2>
     <p class="space" style="line-height: 12pt">REPUBLIC OF THE PHILIPPINES)<br>CITY OF DIPOLOG. . . . . . . . . . . . . . .) S.S.<br></p>
     <div style="margin-top: 25px;" class="space">&nbsp;</div>         
-    <p style="margin: 5px 0; text-align: left">BEFORE ME, a notary public and in the City of Dipolog, Philippines, this ________ day of ___________________20_______. Personally appeared <span class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->full_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> with respective Res. Cert. No. _______________. The stated, know to me and to me known to be the same their own free and voluntary set and deed.</p>
+            <td style="width:40%"><p class="marginless">Res. Cert. No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_certno }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
+            <td style="width:40%"><p class="marginless">Res. Cert. No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->promisor_certno }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>            
+    <p style="margin: 5px 0; text-align: left">BEFORE ME, a notary public and in the City of Dipolog, Philippines, this <span class="underlyn big">{{date("d", strtotime("+ 1 day"))}}</span> day of <span class="underlyn big">{{date("F")}}</span> <span class="underlyn big">{{date("Y")}}</span>. Personally appeared <span class="underlyn big txtmiddle marginless">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $profile->full_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> with respective Res. Cert. No. <span class="underlyn big">{{ $profile->promisor_certno }}</span>. The stated, know to me and to me known to be the same their own free and voluntary set and deed.</p>
 
     <table>
         <tr>

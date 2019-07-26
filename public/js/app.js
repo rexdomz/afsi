@@ -65352,9 +65352,9 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-sm-3" }, [
       _c("div", { staticClass: "small-box bg-green" }, [
         _c("div", { staticClass: "inner" }, [
-          _c("h3", [_vm._v("Release")]),
+          _c("h3", [_vm._v("Transactions")]),
           _vm._v(" "),
-          _c("p", [_vm._v("Daily")])
+          _c("p", [_vm._v("Release | Expenses")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "icon" }, [
@@ -65363,7 +65363,10 @@ var staticRenderFns = [
         _vm._v(" "),
         _c(
           "a",
-          { staticClass: "small-box-footer", attrs: { href: "admin/" } },
+          {
+            staticClass: "small-box-footer",
+            attrs: { href: "admin/transactions" }
+          },
           [
             _vm._v("\n                          More info "),
             _c("i", { staticClass: "fa fa-arrow-circle-right" })
@@ -65379,9 +65382,9 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-sm-3" }, [
       _c("div", { staticClass: "small-box bg-yellow" }, [
         _c("div", { staticClass: "inner" }, [
-          _c("h3", [_vm._v("Payslip")]),
+          _c("h3", [_vm._v("Cash")]),
           _vm._v(" "),
-          _c("p", [_vm._v("Collector")])
+          _c("p", [_vm._v("Crds")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "icon" }, [
@@ -65390,9 +65393,12 @@ var staticRenderFns = [
         _vm._v(" "),
         _c(
           "a",
-          { staticClass: "small-box-footer", attrs: { href: "admin/" } },
+          {
+            staticClass: "small-box-footer",
+            attrs: { href: "admin/cashcards" }
+          },
           [
-            _vm._v("\n                          View/Add "),
+            _vm._v("\n                          View "),
             _c("i", { staticClass: "fa fa-arrow-circle-right" })
           ]
         )

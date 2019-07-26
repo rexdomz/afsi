@@ -86,13 +86,13 @@
                     <div class="col-sm-3">
                         <div class="small-box bg-green">
                             <div class="inner">                            
-                            <h3>Release</h3>  
-                            <p>Daily</p>
+                            <h3>Transactions</h3>  
+                            <p>Release | Expenses</p>
                             </div>
                             <div class="icon">
                             <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="admin/" class="small-box-footer">
+                            <a href="admin/transactions" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>                           
@@ -100,14 +100,14 @@
                     <div class="col-sm-3">                    
                         <div class="small-box bg-yellow">
                             <div class="inner">                            
-                            <h3>Payslip</h3> 
-                            <p>Collector</p>
+                            <h3>Cash</h3> 
+                            <p>Crds</p>
                             </div>
                             <div class="icon">
                             <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="admin/" class="small-box-footer">
-                            View/Add <i class="fa fa-arrow-circle-right"></i>
+                            <a href="admin/cashcards" class="small-box-footer">
+                            View <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
