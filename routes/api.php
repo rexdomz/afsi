@@ -20,9 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 /*** Profiles Endpoints ***/
 // List profiles
 Route::get('profiles', 'ProfilesController@index');
+Route::get('filteredprofiles', 'ProfilesController@filtered_index');
 
 // List profiles by area
 Route::get('profilesbyarea/{id}/{perpage?}', 'ProfilesController@get_profiles_by_area');
+Route::get('filteredprofilesbyarea/{id}/{perpage?}', 'ProfilesController@get_profiles_by_area_filtered');
 
 // List profiles by search key
 Route::get('profilesbykeyword/{keyword}', 'ProfilesController@get_profiles_by_keyword');

@@ -61,11 +61,13 @@
                                 <h3 class="box-title">Collections</h3><br>
                                 <i>Note: Total number of lenders per page is 25.</i><br>                                
                                 <p><span style="width: 150px;float: left;"><strong>Daily</strong>|page({{ pagination.current_page }} of {{ pagination.last_page }}): </span><span class="badge bg-blue">{{ totalAmountDaily | currency('P') }} </span> <br>
-                                <span style="width: 150px;float: left;"><strong>Weekly</strong>|page({{ pagination.current_page }} of {{ pagination.last_page }}): </span><span class="badge bg-green"> {{ totalAmountWeekly | currency('P') }} </span> <br>                                                                   
-                                <span style="width: 150px;float: left;"> Total Loan: </span> <span class="badge bg-red">{{ totalLoanAmounts | currency('P') }}</span><br>                                                                
+                                <!--<span style="width: 150px;float: left;"><strong>Weekly</strong>|page({{ pagination.current_page }} of {{ pagination.last_page }}): </span><span class="badge bg-green"> {{ totalAmountWeekly | currency('P') }} </span> <br>-->                                                                   
+                                <span style="width: 150px;float: left;"> Total Loan: </span> <span class="badge bg-blue">{{ totalLoanAmounts | currency('P') }}</span><br>
                                 <span style="width: 150px;float: left;"> Total Payments: </span> <span class="badge bg-blue">{{ totalPayments | currency('P') }}</span><br>
+                                <span style="width: 150px;float: left;"> Balance: </span> <span class="badge bg-red">{{ totalLoanAmounts - totalPayments | currency('P') }}</span><br>
                                 <span style="width: 150px;float: left;"> Total Customers: </span> {{ pagination.total }}<br>
-                                <span style="width: 150px;float: left;"> Area Collector: </span> {{ area.collector }}</p>                                                                
+                                <span style="width: 150px;float: left;"> Area Collector: </span> {{ area.collector }}<br>                                                                
+                                <span style="width: 150px;float: left;"> Area Asst. Collector: </span> {{ area.assistant_collector }}</p>  
                             </div>
                             <div class="box-body">                                
                                 <a :href=paymentHref class="btnPrint btn btn-block btn-info btn-xs">Print</a>                                
@@ -179,7 +181,7 @@ export default {
       totalLoanAmounts: function () {
           var sum = 0;          
           this.profiles.forEach(e => {
-              sum += e.amount_loan;
+              sum += (( (e.loan) + (e.loan * (e.interest/100) * e.term)) );
           });
           return sum;
       },
@@ -232,7 +234,7 @@ export default {
         let vm = this;                
         var id = this.area.id             
         var perpage = 25;        
-        fetch(`http://afsi.com/api/profilesbyarea/${id}/${perpage}`)
+        fetch(`http://afsi.com/api/filteredprofilesbyarea/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
             this.profiles = res.data;
@@ -242,7 +244,7 @@ export default {
     },
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = page_url || 'http://afsi.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/filteredprofiles';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {

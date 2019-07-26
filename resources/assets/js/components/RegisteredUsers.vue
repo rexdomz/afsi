@@ -89,7 +89,7 @@
                         <div class="form-group">                               
                           <label for="amountloan" class="col-sm-4 control-label">Loan Amount</label>
                           <div style="margin-bottom: 9px;" class="col-sm-8">  
-                              <p class="form-control">{{ get_amount_loan(profile) | currency('P') }}</p>                              
+                              <p class="form-control">{{ ( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term) ) | currency('P') }} </p>                              
                           </div>
                         </div>   
                         <div class="form-group">                               
@@ -101,7 +101,7 @@
                         <div class="form-group">                               
                           <label for="inputFullName" class="col-sm-4 control-label">Rate per Day</label>
                           <div style="margin-bottom: 9px;" class="col-sm-8">
-                              <!--<p class="form-control">{{ computedDataRate | currency('P') }}</p>-->
+                              <p class="form-control">{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</p>
                           </div>
                         </div> 
                         <div class="form-group">                               
@@ -353,7 +353,7 @@ export default {
         pay: '',
         date_pay: ''     
       },        
-      pay_id: '',   
+      pay_id: '',  
       profiles: [],      
       profile: {        
         id: '',
@@ -433,7 +433,7 @@ export default {
 
   methods: {                 
     addprofile() {
-      console.log(JSON.stringify(this.profile))
+      //console.log(JSON.stringify(this.profile))
       if (this.edit === false) {
         fetch('http://afsi.com/api/profile', {
             method: 'post',
@@ -509,7 +509,7 @@ export default {
         fetch(`http://afsi.com/api/profilesbyarea/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
-            this.profiles = res.data;
+            this.profiles = res.data;            
             vm.makePagination(res.meta, res.links);
           })
           .catch(err => console.log(err));        
@@ -520,11 +520,11 @@ export default {
       fetch(page_url)
         .then(res => res.json())
         .then(res => {
-          this.profiles = res.data;
+          this.profiles = res.data;          
           vm.makePagination(res.meta, res.links);
         })
         .catch(err => console.log(err));
-        console.log("tanan:"+JSON.stringify(this.profile));
+        //console.log("tanan:"+JSON.stringify(this.profile));
     },
     makePagination(meta, links) {
       let pagination = {

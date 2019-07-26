@@ -31,9 +31,11 @@ Route::prefix('admin')->group(function() {
     Route::get('/user-payment', 'AdminController@payment')->name('admin.user-payment');
     Route::get('/quota', 'AdminController@collector')->name('admin.quota');
     Route::get('/area', 'AdminController@area')->name('admin.area');
-
-    /* Release */
+    
     Route::get('/cashcards', 'AdminController@cash_card')->name('admin.cashcards');
+    Route::get('/transactions', 'AdminController@get_transactions')->name('admin.transactions');
+    
+    /* Release */
     Route::get('/release', 'AdminController@release')->name('release');
 
     //Print

@@ -29,7 +29,7 @@ class PaymentController extends Controller
     public function get_payments_by_user($id, $perpage)
     {
         // Get payments history
-        $payments = Payments::where('profile_id', $id)->orderBy('date_pay', 'desc')->paginate($perpage);                
+        $payments = Payments::where('profile_id', $id)->orderBy('date_pay', 'asc')->paginate($perpage);                
 
         // Return paginated records by area
         return PaymentsResource::collection($payments);        

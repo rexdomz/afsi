@@ -59,4 +59,8 @@ class AdminController extends Controller
         return view('cashcards');
     }
 
+    public function get_transactions() {
+        return view('transactions');
+    }
+
 }

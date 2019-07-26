@@ -287,7 +287,7 @@ export default {
         var id = this.area
         var perpage = 25;
         console.log('Area:' + id)
-        fetch(`http://afsi.com/api/profilesbyarea/${id}/${perpage}`)
+        fetch(`http://afsi.com/api/filteredprofilesbyarea/${id}/${perpage}`)
           .then(res => res.json())
           .then(res => {
             this.profiles = res.data;
@@ -297,7 +297,7 @@ export default {
     },
     fetchprofiles(page_url) {
       let vm = this;
-      page_url = page_url || 'http://afsi.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/filteredprofiles';
       fetch(page_url)
         .then(res => res.json())
         .then(res => {

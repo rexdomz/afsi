@@ -22,8 +22,22 @@ class ProfilesController extends Controller
 
     public function index()
     {
+        // Get profiles        
+        $profiles = Profiles::orderBy('full_name', 'asc')
+                    ->paginate(20);                        
+                        
+        //dd($profiles);                  
+        // Return collection of articles as a resource               
+        return ProfilesResource::collection($profiles);                
+    }
+
+    public function filtered_index()
+    {
         // Get profiles
-        $profiles = Profiles::orderBy('full_name', 'asc')->paginate(20);                        
+        $status = 1;
+        $profiles = Profiles::where('status', '=', $status)
+                    ->orderBy('full_name', 'asc')
+                    ->paginate(20);                        
                         
         //dd($profiles);                  
         // Return collection of articles as a resource               
@@ -32,11 +46,33 @@ class ProfilesController extends Controller
 
     public function get_profiles_by_area($id, $perpage)
     {
-        // Get profiles    
-        if ( $id > 0 ) {
-            $profiles = Profiles::where('area', $id)->orderBy('full_name', 'asc')->paginate($perpage);
+        // Get profiles         
+        if ( $id > 0 ) {            
+            $profiles = Profiles::where('area', $id)                        
+                        ->orderBy('full_name', 'asc')
+                        ->paginate($perpage);
         } else {            
-            $profiles = Profiles::orderBy('full_name', 'asc')->paginate($perpage);            
+            $profiles = Profiles::orderBy('full_name', 'asc')
+                        ->paginate($perpage);            
+        }
+
+        // Return paginated records by area
+        return ProfilesResource::collection($profiles);        
+    }
+
+    public function get_profiles_by_area_filtered($id, $perpage)
+    {
+        // Get profiles 
+        $status = 1;   
+        if ( $id > 0 ) {            
+            $profiles = Profiles::where('area', $id)
+                        ->where('status', '=', $status)
+                        ->orderBy('full_name', 'asc')
+                        ->paginate($perpage);
+        } else {            
+            $profiles = Profiles::where('status', '=', $status)
+                        ->orderBy('full_name', 'asc')
+                        ->paginate($perpage);            
         }
 
         // Return paginated records by area

@@ -183,12 +183,12 @@ input.searchnameinpt {
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{ URL::route('admin.cashcards') }}"><i class="fa fa-table"></i>Cash Cards</a></li>
-                <li><a href=""><i class="fa fa-pie-chart"></i>Transactions</a></li>
+                <li><a href="{{ URL::route('admin.transactions') }}"><i class="fa fa-pie-chart"></i>Transactions</a></li>
                 <li><a href="{{ URL::route('admin.quota') }}"><i class="fa fa-th"></i>Collector's Quota</a></li>
               </ul>
             </li>
 
-            <li><a href=""><i class="fa fa-th"></i>Payslip</a></li>
+            <!--<li><a href=""><i class="fa fa-th"></i>Payslip</a></li>-->
             <li><a href="{{ URL::route('admin.area') }}"><i class="fa fa-laptop"></i>Areas</a></li>
           @else
             <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>

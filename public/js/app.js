@@ -18246,6 +18246,7 @@ Vue.component('quota', __webpack_require__(195));
 Vue.component('collector-view-only', __webpack_require__(198));
 Vue.component('quota-view-only', __webpack_require__(201));
 Vue.component('cash-cards', __webpack_require__(204));
+Vue.component('transactions', __webpack_require__(221));
 
 Vue.component('autocomplete', __webpack_require__(207));
 
@@ -67524,7 +67525,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
     addprofile: function addprofile() {
       var _this = this;
 
-      console.log(JSON.stringify(this.profile));
+      //console.log(JSON.stringify(this.profile))
       if (this.edit === false) {
         fetch('http://afsi.com/api/profile', {
           method: 'post',
@@ -67629,7 +67630,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       }).catch(function (err) {
         return console.log(err);
       });
-      console.log("tanan:" + JSON.stringify(this.profile));
+      //console.log("tanan:"+JSON.stringify(this.profile));
     },
     makePagination: function makePagination(meta, links) {
       var pagination = {
@@ -68418,10 +68419,13 @@ var render = function() {
                                   _vm._v(
                                     _vm._s(
                                       _vm._f("currency")(
-                                        _vm.get_amount_loan(_vm.profile),
+                                        _vm.profile.loan +
+                                          _vm.profile.loan *
+                                            (_vm.profile.interest / 100) *
+                                            _vm.profile.term,
                                         "P"
                                       )
-                                    )
+                                    ) + " "
                                   )
                                 ])
                               ]
@@ -68479,7 +68483,40 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _vm._m(3),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-sm-4 control-label",
+                                attrs: { for: "inputFullName" }
+                              },
+                              [_vm._v("Rate per Day")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "col-sm-8",
+                                staticStyle: { "margin-bottom": "9px" }
+                              },
+                              [
+                                _c("p", { staticClass: "form-control" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm._f("currency")(
+                                        (_vm.profile.loan +
+                                          _vm.profile.loan *
+                                            (_vm.profile.interest / 100) *
+                                            _vm.profile.term) /
+                                          (_vm.profile.term * 30),
+                                        "P"
+                                      )
+                                    )
+                                  )
+                                ])
+                              ]
+                            )
+                          ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
                             _c(
@@ -69130,7 +69167,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
-                            _vm._m(4),
+                            _vm._m(3),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-sm-8" }, [
                               _c(
@@ -69150,7 +69187,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(5)
+                  _vm._m(4)
                 ])
               ])
             ]
@@ -69165,7 +69202,7 @@ var render = function() {
             [
               _c("div", { staticClass: "modal-dialog" }, [
                 _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(6),
+                  _vm._m(5),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -69573,7 +69610,7 @@ var render = function() {
                               },
                               [
                                 _c("div", { staticClass: "input-group date" }, [
-                                  _vm._m(7),
+                                  _vm._m(6),
                                   _vm._v(" "),
                                   _c("input", {
                                     directives: [
@@ -69627,7 +69664,7 @@ var render = function() {
                               },
                               [
                                 _c("div", { staticClass: "input-group date" }, [
-                                  _vm._m(8),
+                                  _vm._m(7),
                                   _vm._v(" "),
                                   _c("input", {
                                     directives: [
@@ -69713,13 +69750,13 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _vm._m(9)
+                          _vm._m(8)
                         ]
                       )
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(10)
+                  _vm._m(9)
                 ])
               ])
             ]
@@ -69781,26 +69818,6 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h4", { staticClass: "modal-title" }, [_vm._v("Promisory Note")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-4 control-label",
-          attrs: { for: "inputFullName" }
-        },
-        [_vm._v("Rate per Day")]
-      ),
-      _vm._v(" "),
-      _c("div", {
-        staticClass: "col-sm-8",
-        staticStyle: { "margin-bottom": "9px" }
-      })
     ])
   },
   function() {
@@ -71304,7 +71321,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       var id = this.area;
       var perpage = 25;
       console.log('Area:' + id);
-      fetch('http://afsi.com/api/profilesbyarea/' + id + '/' + perpage).then(function (res) {
+      fetch('http://afsi.com/api/filteredprofilesbyarea/' + id + '/' + perpage).then(function (res) {
         return res.json();
       }).then(function (res) {
         _this2.profiles = res.data;
@@ -71317,7 +71334,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
       var _this3 = this;
 
       var vm = this;
-      page_url = page_url || 'http://afsi.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/filteredprofiles';
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
@@ -72469,6 +72486,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -72558,7 +72577,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     totalLoanAmounts: function totalLoanAmounts() {
       var sum = 0;
       this.profiles.forEach(function (e) {
-        sum += e.amount_loan;
+        sum += e.loan + e.loan * (e.interest / 100) * e.term;
       });
       return sum;
     },
@@ -72619,7 +72638,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var vm = this;
       var id = this.area.id;
       var perpage = 25;
-      fetch('http://afsi.com/api/profilesbyarea/' + id + '/' + perpage).then(function (res) {
+      fetch('http://afsi.com/api/filteredprofilesbyarea/' + id + '/' + perpage).then(function (res) {
         return res.json();
       }).then(function (res) {
         _this3.profiles = res.data;
@@ -72632,7 +72651,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this4 = this;
 
       var vm = this;
-      page_url = page_url || 'http://afsi.com/api/profiles';
+      page_url = page_url || 'http://afsi.com/api/filteredprofiles';
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
@@ -73011,36 +73030,10 @@ var render = function() {
                       _c(
                         "span",
                         { staticStyle: { width: "150px", float: "left" } },
-                        [
-                          _c("strong", [_vm._v("Weekly")]),
-                          _vm._v(
-                            "|page(" +
-                              _vm._s(_vm.pagination.current_page) +
-                              " of " +
-                              _vm._s(_vm.pagination.last_page) +
-                              "): "
-                          )
-                        ]
-                      ),
-                      _c("span", { staticClass: "badge bg-green" }, [
-                        _vm._v(
-                          " " +
-                            _vm._s(
-                              _vm._f("currency")(_vm.totalAmountWeekly, "P")
-                            ) +
-                            " "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        { staticStyle: { width: "150px", float: "left" } },
                         [_vm._v(" Total Loan: ")]
                       ),
                       _vm._v(" "),
-                      _c("span", { staticClass: "badge bg-red" }, [
+                      _c("span", { staticClass: "badge bg-blue" }, [
                         _vm._v(
                           _vm._s(_vm._f("currency")(_vm.totalLoanAmounts, "P"))
                         )
@@ -73063,6 +73056,24 @@ var render = function() {
                       _c(
                         "span",
                         { staticStyle: { width: "150px", float: "left" } },
+                        [_vm._v(" Balance: ")]
+                      ),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "badge bg-red" }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm._f("currency")(
+                              _vm.totalLoanAmounts - _vm.totalPayments,
+                              "P"
+                            )
+                          )
+                        )
+                      ]),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticStyle: { width: "150px", float: "left" } },
                         [_vm._v(" Total Customers: ")]
                       ),
                       _vm._v(" " + _vm._s(_vm.pagination.total)),
@@ -73073,7 +73084,15 @@ var render = function() {
                         { staticStyle: { width: "150px", float: "left" } },
                         [_vm._v(" Area Collector: ")]
                       ),
-                      _vm._v(" " + _vm._s(_vm.area.collector))
+                      _vm._v(" " + _vm._s(_vm.area.collector)),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticStyle: { width: "150px", float: "left" } },
+                        [_vm._v(" Area Asst. Collector: ")]
+                      ),
+                      _vm._v(" " + _vm._s(_vm.area.assistant_collector))
                     ])
                   ]),
                   _vm._v(" "),
@@ -76146,6 +76165,801 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(222)
+/* template */
+var __vue_template__ = __webpack_require__(223)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Transactions.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2554e88c", Component.options)
+  } else {
+    hotAPI.reload("data-v-2554e88c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 222 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      myDate: null,
+      myDate2: null,
+      myDate3: null,
+      areas: [],
+      area: {
+        id: -1,
+        area_code: '',
+        address: '',
+        collector: 'All',
+        contact: ''
+      },
+      payments: [],
+      payment: {
+        id: '',
+        profile_id: '',
+        pay: '',
+        date_pay: ''
+      },
+      pay_id: '',
+      profiles: [],
+      profile: {
+        id: '',
+        full_name: '',
+        address: '',
+        area: '',
+        loan: '',
+        interest: '',
+        term: '',
+        status: '',
+        date_from: '',
+        date_to: '',
+        contact: '',
+        result: '',
+        icon: ''
+      },
+      profile_id: '',
+      pagination: {},
+      edit: false
+    };
+  },
+
+
+  filters: {
+    formatDate: function formatDate(value) {
+      return moment(String(value)).format('D MMM YYYY');
+    }
+  },
+
+  watch: {
+    myDate: function myDate() {
+      this.myDate2 = new Date(this.myDate.setDate(this.myDate.getDate() + this.profile.term * 30));
+      this.myDate3 = new Date(this.myDate.setDate(this.myDate.getDate() - this.profile.term * 30));
+      console.log('1st: ' + this.myDate3.toISOString().split('T')[0]);
+      console.log('2nd: ' + this.myDate2.toISOString().split('T')[0]);
+    }
+  },
+
+  created: function created() {
+    this.fetchprofiles();
+    this.fetchAreas();
+  },
+
+
+  computed: {
+    paymentHref: function paymentHref() {
+      return "/admin/cash-card/" + this.area.id + "/" + this.area.collector;
+    }
+  },
+
+  methods: {
+    checkDate: function checkDate(profile) {
+      var date = moment(profile.date_to);
+      var now = moment().valueOf();
+      if (date > now) {
+        this.profile.date_expire = true;
+        return true;
+      } else {
+        this.profile.date_expire = false;
+        return false;
+      }
+    },
+    fetchPaymentsByID: function fetchPaymentsByID(id) {
+      var _this = this;
+
+      var vm = this;
+      var perpage = 20;
+      fetch('http://afsi.com/api/paymentsbyid/' + id + '/' + perpage).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this.payments = res.data;
+        console.log(_this.payments);
+        vm.makePagination(res.meta, res.links);
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    fetchAreas: function fetchAreas(page_url) {
+      var _this2 = this;
+
+      page_url = 'http://afsi.com/api/areas';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this2.areas = res.data;
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    fetchProfilesByAreas: function fetchProfilesByAreas() {
+      var _this3 = this;
+
+      var vm = this;
+      var id = this.area.id;
+      var perpage = 25;
+      fetch('http://afsi.com/api/profilesbyarea/' + id + '/' + perpage).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this3.profiles = res.data;
+        vm.makePagination(res.meta, res.links);
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    fetchprofiles: function fetchprofiles(page_url) {
+      var _this4 = this;
+
+      var vm = this;
+      page_url = page_url || 'http://afsi.com/api/profiles';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this4.profiles = res.data;
+        vm.makePagination(res.meta, res.links);
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev,
+        per_page: meta.per_page,
+        total: meta.total
+      };
+      this.pagination = pagination;
+    },
+    deleteprofile: function deleteprofile(id) {
+      var _this5 = this;
+
+      if (confirm('Are You Sure?')) {
+        fetch('http://afsi.com/api/profile/' + id, {
+          method: 'delete'
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          alert('profile Removed');
+          _this5.fetchprofiles();
+        }).catch(function (err) {
+          return console.log(err);
+        });
+      }
+    },
+    editprofile: function editprofile(profile) {
+      this.edit = true;
+      this.profile.id = profile.id;
+      this.profile.profile_id = profile.id;
+      this.profile.full_name = profile.full_name;
+      this.profile.address = profile.address;
+      this.profile.area = profile.area;
+      this.profile.loan = profile.loan;
+      this.profile.interest = profile.interest;
+      this.profile.term = profile.term;
+      this.profile.status = profile.status;
+      this.profile.date_from = moment(String(profile.date_from)).format('YYYY-MM-DD');
+      this.profile.date_to = moment(String(profile.date_to)).format('YYYY-MM-DD');
+      this.profile.contact = profile.contact;
+      this.fetchPaymentsByID(profile.id);
+    },
+    clearForm: function clearForm() {
+      this.edit = false;
+      this.profile.id = null;
+      this.profile.profile_id = null;
+      this.profile.full_name = '';
+      this.profile.address = '';
+      this.profile.area = '';
+      this.profile.loan = '';
+      this.profile.interest = '';
+      this.profile.term = '';
+      this.profile.status = '';
+      this.profile.date_from = '';
+      this.profile.date_to = '';
+      this.profile.contact = '';
+    },
+
+    getStat: function getStat(status) {
+      switch (status) {
+        case 0:
+          {
+            this.profile.result = "Inactive";
+            this.profile.icon = "bg-yellow";
+            break;
+          }
+        case 1:
+          {
+            this.profile.result = "Active";
+            this.profile.icon = "bg-green";
+            break;
+          }
+        case 2:
+          {
+            this.profile.result = "Suspended";
+            this.profile.icon = "bg-red";
+            break;
+          }
+        default:
+          {
+            this.profile.result = "holla";
+            this.profile.icon = "";
+            break;
+          }
+      }
+      var output = '<span class="badge ' + this.profile.icon + '">' + this.profile.result + '</span>';
+      return output;
+    }
+
+  }
+});
+
+/***/ }),
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("section", { staticClass: "content" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("section", { staticClass: "col-lg-6 connectedSortable" }, [
+          _c("div", { staticClass: "box box-solid bg-light-blue-gradient" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "form-group col-sm-5" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "control-label",
+                    attrs: { for: "inputFullName" }
+                  },
+                  [_vm._v("Select Date")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "10px" } }, [
+                  _c("div", { staticClass: "input-group date" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control pull-right",
+                      attrs: { id: "myDate", type: "date" },
+                      domProps: {
+                        value:
+                          _vm.myDate && _vm.myDate.toISOString().split("T")[0]
+                      },
+                      on: {
+                        input: function($event) {
+                          _vm.myDate = $event.target.valueAsDate
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.myDate,
+                          expression: "myDate"
+                        }
+                      ],
+                      attrs: { type: "hidden" },
+                      domProps: { value: _vm.myDate },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.myDate = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(2)
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box box-solid bg-teal-gradient" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-body border-radius-none" }, [
+              _c("div", { staticClass: "form-group col-sm-5" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "control-label",
+                    attrs: { for: "inputFullName" }
+                  },
+                  [_vm._v("Select Date")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "10px" } }, [
+                  _c("div", { staticClass: "input-group date" }, [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control pull-right",
+                      attrs: { id: "myDate", type: "date" },
+                      domProps: {
+                        value:
+                          _vm.myDate && _vm.myDate.toISOString().split("T")[0]
+                      },
+                      on: {
+                        input: function($event) {
+                          _vm.myDate = $event.target.valueAsDate
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.myDate,
+                          expression: "myDate"
+                        }
+                      ],
+                      attrs: { type: "hidden" },
+                      domProps: { value: _vm.myDate },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.myDate = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(5)
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(6)
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header" }, [
+      _c("div", { staticClass: "pull-right box-tools" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary btn-sm pull-right",
+            staticStyle: { "margin-right": "5px" },
+            attrs: {
+              type: "button",
+              "data-widget": "collapse",
+              "data-toggle": "tooltip",
+              title: "Collapse"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        )
+      ]),
+      _vm._v(" "),
+      _c("i", { staticClass: "fa fa-book", attrs: { "aria-hidden": "true" } }),
+      _vm._v(" "),
+      _c("h3", { staticClass: "box-title" }, [
+        _vm._v("\n              Release\n            ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "fa fa-calendar" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("table", { staticClass: "table" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Full Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Loan Amount")])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [_vm._v("xxx")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("xxx")])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [_vm._v("Total:")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("$$$")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header" }, [
+      _c("i", { staticClass: "fa fa-money", attrs: { "aria-hidden": "true" } }),
+      _vm._v(" "),
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Expenses")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn bg-teal btn-sm",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn bg-teal btn-sm",
+            attrs: { type: "button", "data-widget": "remove" }
+          },
+          [_c("i", { staticClass: "fa fa-times" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "fa fa-calendar" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("table", { staticClass: "table" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Amount")])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [_vm._v("xxx")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("xxx")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("xxx")])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [_vm._v("Total")]),
+        _vm._v(" "),
+        _c("td"),
+        _vm._v(" "),
+        _c("td", [_vm._v("$$$")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "col-lg-6 connectedSortable" }, [
+      _c("div", { staticClass: "box box-info" }, [
+        _c("div", { staticClass: "box-header" }, [
+          _c("i", {
+            staticClass: "fa fa-keyboard-o",
+            attrs: { "aria-hidden": "true" }
+          }),
+          _vm._v(" "),
+          _c("h3", { staticClass: "box-title" }, [_vm._v("Add Expenses")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "box-body" }, [
+          _c("form", { attrs: { action: "#", method: "post" } }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text", name: "name", placeholder: "name" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text", name: "amount", placeholder: "amount" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("textarea", {
+                staticClass: "textarea",
+                staticStyle: {
+                  width: "100%",
+                  height: "125px",
+                  "font-size": "14px",
+                  "line-height": "18px",
+                  border: "1px solid #dddddd",
+                  padding: "10px"
+                },
+                attrs: { placeholder: "Description" }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "box-footer clearfix" }, [
+          _c(
+            "button",
+            {
+              staticClass: "pull-right btn btn-default",
+              attrs: { type: "button", id: "sendEmail" }
+            },
+            [
+              _vm._v("Add\n              "),
+              _c("i", { staticClass: "fa fa-arrow-circle-right" })
+            ]
+          )
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2554e88c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
