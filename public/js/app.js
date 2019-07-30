@@ -67558,9 +67558,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
-          _this.clearForm();
+          //this.clearForm();
           alert('Profile Updated');
-          _this.fetchProfilesByAreas();
+          //this.fetchProfilesByAreas();
         }).catch(function (err) {
           return console.log(err);
         });
@@ -71281,6 +71281,20 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_filters___default.a);
 
 
   computed: {
+    totalPayments: function totalPayments() {
+      var sum = 0;
+      this.profiles.forEach(function (e) {
+        sum += e.totalpay;
+      });
+      return sum;
+    },
+    totalLoanAmounts: function totalLoanAmounts() {
+      var sum = 0;
+      this.profiles.forEach(function (e) {
+        sum += e.loan + e.loan * (e.interest / 100) * e.term;
+      });
+      return sum;
+    },
     totalAmount: function totalAmount() {
       var sum = 0;
       this.payments.forEach(function (e) {
@@ -71721,7 +71735,12 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("currency")(
-                                profile.amount_loan - profile.totalpay,
+                                profile.loan +
+                                  profile.loan *
+                                    (profile.interest / 100) *
+                                    profile.term -
+                                  _vm.totalAmount -
+                                  profile.totalpay,
                                 "P"
                               )
                             )

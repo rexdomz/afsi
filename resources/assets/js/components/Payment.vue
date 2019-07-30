@@ -42,7 +42,7 @@
                                 <td>{{ profile.full_name }}</td> 
                                 <td><span class="badge bg-green"> {{ profile.loan | currency('P') }} </span></td>                                                                                                                                                                                 
                                 <td><span class="badge bg-blue"> {{ ( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term) ) | currency('P') }} </span></td>
-                                <td><span class="badge bg-red">{{ profile.amount_loan - profile.totalpay | currency('P') }}</span></td>
+                                <td><span class="badge bg-red">{{ ( ( (( (profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) ) - totalAmount ) ) - profile.totalpay | currency('P') }}</span></td>
                                 <!--<td>{{ ( ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) * 7 ) | currency('P') }}</td>-->                                
                                 <td>{{ ( ((profile.loan) + (profile.loan * (profile.interest/100) * profile.term)) / (profile.term * 30) ) | currency('P') }}</td>
                                 <td><span v-bind:style=" checkDate(profile) ? 'color: #000;' : 'color: red;' " >{{ profile.date_to | formatDate }}</span></td>
@@ -245,12 +245,26 @@ export default {
   },
 
   computed: {
+      totalPayments: function () {
+          var sum = 0;
+          this.profiles.forEach(e => {
+              sum += e.totalpay;
+          });
+          return sum;
+      },
+      totalLoanAmounts: function () {
+          var sum = 0;          
+          this.profiles.forEach(e => {
+              sum += (( (e.loan) + (e.loan * (e.interest/100) * e.term)) );
+          });
+          return sum;
+      },
       totalAmount: function () {
           var sum = 0;
           this.payments.forEach(e => {
               sum += e.pay;
           });
-          return sum
+          return sum;
       },
       paymentHref () {
         //console.log(this.profile.id);

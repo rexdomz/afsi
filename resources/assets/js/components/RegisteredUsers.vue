@@ -459,9 +459,9 @@ export default {
           })
           .then(res => res.json())
           .then(data => {
-            this.clearForm();
+            //this.clearForm();
             alert('Profile Updated');
-            this.fetchProfilesByAreas();
+            //this.fetchProfilesByAreas();
           })
           .catch(err => console.log(err));               
       }      
