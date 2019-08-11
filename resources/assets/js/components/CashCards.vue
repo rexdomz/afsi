@@ -5,32 +5,44 @@
       <div class="row">
         <div class="col-md-12">
             <div class="box">
-              <div class="box-header with-border">
-                  <h3 class="box-title">Cash Cards</h3>          
+              <div class="box-header">
+                  <h3 class="box-title">Colection Form</h3>          
               </div>                                      
-
               <div class="box-body"> 
-                <div class="col-md-3">
-                    <div><p>Filter by Area:                    
-                        <select @change="fetchProfilesByAreas()" v-model="area" id="area" name="area" class="form-control select2" style="height: 30px !important; width: 50%; margin: 10px 0 5px 0;">                                     
-                            <option v-for="area in areas" :value="area" v-bind:key="area.id">{{ area.area_code }} - {{ area.address }}</option>
-                        </select></p>
-                    </div>
+
+                <div class="col-md-5">
+                    
                     <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Details</h3><br>
-                            <i>Note: Total number of lenders per page is 25.</i><br>                                                                
-                            <span style="width: 150px;float: left;"> Total Customers: </span> {{ pagination.total }}<br>
+                        <div class="box-header">                            
+                          <div>
+                            <p>Filter:</p>
+                            <select @change="fetchProfilesByType()" v-model="areaSelect" id="area" name="area" class="form-control select2" style="height: 25px !important; width: 60%; margin: 0 0 5px 0; float:left">                                                                     
+                                <option v-for="area in areas" 
+                                  :selected="area == areaSelect ? 'selected' : ''"
+                                  :value="area.id" 
+                                  v-bind:key="area.id">
+                                  {{ area.area_code }} - {{ area.address }}
+                                </option>
+                            </select>
+                            <select @change="fetchProfilesByType()" class="form-control select2" name="template" v-model="category" style="height: 25px !important; width: 60%; margin: 0 0 5px 0; float:left">
+                                <option v-for="template in templates"
+                                    :selected="template.id == category ? 'selected' : ''"
+                                    :value="template.id"
+                                    v-bind:key="template.id">
+                                    {{ template.name }}
+                                </option>
+                            </select>                           
+                            
+                            <!--<p><span style="width: 150px;float: left;"> Total Customers: </span> {{ pagination.total }}<br>
                             <span style="width: 150px;float: left;"> Area Collector: </span> {{ area.collector }}<br>
-                            <span style="width: 150px;float: left;"> Assistant Collector: </span> {{ area.assistant_collector }}</p>
+                            <span style="width: 150px;float: left;"> Assistant Collector: </span> {{ area.assistant_collector }}</p>-->
+                          </div>
+                            <!--<i>Note: Total number of lenders per page is 25.</i><br>-->                            
                         </div>
                         <div class="box-body">                                
                             <a :href=paymentHref class="btnPrint btn btn-block btn-info btn-xs">Print</a>                                
                         </div>
                     </div> <!-- /box -->
-                </div>
-
-                  <div class="col-md-4">  
                     <div class="box-tools">
                         <ul class="pagination pagination-sm no-margin pull-right">
                             <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchprofiles(pagination.prev_page_url)">Previous</a></li>
@@ -41,15 +53,21 @@
                     <table style="margin-top: 1.5em; float: left" class="table">
                         <tr>                    
                           <th>Full Name</th>                    
+                          <th>Maturity Date</th>
                           <th>Status</th>                            
                         </tr>
                         <tr v-for="profile in profiles" v-bind:key="profile.id">                        
-                            <td>{{ profile.full_name }}</td>                                                        
+                            <td>{{ profile.full_name }}</td> 
+                            <td><span v-bind:style=" checkDate(profile) ? 'color: #000;' : 'color: red;' " >{{ profile.date_to | formatDate }}</span></td>                                                      
                             <td><div v-html="getStat(profile.status)"></div></td>
                         </tr>                            
-                    </table>                                                              
+                    </table>   
                 </div>
-                <!-- /.box-body -->
+
+                  <div class="col-md-6">  
+                                                                               
+                </div>
+                
             </div>
           </div>
             <!-- /.box-body -->
@@ -81,7 +99,8 @@ export default {
           address: '',
           collector: 'All',
           contact: ''            
-      },   
+      }, 
+      areaSelect: 1,  
       payments: [],
       payment: {        
         id: '',
@@ -108,7 +127,13 @@ export default {
       },
       profile_id: '',
       pagination: {},
-      edit: false,      
+      edit: false, 
+      templates: [
+        {id: 1, name:'All Accounts'},
+        {id: 2, name:'Active Accounts'},
+        {id: 3, name:'Bad Accounts'}
+      ],
+      category: 1
     };
   },
 
@@ -128,13 +153,14 @@ export default {
   },
 
   created() {
-    this.fetchprofiles();
+    //this.fetchprofiles();
+    this.fetchProfilesByType();
     this.fetchAreas();
   },
 
   computed: {      
       paymentHref () {        
-        return "/admin/cash-card/" + this.area.id + "/" + this.area.collector;
+        return "/admin/cash-card/" + this.areaSelect + "/" + this.category;
       }
   },
 
@@ -173,7 +199,7 @@ export default {
     },
     fetchProfilesByAreas() {    
         let vm = this;                
-        var id = this.area.id             
+        var id = this.areaSelect;             
         var perpage = 25;        
         fetch(`http://afsi.com/api/profilesbyarea/${id}/${perpage}`)
           .then(res => res.json())
@@ -182,6 +208,19 @@ export default {
             vm.makePagination(res.meta, res.links);
           })
           .catch(err => console.log(err));           
+    },
+    fetchProfilesByType() {
+        let vm = this;                
+        var id = this.areaSelect;  
+        var status = this.category;           
+        var perpage = 25;        
+        fetch(`http://afsi.com/api/profilesbyareatype/${id}/${status}/${perpage}`)
+          .then(res => res.json())
+          .then(res => {
+            this.profiles = res.data;
+            vm.makePagination(res.meta, res.links);
+          })
+          .catch(err => console.log(err));  
     },
     fetchprofiles(page_url) {
       let vm = this;

@@ -182,9 +182,22 @@ input.searchnameinpt {
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ URL::route('admin.cashcards') }}"><i class="fa fa-table"></i>Cash Cards</a></li>
+                <li><a href="{{ URL::route('admin.cashcards') }}"><i class="fa fa-table"></i>Collection Form</a></li>
                 <li><a href="{{ URL::route('admin.transactions') }}"><i class="fa fa-pie-chart"></i>Transactions</a></li>
                 <li><a href="{{ URL::route('admin.quota') }}"><i class="fa fa-th"></i>Collector's Quota</a></li>
+              </ul>
+            </li>
+
+            <li class="active treeview menu-open">
+              <a href="#">
+                <i class="fa "></i> <span>Employee</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=""><i class="fa fa-table"></i>Records</a></li>
+                <li><a href=""><i class="fa fa-pie-chart"></i>Payroll</a></li>                
               </ul>
             </li>
 
@@ -197,6 +210,53 @@ input.searchnameinpt {
             <li><a href="registered-users"><i class="fa fa-table"></i>Registered Customers</a></li>      
             <li><a href="/quota"><i class="fa fa-th"></i>Collector's Quota</a></li>
             <li><a href="/area"><i class="fa fa-laptop"></i>Areas</a></li>
+
+            <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/registration"><i class="fa fa-edit"></i> New Registration</a></li>    
+
+            <li class="active treeview menu-open">
+              <a href="#">
+                <i class="fa "></i> <span>Customers</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="/user-payment"><i class="fa fa-pie-chart"></i>Customer Ledger</a></li>
+                <li><a href="registered-users"><i class="fa fa-table"></i>Registered Customers</a></li>
+              </ul>
+            </li>                                                       
+
+            <li class="active treeview menu-open">
+              <a href="#">
+                <i class="fa "></i> <span>Reports</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=""><i class="fa fa-table"></i>Collection Form</a></li>
+                <li><a href=""><i class="fa fa-pie-chart"></i>Transactions</a></li>
+                <li><a href="/quota"><i class="fa fa-th"></i>Collector's Quota</a></li>
+              </ul>
+            </li>
+
+            <li class="active treeview menu-open">
+              <a href="#">
+                <i class="fa "></i> <span>Employee</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=""><i class="fa fa-table"></i>Records</a></li>
+                <li><a href=""><i class="fa fa-pie-chart"></i>Payroll</a></li>                
+              </ul>
+            </li>
+
+            <!--<li><a href=""><i class="fa fa-th"></i>Payslip</a></li>-->
+            <li><a href="/area"><i class="fa fa-laptop"></i>Areas</a></li>
+
           @endif
                   
       </ul>
@@ -215,7 +275,7 @@ input.searchnameinpt {
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Dashboard</h3>
+          <!--<h3 class="box-title">Dashboard</h3>-->
 
           <!--
           <div class="box-tools pull-right">

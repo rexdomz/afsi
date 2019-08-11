@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Profiles;
 use App\Payments;
 use App\Area;
+use Carbon\Carbon;
 //use App\Http\Resources\Profiles as ProfilesResource;
 //use App\Http\Resources\Payments as PaymentsResource;
 
@@ -81,26 +82,47 @@ class PrintController extends Controller
         return view('promisory', array('payments' => $payments, 'profile' => $profile, 'totalPayment' => $totalPayment, 'originalBalance' => $originalBalance, 'ratePerDay' => $ratePerDay));        
     }
 
-    public function printCC($id, $collector) {
+    public function printCC($id, $type) {
         //get profile   
-        $status = 1;        
+        $stat = 1;        
         if ($id >= 0) {
-            $profiles = Profiles::where('area', '=', $id)
-                        ->where('status', '=', $status)
-                        ->orderBy('full_name', 'asc')
-                        ->get();
+
+            switch($type) {
+                case 1:
+                    $profiles = Profiles::where('area', $id)   
+                    ->where('status', '=', $stat)                      
+                    ->orderBy('full_name', 'asc')
+                    ->get();
+                    break;
+                case 2:                    
+                    $profiles = Profiles::where('area', $id)    
+                    ->where('status', '=', $stat) 
+                    ->whereDate('date_to', '>', Carbon::now()->toDateTimeString())                
+                    ->orderBy('full_name', 'asc')
+                    ->get();
+                    break;
+                case 3:                    
+                    $profiles = Profiles::where('area', $id)        
+                    ->where('status', '=', $stat) 
+                    ->whereDate('date_to', '<=', Carbon::now()->toDateTimeString())                
+                    ->orderBy('full_name', 'asc')
+                    ->get();
+                    break;
+            }
+
             $area = Area::where('id', '=', $id)->get();
             foreach($area as $a) {            
                 $area = json_encode($a);
             }
+
         } else {
-            $profiles = Profiles::where('status', '=', $status)
+            $profiles = Profiles::where('status', '=', $stat)
                         ->orderBy('full_name', 'asc')
                         ->get();
             $area = '';
         }        
-        
-        return view('printcc', array('profiles' => $profiles, 'collector'=> $collector, 'area'=> $area));
+                
+        return view('printcc', array('profiles' => $profiles, 'area'=> $area));
     }
 
 

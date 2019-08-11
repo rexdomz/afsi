@@ -27,6 +27,7 @@ Route::get('filteredrelease', 'ProfilesController@filtered_release');
 
 // List profiles by area
 Route::get('profilesbyarea/{id}/{perpage?}', 'ProfilesController@get_profiles_by_area');
+Route::get('profilesbyareatype/{id}/{status}/{perpage?}', 'ProfilesController@get_profiles_by_area_type');
 Route::get('filteredprofilesbyarea/{id}/{perpage?}', 'ProfilesController@get_profiles_by_area_filtered');
 
 // List profiles by search key

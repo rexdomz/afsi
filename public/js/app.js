@@ -71213,6 +71213,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 //npm install vue2-filters
@@ -71735,12 +71736,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("currency")(
-                                profile.loan +
-                                  profile.loan *
-                                    (profile.interest / 100) *
-                                    profile.term -
-                                  _vm.totalAmount -
-                                  profile.totalpay,
+                                profile.amountloan - profile.totalpay,
                                 "P"
                               )
                             )
@@ -75518,6 +75514,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -75533,6 +75547,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         collector: 'All',
         contact: ''
       },
+      areaSelect: 1,
       payments: [],
       payment: {
         id: '',
@@ -75559,7 +75574,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       profile_id: '',
       pagination: {},
-      edit: false
+      edit: false,
+      templates: [{ id: 1, name: 'All Accounts' }, { id: 2, name: 'Active Accounts' }, { id: 3, name: 'Bad Accounts' }],
+      category: 1
     };
   },
 
@@ -75580,14 +75597,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   created: function created() {
-    this.fetchprofiles();
+    //this.fetchprofiles();
+    this.fetchProfilesByType();
     this.fetchAreas();
   },
 
 
   computed: {
     paymentHref: function paymentHref() {
-      return "/admin/cash-card/" + this.area.id + "/" + this.area.collector;
+      return "/admin/cash-card/" + this.areaSelect + "/" + this.category;
     }
   },
 
@@ -75634,7 +75652,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this3 = this;
 
       var vm = this;
-      var id = this.area.id;
+      var id = this.areaSelect;
       var perpage = 25;
       fetch('http://afsi.com/api/profilesbyarea/' + id + '/' + perpage).then(function (res) {
         return res.json();
@@ -75645,15 +75663,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return console.log(err);
       });
     },
-    fetchprofiles: function fetchprofiles(page_url) {
+    fetchProfilesByType: function fetchProfilesByType() {
       var _this4 = this;
+
+      var vm = this;
+      var id = this.areaSelect;
+      var status = this.category;
+      var perpage = 25;
+      fetch('http://afsi.com/api/profilesbyareatype/' + id + '/' + status + '/' + perpage).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this4.profiles = res.data;
+        vm.makePagination(res.meta, res.links);
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    fetchprofiles: function fetchprofiles(page_url) {
+      var _this5 = this;
 
       var vm = this;
       page_url = page_url || 'http://afsi.com/api/profiles';
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this4.profiles = res.data;
+        _this5.profiles = res.data;
         vm.makePagination(res.meta, res.links);
       }).catch(function (err) {
         return console.log(err);
@@ -75671,7 +75705,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.pagination = pagination;
     },
     deleteprofile: function deleteprofile(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (confirm('Are You Sure?')) {
         fetch('http://afsi.com/api/profile/' + id, {
@@ -75680,7 +75714,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           return res.json();
         }).then(function (data) {
           alert('profile Removed');
-          _this5.fetchprofiles();
+          _this6.fetchprofiles();
         }).catch(function (err) {
           return console.log(err);
         });
@@ -75768,102 +75802,140 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "box-body" }, [
-              _c("div", { staticClass: "col-md-3" }, [
-                _c("div", [
-                  _c("p", [
-                    _vm._v(
-                      "Filter by Area:                    \n                      "
-                    ),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.area,
-                            expression: "area"
-                          }
-                        ],
-                        staticClass: "form-control select2",
-                        staticStyle: {
-                          height: "30px !important",
-                          width: "50%",
-                          margin: "10px 0 5px 0"
-                        },
-                        attrs: { id: "area", name: "area" },
-                        on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.area = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                            function($event) {
-                              return _vm.fetchProfilesByAreas()
-                            }
-                          ]
-                        }
-                      },
-                      _vm._l(_vm.areas, function(area) {
-                        return _c(
-                          "option",
-                          { key: area.id, domProps: { value: area } },
-                          [
-                            _vm._v(
-                              _vm._s(area.area_code) +
-                                " - " +
-                                _vm._s(area.address)
-                            )
-                          ]
-                        )
-                      }),
-                      0
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
+              _c("div", { staticClass: "col-md-5" }, [
                 _c("div", { staticClass: "box" }, [
                   _c("div", { staticClass: "box-header" }, [
-                    _c("h3", { staticClass: "box-title" }, [_vm._v("Details")]),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c("i", [
-                      _vm._v("Note: Total number of lenders per page is 25.")
-                    ]),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      { staticStyle: { width: "150px", float: "left" } },
-                      [_vm._v(" Total Customers: ")]
-                    ),
-                    _vm._v(" " + _vm._s(_vm.pagination.total)),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      { staticStyle: { width: "150px", float: "left" } },
-                      [_vm._v(" Area Collector: ")]
-                    ),
-                    _vm._v(" " + _vm._s(_vm.area.collector)),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      { staticStyle: { width: "150px", float: "left" } },
-                      [_vm._v(" Assistant Collector: ")]
-                    ),
-                    _vm._v(" " + _vm._s(_vm.area.assistant_collector)),
-                    _c("p")
+                    _c("div", [
+                      _c("p", [_vm._v("Filter:")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.areaSelect,
+                              expression: "areaSelect"
+                            }
+                          ],
+                          staticClass: "form-control select2",
+                          staticStyle: {
+                            height: "25px !important",
+                            width: "60%",
+                            margin: "0 0 5px 0",
+                            float: "left"
+                          },
+                          attrs: { id: "area", name: "area" },
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.areaSelect = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                              function($event) {
+                                return _vm.fetchProfilesByType()
+                              }
+                            ]
+                          }
+                        },
+                        _vm._l(_vm.areas, function(area) {
+                          return _c(
+                            "option",
+                            {
+                              key: area.id,
+                              domProps: {
+                                selected:
+                                  area == _vm.areaSelect ? "selected" : "",
+                                value: area.id
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(area.area_code) +
+                                  " - " +
+                                  _vm._s(area.address) +
+                                  "\n                              "
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.category,
+                              expression: "category"
+                            }
+                          ],
+                          staticClass: "form-control select2",
+                          staticStyle: {
+                            height: "25px !important",
+                            width: "60%",
+                            margin: "0 0 5px 0",
+                            float: "left"
+                          },
+                          attrs: { name: "template" },
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.category = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                              function($event) {
+                                return _vm.fetchProfilesByType()
+                              }
+                            ]
+                          }
+                        },
+                        _vm._l(_vm.templates, function(template) {
+                          return _c(
+                            "option",
+                            {
+                              key: template.id,
+                              domProps: {
+                                selected:
+                                  template.id == _vm.category ? "selected" : "",
+                                value: template.id
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(template.name) +
+                                  "\n                              "
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "box-body" }, [
@@ -75876,10 +75948,8 @@ var render = function() {
                       [_vm._v("Print")]
                     )
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-4" }, [
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "box-tools" }, [
                   _c(
                     "ul",
@@ -75973,6 +76043,22 @@ var render = function() {
                         _c("td", [_vm._v(_vm._s(profile.full_name))]),
                         _vm._v(" "),
                         _c("td", [
+                          _c(
+                            "span",
+                            {
+                              style: _vm.checkDate(profile)
+                                ? "color: #000;"
+                                : "color: red;"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm._f("formatDate")(profile.date_to))
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
                           _c("div", {
                             domProps: {
                               innerHTML: _vm._s(_vm.getStat(profile.status))
@@ -75984,7 +76070,9 @@ var render = function() {
                   ],
                   2
                 )
-              ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" })
             ])
           ]),
           _vm._v(" "),
@@ -76005,8 +76093,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-header with-border" }, [
-      _c("h3", { staticClass: "box-title" }, [_vm._v("Cash Cards")])
+    return _c("div", { staticClass: "box-header" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Colection Form")])
     ])
   },
   function() {
@@ -76015,6 +76103,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("th", [_vm._v("Full Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Maturity Date")]),
       _vm._v(" "),
       _c("th", [_vm._v("Status")])
     ])
