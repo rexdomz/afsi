@@ -13,11 +13,15 @@ class Profiles extends Model
     ];
 
     protected $dates = [
-        'date_from' => 'date:Y-m-d h:i:s',
-        'date_to' => 'date:Y-m-d h:i:s',
+        //'date_from' => 'date:Y-m-d h:i:s',
+        //'date_to' => 'date:Y-m-d h:i:s',
+        'date_from' => 'YYYY-MM-DD',
+        'date_to' => 'YYYY-MM-DD',
         'created_at',
         'updated_at'
     ];
+    
+    protected $dateFormat = 'YYYY-MM-DD';
 
     protected $appends = ['totalpay', 'amountloan', 'dailyrate'];
 

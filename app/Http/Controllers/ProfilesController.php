@@ -71,6 +71,36 @@ class ProfilesController extends Controller
         return ProfilesResource::collection($profiles);        
     }
 
+    public function search_param($id, $param, $perpage) {
+        $stat =1;
+        switch($id) {
+            case '1':                
+                $profiles = Profiles::where('area', $id)   
+                ->where('status', '=', $stat)    
+                //->whereBetween('date_from', [$from, $to])     
+                ->whereDate('date_from', '=', $param)             
+                ->orderBy('date_from', 'asc')
+                ->paginate($perpage);
+                break;
+            case '2':                    
+                $profiles = Profiles::where('area', $id)    
+                ->where('status', '=', $stat) 
+                ->whereDate('date_to', '>', Carbon::now()->toDateTimeString())                
+                ->orderBy('date_from', 'asc')
+                ->paginate($perpage);
+                break;
+            case '3':                    
+                $profiles = Profiles::where('area', $id)        
+                ->where('status', '=', $stat) 
+                ->whereDate('date_to', '<=', Carbon::now()->toDateTimeString())                
+                ->orderBy('date_from', 'asc')
+                ->paginate($perpage);
+                break;
+        }
+        
+        return ProfilesResource::collection($profiles); 
+    }
+
     public function get_profiles_by_area_type($id, $status, $perpage)
     {        
 

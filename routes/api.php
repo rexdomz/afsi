@@ -83,6 +83,10 @@ Route::put('updatepayment', 'PaymentController@store');
 Route::delete('deletepayment/{id}', 'PaymentController@destroy');
 
 
+/***Transaction Endpoints ***/
+Route::get('searchparameter/{id}/{param}/{perpage?}', 'ProfilesController@search_param');
+
+
 Route::fallback(function(){
     return response()->json([
         'message' => 'Page Not Found. If error persists, contact RexDomz'], 404);
